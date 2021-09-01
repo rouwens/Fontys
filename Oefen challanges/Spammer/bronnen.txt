@@ -1,0 +1,4 @@
+Mail template - https://mkyong.com/python/how-do-send-email-in-python-via-smtplib/
+Naar meerdere adressen sturen - https://stackoverflow.com/questions/8856117/how-to-send-email-to-multiple-recipients-using-python-smtplib
+Extern bestandje importeren - https://stackoverflow.com/questions/30768056/importing-external-txt-file-in-python/45720089
+mail met html inhoud sturen - https://www.spritecloud.com/creating-and-sending-html-e-mails-with-python/

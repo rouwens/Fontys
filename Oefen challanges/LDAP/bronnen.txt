@@ -1,0 +1,2 @@
+input match met verwachte string - https://stackoverflow.com/questions/42180125/python-if-statement-if-input-is-a-certain-string
+strings samenvoegen met spatie ertussen - https://stackoverflow.com/questions/11470996/adjusting-1-space-between-two-strings-using-python/27654973

@@ -1,0 +1,9 @@
+interpuncties uit string verwijderen - https://www.geeksforgeeks.org/python-remove-punctuation-from-string/
+willekeurige string genereren - https://pynative.com/python-generate-random-string/
+Hashlib gebruiken - https://www.thepythoncode.com/article/hashing-functions-in-python-using-hashlib
+encryptie/decryptie base64 - https://pythonhowtoprogram.com/how-to-decode-and-encode-in-base64-in-python-3/
+Wachten op druk op de knop - https://stackoverflow.com/questions/983354/how-to-make-a-script-wait-for-a-pressed-key
+Verwijderen van de eerste x karakters van een string - https://stackoverflow.com/questions/4945548/remove-the-first-character-of-a-string
+Verwijderen van de laatste x karakters van een string - https://stackoverflow.com/questions/15478127/remove-final-character-from-string
+
+https://www.geeksforgeeks.org/how-to-print-out-all-rows-of-a-mysql-table-in-python/

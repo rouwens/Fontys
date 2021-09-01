@@ -1,0 +1,6 @@
+Tekst opzoeken in een bestand - https://stackoverflow.com/questions/44205923/checking-if-word-exists-in-a-text-file-python
+Checken op hoofdletters/kleineletters - https://www.kite.com/python/answers/how-to-check-if-a-string-is-upper,-lower,-or-mixed-case-in-python#:~:text=Call%20str.,if%20str%20is%20all%20lowercase.&text=True-,Call%20str.,if%20str%20is%20all%20uppercase.
+Bestand uitlezen vanuit een URL - https://www.quora.com/How-can-I-open-a-URL-file-and-read-it-print-it-using-Python-3-5
+Lengte van een variablen tellen - https://www.tutorialspoint.com/python3/string_len.htm#:~:text=The%20len()%20method%20returns%20the%20length%20of%20the%20string.
+Checken of er interpuncties in de string zitten - https://www.codespeedy.com/detect-if-a-string-contains-special-characters-or-not-in-python/
+Checken of er items uit de list in de string zitten - https://www.geeksforgeeks.org/python-test-if-string-contains-element-from-list/

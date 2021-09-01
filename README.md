@@ -1,3 +1,3 @@
-# Github
- 
-Dit is mijn Github repository voor al mijn werk dat ik gemaakt heb voor mijn studie. Voor elk semester heb ik een apart branch aangemaakt.
+Hier staan mijn oefenopdrachten die ik in semester twee heb gemaakt voor de applicatie laag
+
+Zoals je kan zien staan er ook mapjes tussen waarover ik nog niks heb geschreven in de documenten. Dit zijn uitprobeersels voor mijzelf

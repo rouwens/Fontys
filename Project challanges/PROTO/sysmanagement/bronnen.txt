@@ -1,0 +1,4 @@
+SSH keybased login - https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server
+SSH remote commands - https://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html
+
+os system output opslaan - https://stackoverflow.com/questions/3503879/assign-output-of-os-system-to-a-variable-and-prevent-it-from-being-displayed-on

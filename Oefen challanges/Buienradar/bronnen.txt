@@ -1,0 +1,5 @@
+Config parser python3 - https://betterprogramming.pub/tips-and-tricks-for-handling-configuration-files-in-python-a9d7429aa50b
+Buienradar - https://pypi.org/project/buienradar/
+Discord bot - https://www.freecodecamp.org/news/create-a-discord-bot-with-python/
+
+https://stackoverflow.com/questions/11806559/removing-first-x-characters-from-string/11806564

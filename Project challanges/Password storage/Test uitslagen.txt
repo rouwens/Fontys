@@ -1,0 +1,37 @@
+Test Password manager 
+Red Hat 8
+
+Account aanmaken			        V
+Inloggen				            V
+Wachtwoord wijzigen			        V
+Wachtwoord vergeten			        V
+Herstelsleutel vernieuwen		    V
+Alle gegevens verwijderen		    V
+Account verwijderen			        V
+
+
+Dingen toevoegen			        V
+Dingen Aanpassen			        V
+Dingen verwijderen			        V
+Dingen zien				            V
+Dingen zien die niet van jouw zijn	V
+Wachtwoord genereren			    V
+
+
+Windows 10
+
+Account aanmaken			        V
+Inloggen				            V
+Wachtwoord wijzigen			        V
+Wachtwoord vergeten			        V
+Herstelsleutel vernieuwen		    V
+Alle gegevens verwijderen		    V
+Account verwijderen			        V
+
+
+Dingen toevoegen			        V
+Dingen Aanpassen			        V
+Dingen verwijderen			        V
+Dingen zien				            V
+Dingen zien die niet van jouw zijn	V
+Wachtwoord genereren			    V

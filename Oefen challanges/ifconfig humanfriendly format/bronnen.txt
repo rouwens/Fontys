@@ -1,0 +1,3 @@
+ifconfig output filteren - https://stackoverflow.com/questions/49318355/grep-ifconfig-output-using-shell-scripting
+speciefiek stukje uit output filteren - https://stackoverflow.com/questions/15712855/use-grep-to-extract-first-word-after-match
+speciefieke lijn uitlezen in Python3 - https://www.geeksforgeeks.org/how-to-read-specific-lines-from-a-file-in-python/
