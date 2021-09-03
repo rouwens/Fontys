@@ -1,61 +1,64 @@
-- name: Install Apache2 and MariaDB
+- name: Install Apache2
   remote_user: root
+  hosts: web
 
-  - hosts: web
-    tasks:
-    - name: Install Apache2
-      ansible.builtin.package:
-        name: httpd
-        state: present
+  tasks:
+  - name: Install Apache2
+    ansible.builtin.package:
+      name: httpd
+      state: present
 
-    - name: Install PHP
-      ansible.builtin.package:
-        name: php
-        state: present
+  - name: Install PHP
+    ansible.builtin.package:
+      name: php
+      state: present
 
-    - name: Install php modules
-      yum:
-        name: "{{ packages }}"
-      vars:
-        packages:
-        - php-bcmath
-        - php-bz2
-        - php-gd
-        - php-mbstring
-        - php-mysqlnd
-        - php-zip
-        - php-xml
+  - name: Install php modules
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - php-bcmath
+      - php-bz2
+      - php-gd
+      - php-mbstring
+      - php-mysqlnd
+      - php-zip
+      - php-xml
 
-    - name: Restart Apache2
-      ansible.builtin.service:
-        name: httpd
-        state: restarted
-    
-    - name: Open port 80
-      ansible.posix.firewalld:
-        port: 80/tcp
-        permanent: yes
-        state: enabled
-
-    - name: Restart Firewalld
-      ansible.builtin.service:
-        name: firewalld
-        state: restarted
+  - name: Restart Apache2
+    ansible.builtin.service:
+      name: httpd
+      state: restarted
   
-  - hosts: database
-    tasks: Install MariaDB with an user 
-    - name: Install MariaDB
-      ansible.builtin.package:
-        name: mariadb-server
-        state: present
-    
-    - name: Open port 3306
-      ansible.posix.firewalld:
-        port: 3306/tcp
-        permanent: yes
-        state: enabled
+  - name: Open port 80
+    ansible.posix.firewalld:
+      port: 80/tcp
+      permanent: yes
+      state: enabled
 
-    - name: Restart Firewalld
-      ansible.builtin.service:
-        name: firewalld
-        state: restarted
+  - name: Restart Firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: restarted
+
+- name: Install MariaDB with an user
+  remote_user: root
+  hosts: database
+
+  tasks:
+  - name: Install MariaDB
+    ansible.builtin.package:
+      name: mariadb-server
+      state: present
+  
+  - name: Open port 3306
+    ansible.posix.firewalld:
+      port: 3306/tcp
+      permanent: yes
+      state: enabled
+
+  - name: Restart Firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: restarted
