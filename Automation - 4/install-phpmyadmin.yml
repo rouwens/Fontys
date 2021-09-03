@@ -28,6 +28,6 @@
   - name: Set external database 
     lineinfile: 
       path: /var/www/html/phpmyadmin/config.inc.php
-      regexp: '^(.*)cfg['Servers'][$i]['host'] = 'localhost';(.*)$' 
+      regexp: "^(.*)cfg['Servers'][$i]['host'] = 'localhost';(.*)$" 
       line: "cfg['Servers'][$i]['host'] = '192.168.123.13';"
       backrefs: yes
