@@ -79,7 +79,7 @@
     ansible.builtin.shell: sudo systemctl enable mariadb
   
   - name: Create user daan
-    ansible.builtin.shell: mysql -u root -e "CREATE USER 'daan'@% IDENTIFIED BY 'daan0409';"
+    ansible.builtin.shell: mysql -u root -e "CREATE USER 'daan'@'%' IDENTIFIED BY 'daan0409';"
   
   - name: Give user daan all rights
-    ansible.builtin.shell: mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'daan'@% IDENTIFIED BY 'daan0409'"
+    ansible.builtin.shell: mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'daan'@'%' IDENTIFIED BY 'daan0409';
