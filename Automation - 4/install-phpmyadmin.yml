@@ -12,8 +12,11 @@
     ansible.builtin.unarchive:
       remote_src: yes
       src: /root/phpmyadmin.zip
-      dest: /var/www/html/phpmyadmin
+      dest: /var/www/html/
   
+  - name: Rename phpmyadmin folder
+    ansible.builtin.shell: mv /var/www/html/phpMyAdmin-5.1.1-all-languages /var/www/html/phpmyadmin
+
   - name: Copy phpmyadmin config
     ansible.builtin.copy:
       src: /var/www/html/phpmyadmin/config.sample.inc.php
