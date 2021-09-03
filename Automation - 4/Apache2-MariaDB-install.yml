@@ -25,6 +25,7 @@
       - php-mysqlnd
       - php-zip
       - php-xml
+      - php-json
 
   - name: Restart Apache2
     ansible.builtin.service:
