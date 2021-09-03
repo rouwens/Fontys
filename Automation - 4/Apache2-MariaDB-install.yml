@@ -43,8 +43,7 @@
       state: restarted
   
   hosts: database
-  tasks: Install MariaDB with an user
-  
+  tasks: Install MariaDB with an user 
   - name: Install MariaDB
     ansible.builtin.package:
       name: mariadb-server
