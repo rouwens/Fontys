@@ -1,3 +1,5 @@
+ansible.posix.firewalld
+
 - name: Install Apache2 and MariaDB
   remote_user: root
 
