@@ -48,14 +48,3 @@
     ansible.builtin.package:
       name: mariadb-server
       state: present
-  
-  - name: Open port 3306
-    ansible.posix.firewalld:
-      port: 3306/tcp
-      permanent: yes
-      state: enabled
-
-  - name: Restart Firewalld
-    ansible.builtin.service:
-      name: firewalld
-      state: restarted
