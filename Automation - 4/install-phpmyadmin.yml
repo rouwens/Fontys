@@ -19,6 +19,7 @@
 
   - name: Copy phpmyadmin config
     ansible.builtin.copy:
+      remote_src: yes
       src: /var/www/html/phpmyadmin/config.sample.inc.php
       dest: /var/www/html/phpmyadmin/config.inc.php
       mode: '0644'
