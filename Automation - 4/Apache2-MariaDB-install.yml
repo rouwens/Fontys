@@ -1,5 +1,3 @@
-ansible.posix.firewalld
-
 - name: Install Apache2 and MariaDB
   remote_user: root
 
@@ -32,10 +30,3 @@ ansible.posix.firewalld
     ansible.builtin.service:
       name: httpd
       state: restarted
-  
-  - name: Open port 80
-    ansible.posix.firewalld:
-      port: 80/tcp
-      permanent: yes
-      state: enabled
-
