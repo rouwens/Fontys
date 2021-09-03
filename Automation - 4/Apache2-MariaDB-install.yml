@@ -35,4 +35,9 @@
     ansible.posix.firewalld:
       port: 80/tcp
       permanent: yes
-      state: enabled 
+      state: enabled
+
+  - name: Restart Firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: restarted
