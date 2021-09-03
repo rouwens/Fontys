@@ -35,7 +35,7 @@ ansible.posix.firewalld
   
   - name: Open port 80
     ansible.posix.firewalld:
-      service: http
+      port: 80/tcp
       permanent: yes
       state: enabled
 
