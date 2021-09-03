@@ -69,7 +69,4 @@
       state: restarted
     
   - name: MariaDB started on boot
-    ansible.builtin.systemd:
-      state: enabled
-      name: mariadb
-      
+    ansible.builtin.shell: sudo systemctl enable mariadb
