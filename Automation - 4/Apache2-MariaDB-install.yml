@@ -22,7 +22,7 @@
        - php-bz2
        - php-gd
        - php-mbstring
-       - php-mysql
+       - php-mysqlnd
        - php-zip
        - php-xml
 
@@ -30,4 +30,10 @@
     ansible.builtin.service:
       name: httpd
       state: restarted
+  
+  - name: Open port 80
+    ansible.posix.firewalld:
+      service: http
+      permanent: yes
+      state: enabled
 
