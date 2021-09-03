@@ -151,3 +151,33 @@ $cfg['SaveDir'] = '';
  * You can find more configuration options in the documentation
  * in the doc/ folder or at <https://docs.phpmyadmin.net/>.
  */
+
+
+
+
+         - name: Download Wordpress
+    get_url:
+      url: https://nl.wordpress.org/latest-nl_NL.zip
+      dest: /root/wordpress.zip
+
+  - name: Extract Wordpress
+    ansible.builtin.unarchive:
+      remote_src: yes
+      src: /root/wordpress.zip
+      dest: /var/www/
+
+  - name: Delete HTML directory
+    file:
+      state: absent
+      path: /var/www/html
+
+  - name: Rename Wordpress folder
+    ansible.builtin.copy:
+      remote_src: yes
+      src: /var/www/wordpress
+      dest: /var/www/html
+      mode: 0777
+
+  - name: Move Wordpress files one directory up
+    ansible.builtin.shell:
+      cmd: mv /var/www/html/wordpress/* /var/www/html/ 
