@@ -1,0 +1,42 @@
+- name: Install Apache2 and MariaDB
+  remote_user: root
+
+  hosts: web
+  tasks:
+  - name: Install Apache2
+    ansible.builtin.package:
+      name: apache2
+      state: present
+
+  - name: Install PHP
+    ansible.builtin.package:
+      name: php7.4
+      state: present
+
+  - name: Install Python3 APT
+    ansible.builtin.package:
+      name: python3-apt
+      state: present
+
+  - name: Install Aptitude
+    ansible.builtin.package:
+      name: aptitude
+      state: present
+
+  - name: Install PHP modules and zip
+    apt:
+      pkg:
+        - php7.4-bcmath
+        - php7.4-bz2
+        - php7.4-gd
+        - php7.4-mbstring
+        - php7.4-mysql
+        - php7.4-zip
+        - php7.4-xml
+        - zip
+
+  - name: Restart Apache2
+    ansible.builtin.service:
+      name: apache2
+      state: restarted
+
