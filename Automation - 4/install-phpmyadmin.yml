@@ -1,7 +1,8 @@
 - name: Install phpmyadmin
   hosts: web
   remote_user: root
-
+  
+  task: Install phpmyadmin
   - name: Download phpmyadmin
     get_url:
       url: https://files.phpmyadmin.net/phpMyAdmin/5.1.1/phpMyAdmin-5.1.1-all-languages.zip
