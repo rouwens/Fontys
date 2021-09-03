@@ -30,3 +30,9 @@
     ansible.builtin.service:
       name: httpd
       state: restarted
+  
+  - name: Open port 80
+    ansible.posix.firewalld:
+      port: 80/tcp
+      permanent: yes
+      state: enabled 
