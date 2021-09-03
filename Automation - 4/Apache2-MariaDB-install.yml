@@ -63,6 +63,12 @@
       name: firewalld
       state: restarted
 
+  - name: MariaDB allow connection from all sources
+    ansible.builtin.lineinfile:
+      path: /etc/my.cnf.d/mariadb-server.cnf
+      regexp: '^#bind-address= 0.0.0.0'
+      line: bind-address= 0.0.0.0
+
   - name: Restart MariaDB
     ansible.builtin.service:
       name: mariadb
@@ -70,3 +76,9 @@
     
   - name: MariaDB started on boot
     ansible.builtin.shell: sudo systemctl enable mariadb
+  
+  - name: Create user daan
+    ansible.builtin.shell: mysql -u root -e "CREATE USER 'daan'@localhost IDENTIFIED BY 'daan0409';"
+  
+  - name: Give user daan all rights
+    ansible.builtin.shell: mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'daan'@localhost IDENTIFIED BY 'daan0409'"
