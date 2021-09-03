@@ -9,4 +9,4 @@
       state: latest
   
   - name: Configure ipa client
-    ansible.builtin.shell: ipa-client-install --domain=rouwens.org --server=freeipa.rouwens.org --realm=ROUWENS.ORG --principal=admin --password=daan0409 --mkhomedir -U
+    ansible.builtin.shell: sudo ipa-client-install --domain=rouwens.org --server=freeipa.rouwens.org --realm=ROUWENS.ORG --principal=admin --password=daan0409 --mkhomedir -U
