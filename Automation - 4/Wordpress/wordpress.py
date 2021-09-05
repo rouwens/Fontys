@@ -122,7 +122,7 @@ os.system (cmd)
 cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S mv /home/localadmin/192.168.123.12/" + vhost + " /etc/apache2/sites-available/'"
 os.system (cmd)
 
-cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S sudo a2ensite" + vhost "'"
+cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S sudo a2ensite" + vhost + "'"
 os.system (cmd)
 
 cmd = "ssh 192.168.123.14 'echo daan0409 | sudo systemctl restart apache2'"
