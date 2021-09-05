@@ -95,10 +95,10 @@ cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S mv /home/localadmin/192.168.1
 os.system (cmd)
 
 #Generate vhost file
-serveradmin = "        ServerAdmin admin@" + domain + "\n"
-servername = "        ServerName " + domain + "\n"
-serveralias = "        ServerAlias www." + domain + "\n"
-documentroot = "        DocumentRoot /var/www/html/" + cleandomain + "\n"
+serveradmin = "    ServerAdmin admin@" + domain + "\n"
+servername = "    ServerName " + domain + "\n"
+serveralias = "    ServerAlias www." + domain + "\n"
+documentroot = "    DocumentRoot /var/www/html/" + cleandomain + "\n"
 
 vhost = domain + ".conf"
 cmd = "cp vhost.temp " + vhost
