@@ -10,7 +10,6 @@ ssh_webserver = "ssh 192.168.123.14 "
 haakje = "'"
 dubbelhaakje = '"'
 
-sudoPassword = 'daan0409'
 os.system ("clear")
 
 print ("Wat is domein naam dat je wilt gebruiken?")
@@ -75,7 +74,7 @@ a_file = open("wordpress/wp-config.php", "r")
 list_of_lines = a_file.readlines()
 list_of_lines[22] = wp_config_db
 list_of_lines[25] = wp_config_usr
-list_of_lines[28] = wp_config_usr
+list_of_lines[28] = wp_config_password
 list_of_lines[31] = wp_config_host
 
 a_file = open("wordpress/wp-config.php", "w")
@@ -87,6 +86,12 @@ print ("Installing Wordpress on the server")
 time.sleep (2)
 cmd = "ssh 192.168.123.14 'cd /home/localadmin && wget -r ftp://localadmin:daan0409@192.168.123.12/wordpress/*'"
 os.system (cmd)
+
+print ()
+print("Configure HTTPD")
+time.sleep (2)
+cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S mv /home/localadmin/wordpress /var/www/html/" + cleandomain + "'"
+os.system (cmd) 
 
 print()
 print ("Cleaning up")
