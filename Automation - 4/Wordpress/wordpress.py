@@ -115,6 +115,19 @@ a_file = open(vhost, "w")
 a_file.writelines(list_of_lines)
 a_file.close()
 
+#Installing vhost on the target server
+cmd = "ssh 192.168.123.14 'cd /home/localadmin && wget -r ftp://localadmin:daan0409@192.168.123.12/" + vhost +"'"
+os.system (cmd)
+
+cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S mv /home/localadmin/192.168.123.12/" + vhost + " /etc/apache2/sites-available/'"
+os.system (cmd)
+
+cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S sudo a2ensite" + vhost "'"
+os.system (cmd)
+
+cmd = "ssh 192.168.123.14 'echo daan0409 | sudo systemctl restart apache2'"
+os.system (cmd)
+
 print()
 print ("Cleaning up")
 cmd = "rm -r wordpress"
