@@ -90,7 +90,7 @@ os.system (cmd)
 print ()
 print("Configure HTTPD")
 time.sleep (2)
-cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S mv /home/localadmin/wordpress /var/www/html/" + cleandomain + "'"
+cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S mv /home/localadmin/192.168.123.12/wordpress /var/www/html/" + cleandomain + "'"
 os.system (cmd)
 
 print()
