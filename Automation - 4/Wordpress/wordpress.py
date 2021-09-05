@@ -74,7 +74,7 @@ a_file = open("wordpress/wp-config.php", "r")
 list_of_lines = a_file.readlines()
 list_of_lines[22] = wp_config_db
 list_of_lines[25] = wp_config_usr
-list_of_lines[28] = wp_config_password
+list_of_lines[28] = wp_config_pwd
 list_of_lines[31] = wp_config_host
 
 a_file = open("wordpress/wp-config.php", "w")
@@ -91,7 +91,7 @@ print ()
 print("Configure HTTPD")
 time.sleep (2)
 cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S mv /home/localadmin/wordpress /var/www/html/" + cleandomain + "'"
-os.system (cmd) 
+os.system (cmd)
 
 print()
 print ("Cleaning up")
