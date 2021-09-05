@@ -105,4 +105,8 @@ os.system (cmd)
 
 print ()
 print ("Finisht")
+print ("--------")
+print ()
+print ("Username = " + cleandomain)
+print ("Passowrd = " + password)
 time.sleep (2)
