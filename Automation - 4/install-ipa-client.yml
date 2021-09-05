@@ -1,5 +1,5 @@
 - name: Install/configure ipa client
-  hosts: database
+  hosts: database, web
   remote_user: root
 
   tasks:
@@ -7,6 +7,6 @@
     yum:
       name: ipa-client
       state: latest
-  
+
   - name: Configure ipa client
     ansible.builtin.shell: sudo ipa-client-install --domain=rouwens.org --server=freeipa.rouwens.org --realm=ROUWENS.ORG --principal=admin --password=daan0409 --mkhomedir -U
