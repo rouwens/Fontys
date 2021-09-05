@@ -1,12 +1,5 @@
-import re 
+cleandomain = "rouwenslan"
 
-domain = "rouwens.com"
-haakje = "'"
-ssh = "ssh 192.168.123.13 "
-cmd = "echo daan0409 |sudo -S mysql -u root -e "
-sql = "'create database "
-database = domain + ";'"
+wp_config_usr = "define( 'DB_USER', '" + cleandomain "' );\n"
 
-print (ssh + haakje + cmd + sql + database + haakje)
-test = re.sub(r'[^\w\s]', '', cmd)
-print (test)
+print (wp_config_db)

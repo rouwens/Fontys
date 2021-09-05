@@ -65,9 +65,9 @@ cmd = "mv wordpress/wp-config-sample.php wordpress/wp-config.php"
 os.system(cmd)
 time.sleep(2)
 
-wp_config_db = "define( 'DB_NAME', '" + cleandomain "' );\n"
-wp_config_usr = "define( 'DB_USER', '" + cleandomain "' );\n"
-wp_config_pwd = "define( 'DB_PASSWORD', '" + password "' );\n"
+wp_config_db = "define( 'DB_NAME', '" + cleandomain + "' );" + "\n"
+wp_config_usr = "define( 'DB_USER', '" + cleandomain + "' );\n"
+wp_config_pwd = "define( 'DB_PASSWORD', '" + password + "' );\n"
 wp_config_host = "define( 'DB_HOST', '192.168.123.13' );\n"
 
 # Write Wordpress DB config
