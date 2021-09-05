@@ -100,7 +100,7 @@ servername = "        ServerName " + domain + "\n"
 serveralias = "        ServerAlias www." + domain + "\n"
 documentroot = "        DocumentRoot /var/www/html/" + cleandomain + "\n"
 
-vhost = cleandomain + ".conf"
+vhost = domain + ".conf"
 cmd = "cp vhost.temp " + vhost
 os.system (cmd)
 
