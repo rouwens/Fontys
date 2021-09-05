@@ -56,6 +56,10 @@ a_file = open("wordpress.yml", "w")
 a_file.writelines(list_of_lines)
 a_file.close()
 
+cmd = "ansible-playbook wordpress.yml -k"
+os.system (cmd)
+
+
 print ("Configuring Wordpress")
 #cmd = "mv " +domain+"/wp-config-sample.php " +domain+ "/wp-config.php"
 cmd = "mv wordpress/wp-config-sample.php wordpress/wp-config.php"
