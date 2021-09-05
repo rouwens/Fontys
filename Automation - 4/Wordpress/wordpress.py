@@ -128,15 +128,29 @@ os.system (cmd)
 cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S systemctl restart apache2'"
 os.system (cmd)
 
+print ()
+print ("Configuring DNS")
+
+cmd = "ssh 192.168.123.11 'echo daan0409 | sudo -S echo " + domain + ">> /etc/hosts"
+os.system (cmd)
+
+cmd = "ssh 192.168.123.11 'echo daan0409 | sudo -S systemctl restart dnsmasq"
+os.system (cmd)
+
 print()
 print ("Cleaning up")
+
 cmd = "rm -r wordpress"
+os.system (cmd)
+
+cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S rm -r /home/localadmin/192.168.123.12/*"
 os.system (cmd)
 
 print ()
 print ("Finisht")
 print ("--------")
 print ()
+print ("Database username/password")
 print ("Username = " + cleandomain)
-print ("Passowrd = " + password)
+print ("Password = " + password)
 time.sleep (2)
