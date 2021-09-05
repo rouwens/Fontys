@@ -1,0 +1,17 @@
+- name: Create Database
+  hosts: database
+  remote_user: root
+
+  tasks:
+    - name: Create a new database
+      community.mysql.mysql_db:
+        name: rouwensnl
+        state: present
+
+    - name: Create database user
+      community.mysql.mysql_user:
+        name: rouwensnl
+        password: daan0409
+        priv: 'rouwensnl.*:ALL,GRANT'
+        host: 192.168.123.14
+        state: present

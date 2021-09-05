@@ -1,0 +1,37 @@
+- name: Install phpmyadmin
+  hosts: web
+  remote_user: root
+  
+  tasks:
+  - name: Download phpmyadmin
+    get_url:
+      url: https://files.phpmyadmin.net/phpMyAdmin/5.1.1/phpMyAdmin-5.1.1-all-languages.zip
+      dest: /root/phpmyadmin.zip
+  
+  - name: Extract phpmyadmin
+    ansible.builtin.unarchive:
+      remote_src: yes
+      src: /root/phpmyadmin.zip
+      dest: /var/www/html/
+  
+  - name: Rename phpmyadmin folder
+    ansible.builtin.shell: mv /var/www/html/phpMyAdmin-5.1.1-all-languages /var/www/html/phpmyadmin
+
+  - name: Copy phpmyadmin config
+    ansible.builtin.copy:
+      remote_src: yes
+      src: /var/www/html/phpmyadmin/config.sample.inc.php
+      dest: /var/www/html/phpmyadmin/config.inc.php
+      mode: '0644'
+  
+
+  - name: Set external database 
+    lineinfile: 
+      path: /var/www/html/phpmyadmin/config.inc.php
+      regexp: "^(.*)cfg['Servers'][$i]['host'] = 'localhost';(.*)$" 
+      line: "cfg['Servers'][$i]['host'] = '192.168.123.13';"
+      backrefs: yes
+
+      cfg['Servers'][$i]['host'] = '192.168.123.13';
+
+      sed -i 's/cfg['Servers'][$i]['host'] = 'localhost';/cfg['Servers'][$i]['host'] = '192.168.123.13';/g' /var/www/html/phpmyadmin/config.inc.php
