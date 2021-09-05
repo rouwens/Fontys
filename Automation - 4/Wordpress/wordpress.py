@@ -143,6 +143,9 @@ print ("Cleaning up")
 cmd = "rm -r wordpress"
 os.system (cmd)
 
+cmd = "rm " + vhost
+os.system (cmd)
+
 cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S rm -r /home/localadmin/192.168.123.12/*"
 os.system (cmd)
 
