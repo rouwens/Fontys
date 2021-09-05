@@ -61,42 +61,22 @@ os.system (cmd)
 
 
 print ("Configuring Wordpress")
-#cmd = "mv " +domain+"/wp-config-sample.php " +domain+ "/wp-config.php"
 cmd = "mv wordpress/wp-config-sample.php wordpress/wp-config.php"
 os.system(cmd)
 time.sleep(2)
 
-# Write database name
+wp_config_db = "define( 'DB_NAME', '" + cleandomain "' );\n"
+wp_config_usr = "define( 'DB_USER', '" + cleandomain "' );\n"
+wp_config_pwd = "define( 'DB_PASSWORD', '" + password "' );\n"
+wp_config_host = "define( 'DB_HOST', '192.168.123.13' );\n"
+
+# Write Wordpress DB config
 a_file = open("wordpress/wp-config.php", "r")
 list_of_lines = a_file.readlines()
-list_of_lines[22] = "define( 'DB_NAME', 'wordpress' );\n"
-
-a_file = open("wordpress/wp-config.php", "w")
-a_file.writelines(list_of_lines)
-a_file.close()
-
-# Write database username
-a_file = open("wordpress/wp-config.php", "r")
-list_of_lines = a_file.readlines()
-list_of_lines[25] = "define( 'DB_USER', 'daan' );\n"
-
-a_file = open("wordpress/wp-config.php", "w")
-a_file.writelines(list_of_lines)
-a_file.close()
-
-# Write database password
-a_file = open("wordpress/wp-config.php", "r")
-list_of_lines = a_file.readlines()
-list_of_lines[28] = "define( 'DB_PASSWORD', 'daan0409' );\n"
-
-a_file = open("wordpress/wp-config.php", "w")
-a_file.writelines(list_of_lines)
-a_file.close()
-
-# Write database location
-a_file = open("wordpress/wp-config.php", "r")
-list_of_lines = a_file.readlines()
-list_of_lines[31] = "define( 'DB_HOST', '192.168.123.13' );\n"
+list_of_lines[22] = wp_config_db
+list_of_lines[25] = wp_config_usr
+list_of_lines[28] = wp_config_usr
+list_of_lines[31] = wp_config_host
 
 a_file = open("wordpress/wp-config.php", "w")
 a_file.writelines(list_of_lines)
@@ -104,7 +84,13 @@ a_file.close()
 
 print ()
 print ("Installing Wordpress on the server")
+time.sleep (2)
 cmd = "ssh 192.168.123.14 'cd /home/localadmin && wget -r ftp://localadmin:daan0409@192.168.123.12/wordpress/*'"
+os.system (cmd)
+
+print()
+print ("Cleaning up")
+cmd = "rm -r wordpress"
 os.system (cmd)
 
 print ()
