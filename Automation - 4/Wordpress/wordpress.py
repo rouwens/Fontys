@@ -43,7 +43,7 @@ yml_database = "        name: " + cleandomain + "\n"
 yml_username = "        name: " + cleandomain + "\n"
 yml_password = "        password: " + password + "\n"
 yml_priv     = "        priv: '" + cleandomain + ".*:ALL,GRANT'" + "\n"
-dns_config   = "        line: 192.168.123.14 " + domain + "\n"
+dns_config   = "          line: 192.168.123.14 " + domain + "\n"
 
 a_file = open("wordpress.yml", "r")
 list_of_lines = a_file.readlines()
