@@ -88,10 +88,32 @@ cmd = "ssh 192.168.123.14 'cd /home/localadmin && wget -r ftp://localadmin:daan0
 os.system (cmd)
 
 print ()
-print("Configure HTTPD")
+print("Configure Apache2")
 time.sleep (2)
+#Moving Wordpress files to the right place
 cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S mv /home/localadmin/192.168.123.12/wordpress /var/www/html/" + cleandomain + "'"
 os.system (cmd)
+
+#Generate vhost file
+serveradmin = "        ServerAdmin admin@" + domain
+servername = "        ServerName "domain
+serveralias = "        ServerAlias www" + domain
+documentroot = "        DocumentRoot /var/www/html/" + cleandomain
+
+vhost = cleandomain + ".conf"
+cmd = "cp vhost.temp " + vhost
+os.system (cmd)
+
+a_file = open(vhost, "r")
+list_of_lines = a_file.readlines()
+list_of_lines[1] = serveradmin
+list_of_lines[2] = servername
+list_of_lines[3] = serveralias
+list_of_lines[4] = documentroot
+
+a_file = open(vhost, "w")
+a_file.writelines(list_of_lines)
+a_file.close()
 
 print()
 print ("Cleaning up")
