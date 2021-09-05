@@ -125,7 +125,7 @@ os.system (cmd)
 cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S sudo a2ensite " + vhost + "'"
 os.system (cmd)
 
-cmd = "ssh 192.168.123.14 'echo daan0409 | sudo systemctl restart apache2'"
+cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S systemctl restart apache2'"
 os.system (cmd)
 
 print()
