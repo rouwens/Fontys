@@ -51,7 +51,7 @@ list_of_lines[7] = yml_database
 list_of_lines[12] = yml_username
 list_of_lines[13] = yml_password
 list_of_lines[14] = yml_priv
-list_of_lines
+list_of_lines[26] = dns_config
 
 a_file = open("wordpress.yml", "w")
 a_file.writelines(list_of_lines)
