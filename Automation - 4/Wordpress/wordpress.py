@@ -96,7 +96,7 @@ os.system (cmd)
 
 #Generate vhost file
 serveradmin = "        ServerAdmin admin@" + domain
-servername = "        ServerName "domain
+servername = "        ServerName " + domain
 serveralias = "        ServerAlias www" + domain
 documentroot = "        DocumentRoot /var/www/html/" + cleandomain
 
