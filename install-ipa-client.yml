@@ -1,5 +1,5 @@
 - name: Install/configure ipa client
-  hosts: database
+  hosts: database:web
   remote_user: root
 
   tasks:
