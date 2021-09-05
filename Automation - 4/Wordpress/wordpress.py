@@ -43,6 +43,7 @@ yml_database = "        name: " + cleandomain + "\n"
 yml_username = "        name: " + cleandomain + "\n"
 yml_password = "        password: " + password + "\n"
 yml_priv     = "        priv: '" + cleandomain + ".*:ALL,GRANT'" + "\n"
+dns_config   = "        line: 192.168.123.14 " + domain + "\n"
 
 a_file = open("wordpress.yml", "r")
 list_of_lines = a_file.readlines()
@@ -50,6 +51,7 @@ list_of_lines[7] = yml_database
 list_of_lines[12] = yml_username
 list_of_lines[13] = yml_password
 list_of_lines[14] = yml_priv
+list_of_lines
 
 a_file = open("wordpress.yml", "w")
 a_file.writelines(list_of_lines)
@@ -128,14 +130,6 @@ os.system (cmd)
 cmd = "ssh 192.168.123.14 'echo daan0409 | sudo -S systemctl restart apache2'"
 os.system (cmd)
 
-print ()
-print ("Configuring DNS")
-
-cmd = "ssh 192.168.123.11 'echo daan0409 | sudo -S echo " + domain + ">> /etc/hosts"
-os.system (cmd)
-
-cmd = "ssh 192.168.123.11 'echo daan0409 | sudo -S systemctl restart dnsmasq"
-os.system (cmd)
 
 print()
 print ("Cleaning up")
