@@ -2,13 +2,6 @@
   hosts: elk
 
 
-# Add Elasticsearch rpm key
-
-- name: Import Elasticstack key
-  ansible.builtin.rpm_key:
-    state: present
-    key: http://apt.sw.be/RPM-GPG-KEY.dag.txt
-
 # Install Elasticsearch
 
 - name: Install Elasticsearch
