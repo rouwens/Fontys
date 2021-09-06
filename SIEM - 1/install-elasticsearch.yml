@@ -2,8 +2,6 @@
   hosts: elk
 
 tasks:
-  # Add Elasticsearch rpm key
-
   - name: Import Elasticstack key
     ansible.builtin.rpm_key:
       state: present
