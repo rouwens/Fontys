@@ -57,7 +57,7 @@ a_file = open("wordpress.yml", "w")
 a_file.writelines(list_of_lines)
 a_file.close()
 
-cmd = "ansible-playbook wordpress.yml -k"
+cmd = "echo daan0409 | ansible-playbook wordpress.yml -k"
 os.system (cmd)
 
 
