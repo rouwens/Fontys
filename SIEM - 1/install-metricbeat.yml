@@ -9,14 +9,14 @@
   - name: Install Filebeat
     ansible.builtin.shell: echo 'daan0409' | sudo -S rpm -i metricbeat.rpm
 
-  - name: Install Filebeat config
-    ansible.builtin.shell: echo 'daan0409' | sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/filebeat.yml -O /etc/metricbeat/metricbeat.yml
-  
-  - name: Filebeat setup
-    ansible.builtin.shell: echo 'daan0409' | sudo -S metricbeat modules enable system 
-  
-  - name: Enable Filebeat service
+  - name: Install Metricbeat config
+    ansible.builtin.shell: echo 'daan0409' | sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/metricbeat.yml -O /etc/metricbeat/metricbeat.yml
+
+  - name: Metricbeat setup
+    ansible.builtin.shell: echo 'daan0409' | sudo -S metricbeat modules enable system
+
+  - name: Enable Metricbeat service
     ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl enable metricbeat
-  
-  - name: Start Filebeat service
+
+  - name: Start Metricbeat service
     ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl start metricbeat
