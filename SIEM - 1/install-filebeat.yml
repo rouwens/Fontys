@@ -11,12 +11,10 @@
   - name: Install Filebeat
     ansible.builtin.shell: echo 'daan0409' | sudo -S rpm -i filebeat.rpm
 
-  - name: Download Filebeat config
-  - template:
-      src: filebeat.yml
-      dest: /etc/filebeat/filebeat.yml
+  - name: Install Filebeat config
+    ansible.builtin.shell: ssh 192.168.123.14 'sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/filebeat.yml -O /etc/filebeat/filebeat.yml
   
-  - name: Filebeat setup
+    - name: Filebeat setup
     ansible.builtin.shell: echo 'daan0409' | sudo -S filebeat modules enable system 
   
   - name: Enable Filebeat service
