@@ -12,8 +12,8 @@
   - name: Install Metricbeat config
     ansible.builtin.shell: echo 'daan0409' | sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/metricbeat.yml -O /etc/metricbeat/metricbeat.yml
 
-  #- name: Metricbeat setup
-  #  ansible.builtin.shell: echo 'daan0409' | sudo -S metricbeat modules enable system
+  - name: Setup Metricbeat
+    ansible.builtin.shell: echo 'daan0409' | sudo -S metricbeat setup -e
 
   - name: Enable Metricbeat service
     ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl enable metricbeat
