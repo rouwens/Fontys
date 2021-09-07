@@ -1,5 +1,5 @@
 - name: Install Metricbeat
-  hosts: redhat
+  hosts: dns
   tasks:
   - name: Download Filebeat RPM
     get_url:
