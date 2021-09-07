@@ -1,7 +1,7 @@
 - name: Install filebeat
   hosts: web
 
-tasks:
+- tasks:
   - name: Download Filebeat RPM
     get_url:
       url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.14.1-x86_64.rpm
