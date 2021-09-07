@@ -1,0 +1,11 @@
+- name: Install filebeat
+  hosts: elk
+
+tasks:
+  - name: Download Filebeat RPM
+    get_url:
+      url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.14.1-x86_64.rpm
+      dest: /home/localadmin/filebeat.rpm
+
+  - name: Install Filebeat
+    ansible.builtin.shell: echo "daan0409" | sudo -S rpm -i filebeat.rpm
