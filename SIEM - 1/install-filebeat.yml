@@ -1,5 +1,5 @@
 - name: Install filebeat
-  hosts: elk
+  hosts: web
 
 tasks:
   - name: Download Filebeat RPM
@@ -9,3 +9,20 @@ tasks:
 
   - name: Install Filebeat
     ansible.builtin.shell: echo "daan0409" | sudo -S rpm -i filebeat.rpm
+
+  - name: Download Filebeat config
+    ansible.builtin.shell: ssh 192.168.123.15 'cd /home/localadmin && wget ftp://localadmin:daan0409@192.168.123.12/filebeat.yml
+  
+  - name: Install Filebeat config
+    ansible.builtin.shell: echo "daan0409" | sudo -S cp /home/localadmin/192.168.123.12/filebeat.yml /etc/filebeat/
+  
+  - name: Filebeat setup
+    ansible.builtin.shell: echo "daan0409" | sudo -S filebeat modules enable system 
+  
+  - name: Enable Filebeat service
+    ansible.builtin.shell: echo "daan0409" | sudo -S systemctl enable filebeat
+  
+  - name: Start Filebeat service
+    ansible.builtin.shell: echo "daan0409" | sudo -S systemctl start filebeat
+  
+  
