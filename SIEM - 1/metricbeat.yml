@@ -187,8 +187,6 @@ processors:
 # This allows to enable 6.7 migration aliases
 #migration.6_to_7.enabled: true
 
-[root@freeipa ~]# 
-[root@freeipa ~]# cat /etc/metricbeat/metricbeat.yml 
 ###################### Metricbeat Configuration Example #######################
 
 # This file is an example configuration file highlighting only the most common
