@@ -1,0 +1,22 @@
+- name: Install Metricbeat
+  hosts: redhat
+  tasks:
+  - name: Download Filebeat RPM
+    get_url:
+      url: https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.14.1-x86_64.rpm
+      dest: /home/localadmin/metricbeat.rpm
+
+  - name: Install Filebeat
+    ansible.builtin.shell: echo 'daan0409' | sudo -S rpm -i metricbeat.rpm
+
+  - name: Install Filebeat config
+    ansible.builtin.shell: echo 'daan0409' | sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/filebeat.yml -O /etc/metricbeat/metricbeat.yml
+  
+  - name: Filebeat setup
+    ansible.builtin.shell: echo 'daan0409' | sudo -S metricbeat modules enable system 
+  
+  - name: Enable Filebeat service
+    ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl enable metricbeat
+  
+  - name: Start Filebeat service
+    ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl start metricbeat
