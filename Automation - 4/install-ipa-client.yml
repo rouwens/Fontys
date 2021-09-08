@@ -1,5 +1,5 @@
 - name: Install/configure ipa client
-  hosts: web
+  hosts: ids
   remote_user: root
 
   tasks:

@@ -1,5 +1,5 @@
 - name: Install Netdata
-  hosts: redhat
+  hosts: ids
   tasks:
   
   - name: Add Netdata repo
