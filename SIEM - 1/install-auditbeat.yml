@@ -1,0 +1,22 @@
+- name: Install Auditbeat
+  hosts: redhat
+  tasks:
+  - name: Download Filebeat RPM
+    get_url:
+      url: https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-7.14.1-x86_64.rpm
+      dest: /home/localadmin/auditbeat.rpm
+
+  - name: Install Auditbeat
+    ansible.builtin.shell: echo 'daan0409' | sudo -S rpm -i auditbeat.rpm
+
+  - name: Install Auditbeat config
+    ansible.builtin.shell: echo 'daan0409' | sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/auditbeat.yml -O /etc/auditbeat/auditbeat.yml
+
+  - name: Setup Auditbeat
+    ansible.builtin.shell: echo 'daan0409' | sudo -S auditbeat setup -e
+
+  - name: Enable Auditbeat service
+    ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl enable auditbeat
+
+  - name: Start Auditbeat service
+    ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl start auditbeat
