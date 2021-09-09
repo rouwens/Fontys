@@ -1,5 +1,5 @@
 - name:  Update all systems
-  hosts: redhat
+  hosts: ss
   remote_user: root
 
   tasks:
