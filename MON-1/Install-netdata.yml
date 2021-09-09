@@ -1,5 +1,5 @@
 - name: Install Netdata
-  hosts: ids
+  hosts: ss
   tasks:
   
   - name: Add Netdata repo
