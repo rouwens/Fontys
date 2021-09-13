@@ -45,6 +45,7 @@ echo $ip_address;
     Microsoft Teams <input type="radio" name="software-post" value="teams"/> <br>
     Keepass2 <input type="radio" name="software-post" value="keepass2"/> <br>
     Openshot <input type="radio" name="software-post" value="openshot"/> <br>
+    Thunderbird <input type="radio" name="software-post" value="thunderbird"/> <br>
     <br>
     <input type="submit" value="Installeren">
 </form>
