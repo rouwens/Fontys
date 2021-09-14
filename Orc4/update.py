@@ -17,5 +17,5 @@ software = re.sub(r'[^\w\s]', '', str_split_software)
 
 #cmd = "sshpass -p daan0409 ssh -o StrictHostKeyChecking=no localadmin@" + host + " 'echo daan0409 | sudo -S apt install update -y'"
 #os.system (cmd)
-cmd = "sshpass -p daan0409 ssh -o StrictHostKeyChecking=no localadmin@" + host + " 'echo daan0409 | sudo -S apt install upgrade -y'"
+cmd = "sshpass -p daan0409 ssh -o StrictHostKeyChecking=no localadmin@" + host + " 'system-update'"
 os.system (cmd)
