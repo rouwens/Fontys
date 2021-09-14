@@ -1,0 +1,2 @@
+echo daan0409 | sudo -S apt update -y
+echo daan0409 | sudo -S apt upgrade -y
