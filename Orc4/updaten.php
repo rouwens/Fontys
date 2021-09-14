@@ -31,7 +31,7 @@ else
 <a href="passwd.php">Wachtwoord Veranderen</a>
 </div>
 <br>
-<p> Om je wachtwoord te veranderen moet je een aantal stappen doen. </p> <br>
+<p> Om je systeem te updaten moet je het volgende doen </p> <br>
 <p> 1) Open een terminal venster (crtl + alt + t) </p> <br>
 <p> 2) Type in het venster system-update en druk op enter </p> <br>
 
