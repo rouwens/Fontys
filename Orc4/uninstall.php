@@ -27,6 +27,7 @@ else
 <a href="index.php">Installeren</a>
 <a class="active" href="uninstall.php">Verwijderen</a>
 <a href="updaten.php">Systeem updaten</a>
+<a href="passwd.php">Wachtwoord Veranderen</a>
 </div>
 <br>
 <?php
