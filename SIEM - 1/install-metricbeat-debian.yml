@@ -7,7 +7,7 @@
       dest: /home/localadmin/metricbeat.deb
 
   - name: Install Metricbeat
-    ansible.builtin.shell: echo 'daan0409' | sudo -S rpm -i metricbeat.deb
+    ansible.builtin.shell: echo 'daan0409' | sudo -S dpkg -i metricbeat.deb
 
   - name: Install Metricbeat config
     ansible.builtin.shell: echo 'daan0409' | sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/metricbeat.yml -O /etc/metricbeat/metricbeat.yml

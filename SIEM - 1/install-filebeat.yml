@@ -7,7 +7,7 @@
       dest: /home/localadmin/filebeat.rpm
 
   - name: Install Filebeat
-    ansible.builtin.shell: echo 'daan0409' | sudo -S rpm -i filebeat.rpm
+    ansible.builtin.shell: echo 'daan0409' | sudo -S dpkg -i filebeat.rpm
 
   - name: Install Filebeat config
     ansible.builtin.shell: echo 'daan0409' | sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/filebeat.yml -O /etc/filebeat/filebeat.yml
