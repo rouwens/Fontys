@@ -1,0 +1,22 @@
+- name: Install Auditbeat
+  hosts: debian
+  tasks:
+  - name: Download Filebeat DEB
+    get_url:
+      url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.14.1-amd64.deb
+      dest: /home/localadmin/auditbeat.deb
+
+  - name: Install Auditbeat
+    ansible.builtin.shell: echo 'daan0409' | sudo -S dpkg -i auditbeat.deb
+
+  - name: Install Auditbeat config
+    ansible.builtin.shell: echo 'daan0409' | sudo -S wget -r ftp://localadmin:daan0409@192.168.123.12/auditbeat.yml -O /etc/auditbeat/auditbeat.yml
+
+  - name: Setup Auditbeat
+    ansible.builtin.shell: echo 'daan0409' | sudo -S auditbeat setup -e
+
+  - name: Enable Auditbeat service
+    ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl enable auditbeat
+
+  - name: Start Auditbeat service
+    ansible.builtin.shell: echo 'daan0409' | sudo -S systemctl start auditbeat
