@@ -1,5 +1,5 @@
 - name: Install/configure ipa client
-  hosts: ss
+  hosts: redhat
   remote_user: root
 
   tasks:
