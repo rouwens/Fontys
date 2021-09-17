@@ -3,7 +3,7 @@
   tasks:
   - name: Download Filebeat DEB
     get_url:
-      url: https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-7.14.1-amd64.deb
+      url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.14.1-amd64.deb
       dest: /home/localadmin/filebeat.deb
 
   - name: Install Filebeat
