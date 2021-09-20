@@ -1,5 +1,5 @@
 - name: Install Auditbeat
-  hosts: redhat
+  hosts: jenkins
   tasks:
   - name: Download Filebeat RPM
     get_url:
