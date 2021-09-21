@@ -1,5 +1,5 @@
 - name: Install Auditbeat
-  hosts: jenkins
+  hosts: mail
   tasks:
   - name: Download Filebeat RPM
     get_url:
