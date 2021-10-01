@@ -8,4 +8,4 @@ wget https://download.nextcloud.com/server/releases/nextcloud-22.2.0.zip
 unzip nextcloud-22.2.0.zip
 mv nextcloud html
 chmod -R 0777 /var/www/html/
-systemctl restart apache2
+reboot now
