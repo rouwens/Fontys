@@ -9,4 +9,4 @@ systemctl restart mysql
 mysql -u root -e "CREATE USER 'daan'@'%' IDENTIFIED BY 'daan0409';"
 mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'daan'@'%' IDENTIFIED BY 'daan0409';"
 mysql -u root -e "CREATE DATABASE nextcloud;"
-mysql -u root -e "GRANT GRANT OPTION ON *.* TO 'daan'@'%';';
+mysql -u root -e "GRANT GRANT OPTION ON *.* TO 'daan'@'%';"
