@@ -1,18 +1,5 @@
 #!/bin/bash
 apt upgrade -y
-apt install nodejs open-vm-tools npm -y
+apt install open-vm-tools docker.io -y
 hostnamectl set-hostname maas-wikijs
-cd /home/ubuntu
-wget https://github.com/Requarks/wiki/releases/download/2.5.219/wiki-js.tar.gz
-mkdir wiki
-tar xzf wiki-js.tar.gz -C ./wiki
-cd ./wiki
-wget https://raw.githubusercontent.com/rouwens/Fontys/S3/Automation%20-%206/config.yml
-cd /home/ubuntu
-mv wiki /var/wiki
-rm wiki-js.tar.gz
-cd /etc/systemd/system
-wget https://raw.githubusercontent.com/rouwens/Fontys/S3/Automation%20-%206/wiki.service
-systemctl daemon-reload
-systemctl start wiki
-systemctl enable wiki
+docker run -d -p 80:3000 --name wiki --restart unless-stopped -e "DB_TYPE=mysql" -e "DB_HOST=192.168.123.101" -e "DB_PORT=3306" -e "DB_USER=daan" -e "DB_PASS=daan0409" -e "DB_NAME=wiki" requarks/wiki:2
