@@ -1,0 +1,3 @@
+Shell output in variable - https://stackoverflow.com/questions/3503879/assign-output-of-os-system-to-a-variable-and-prevent-it-from-being-displayed-on
+RAM gebruik - https://www.cyberciti.biz/faq/linux-check-memory-usage/
+System usage - https://askubuntu.com/questions/941949/one-liner-to-show-cpu-ram-and-hdd-usage
