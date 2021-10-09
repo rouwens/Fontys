@@ -1,17 +1,10 @@
-import subprocess
+import os
 
-def test(input):
-    input = input
-    proc = subprocess.Popen(["ssh 192.168.178.254 -l root 'uname -r'"], stdout=subprocess.PIPE, shell=True)
-    (ssh_kernel_version_rpi, err) = proc.communicate()
-    str_ssh_kernel_version_rpi = str(ssh_kernel_version_rpi)
+stat = os.system("ssh 192.168.178.254 -l root 'systemctl status apache2'")
+print (stat)
 
-    clean_ssh_kernel_version_rpi = (str_ssh_kernel_version_rpi[2:-3])
-    input = clean_ssh_kernel_version_rpi
+if stat == 0:
+    print ("Apache2 running")
 
-    return (input)
-
-input = ""
-
-test(input)
-print (input)
+else:
+    print ("Apache2 stopped")

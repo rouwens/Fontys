@@ -395,24 +395,216 @@ async def on_message(message):
         await message.channel.send("-------------------------------")
         await message.channel.send("Uptime Jenkins server")
         await message.channel.send(clean_ssh_uptime_jenkins)
-    
-    elif message.content.startswith('ram_rpi'):
-        proc = subprocess.Popen(["ssh 192.168.178.254 -l root 'free -m'"], stdout=subprocess.PIPE, shell=True)
-        (ssh_ram_rpi, err) = proc.communicate()
-        str_ssh_ram_rpi = str(ssh_ram_rpi)
-        clean_ram_rpi = (str_ssh_ram_rpi[2:-3])
-        
-        await message.channel.send("RAM usage RPI")
-        await message.channel.send(clean_ram_rpi)
 
-    elif message.content.startswith('system_rpi'):
-        proc = subprocess.Popen(["ssh 192.168.178.254 -l root '/root/test.bash'"], stdout=subprocess.PIPE, shell=True)
-        (ssh_system_rpi, err) = proc.communicate()
-        str_ssh_system_rpi = str(ssh_system_rpi)
-        clean_system_rpi = (str_ssh_system_rpi[2:-3])
+    elif message.content.startswith('system_freeipa'):
+        proc = subprocess.Popen(["ssh 192.168.123.10 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_freeipa, err) = proc.communicate()
+        str_ssh_system_freeipa = str(ssh_system_freeipa)
+        clean_system_freeipa = (str_ssh_system_freeipa[2:-3])
         
-        await message.channel.send("System usage RPI")
-        await message.channel.send(clean_system_rpi)
+        await message.channel.send("System usage Freeipa")
+        await message.channel.send(clean_system_freeipa)
+    
+    elif message.content.startswith('system_dns'):
+        proc = subprocess.Popen(["ssh 192.168.123.11 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_dns, err) = proc.communicate()
+        str_ssh_system_dns = str(ssh_system_dns)
+        clean_system_dns = (str_ssh_system_dns[2:-3])
+        
+        await message.channel.send("System usage DNS")
+        await message.channel.send(clean_system_dns)
+
+    elif message.content.startswith('system_ansible'):
+        proc = subprocess.Popen(["ssh 192.168.123.12 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_ansible, err) = proc.communicate()
+        str_ssh_system_ansible = str(ssh_system_ansible)
+        clean_system_ansible = (str_ssh_system_ansible[2:-3])
+        
+        await message.channel.send("System usage Ansible")
+        await message.channel.send(clean_system_ansible)
+    
+    elif message.content.startswith('system_database'):
+        proc = subprocess.Popen(["ssh 192.168.123.13 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_database, err) = proc.communicate()
+        str_ssh_system_database = str(ssh_system_database)
+        clean_system_database = (str_ssh_system_database[2:-3])
+        
+        await message.channel.send("System usage Database")
+        await message.channel.send(clean_system_database)
+    
+    elif message.content.startswith('system_web'):
+        proc = subprocess.Popen(["ssh 192.168.123.14 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_web, err) = proc.communicate()
+        str_ssh_system_web = str(ssh_system_web)
+        clean_system_web = (str_ssh_system_web[2:-3])
+        
+        await message.channel.send("System usage Web")
+        await message.channel.send(clean_system_web)
+
+    elif message.content.startswith('system_elk'):
+        proc = subprocess.Popen(["ssh 192.168.123.15 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_elk, err) = proc.communicate()
+        str_ssh_system_elk = str(ssh_system_elk)
+        clean_system_elk = (str_ssh_system_elk[2:-3])
+        
+        await message.channel.send("System usage ELK")
+        await message.channel.send(clean_system_elk)
+        
+    elif message.content.startswith('system_ids'):
+        proc = subprocess.Popen(["ssh 192.168.123.16 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_ids, err) = proc.communicate()
+        str_ssh_system_ids = str(ssh_system_ids)
+        clean_system_ids = (str_ssh_system_ids[2:-3])
+        
+        await message.channel.send("System usage IDS")
+        await message.channel.send(clean_system_ids)
+    
+    elif message.content.startswith('system_vpn'):
+        proc = subprocess.Popen(["ssh 192.168.123.17 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_vpn, err) = proc.communicate()
+        str_ssh_system_vpn = str(ssh_system_vpn)
+        clean_system_vpn = (str_ssh_system_vpn[2:-3])
+        
+        await message.channel.send("System usage VPN")
+        await message.channel.send(clean_system_vpn)
+    
+    elif message.content.startswith('system_maas'):
+        proc = subprocess.Popen(["ssh 192.168.123.18 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_maas, err) = proc.communicate()
+        str_ssh_system_maas = str(ssh_system_maas)
+        clean_system_maas = (str_ssh_system_maas[2:-3])
+        
+        await message.channel.send("System usage MAAS")
+        await message.channel.send(clean_system_maas)
+    
+    elif message.content.startswith('system_mail'):
+        proc = subprocess.Popen(["ssh 192.168.123.19 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_mail, err) = proc.communicate()
+        str_ssh_system_mail = str(ssh_system_mail)
+        clean_system_mail = (str_ssh_system_mail[2:-3])
+        
+        await message.channel.send("System usage Mail")
+        await message.channel.send(clean_system_mail)
+    
+    elif message.content.startswith('system_jenkins'):
+        proc = subprocess.Popen(["ssh 192.168.123.20 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_jenkins, err) = proc.communicate()
+        str_ssh_system_jenkins = str(ssh_system_jenkins)
+        clean_system_jenkins = (str_ssh_system_jenkins[2:-3])
+        
+        await message.channel.send("System usage Jenkins")
+        await message.channel.send(clean_system_jenkins)
+    
+    elif message.content.startswith('system_all'):
+        proc = subprocess.Popen(["ssh 192.168.123.10 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_freeipa, err) = proc.communicate()
+        str_ssh_system_freeipa = str(ssh_system_freeipa)
+        clean_system_freeipa = (str_ssh_system_freeipa[2:-3])
+            
+        proc = subprocess.Popen(["ssh 192.168.123.11 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_dns, err) = proc.communicate()
+        str_ssh_system_dns = str(ssh_system_dns)
+        clean_system_dns = (str_ssh_system_dns[2:-3])
+        
+        proc = subprocess.Popen(["ssh 192.168.123.12 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_ansible, err) = proc.communicate()
+        str_ssh_system_ansible = str(ssh_system_ansible)
+        clean_system_ansible = (str_ssh_system_ansible[2:-3])
+            
+        proc = subprocess.Popen(["ssh 192.168.123.13 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_database, err) = proc.communicate()
+        str_ssh_system_database = str(ssh_system_database)
+        clean_system_database = (str_ssh_system_database[2:-3])
+         
+        proc = subprocess.Popen(["ssh 192.168.123.14 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_web, err) = proc.communicate()
+        str_ssh_system_web = str(ssh_system_web)
+        clean_system_web = (str_ssh_system_web[2:-3])
+        
+        proc = subprocess.Popen(["ssh 192.168.123.15 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_elk, err) = proc.communicate()
+        str_ssh_system_elk = str(ssh_system_elk)
+        clean_system_elk = (str_ssh_system_elk[2:-3])
+        
+        proc = subprocess.Popen(["ssh 192.168.123.16 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_ids, err) = proc.communicate()
+        str_ssh_system_ids = str(ssh_system_ids)
+        clean_system_ids = (str_ssh_system_ids[2:-3])
+    
+        proc = subprocess.Popen(["ssh 192.168.123.17 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_vpn, err) = proc.communicate()
+        str_ssh_system_vpn = str(ssh_system_vpn)
+        clean_system_vpn = (str_ssh_system_vpn[2:-3])
+        
+        proc = subprocess.Popen(["ssh 192.168.123.18 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_maas, err) = proc.communicate()
+        str_ssh_system_maas = str(ssh_system_maas)
+        clean_system_maas = (str_ssh_system_maas[2:-3])
+    
+        proc = subprocess.Popen(["ssh 192.168.123.19 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_mail, err) = proc.communicate()
+        str_ssh_system_mail = str(ssh_system_mail)
+        clean_system_mail = (str_ssh_system_mail[2:-3])
+    
+        proc = subprocess.Popen(["ssh 192.168.123.20 '/home/localadmin/discord_script.bash'"], stdout=subprocess.PIPE, shell=True)
+        (ssh_system_jenkins, err) = proc.communicate()
+        str_ssh_system_jenkins = str(ssh_system_jenkins)
+        clean_system_jenkins = (str_ssh_system_jenkins[2:-3])
+
+        await message.channel.send("System usage Freeipa")
+        await message.channel.send(clean_system_freeipa)       
+        await message.channel.send("-------------------------------")        
+        await message.channel.send("System usage DNS")
+        await message.channel.send(clean_system_dns)        
+        await message.channel.send("-------------------------------")       
+        await message.channel.send("System usage Ansible")
+        await message.channel.send(clean_system_ansible)        
+        await message.channel.send("-------------------------------")        
+        await message.channel.send("System usage Database")
+        await message.channel.send(clean_system_database)        
+        await message.channel.send("-------------------------------")        
+        await message.channel.send("System usage Web")
+        await message.channel.send(clean_system_web)
+        await message.channel.send("-------------------------------")
+        await message.channel.send("System usage ELK")
+        await message.channel.send(clean_system_elk)        
+        await message.channel.send("-------------------------------")       
+        await message.channel.send("System usage IDS")
+        await message.channel.send(clean_system_ids)
+        await message.channel.send("-------------------------------")
+        await message.channel.send("System usage VPN")
+        await message.channel.send(clean_system_vpn)
+        await message.channel.send("-------------------------------")
+        await message.channel.send("System usage MAAS")
+        await message.channel.send(clean_system_maas)
+        await message.channel.send("-------------------------------")
+        await message.channel.send("System usage Mail")
+        await message.channel.send(clean_system_mail)
+        await message.channel.send("-------------------------------")
+        await message.channel.send("System usage Jenkins")
+        await message.channel.send(clean_system_jenkins)
+    
+    elif message.content.startswith('status_apache2'):
+        stat = os.system("ssh 192.168.123.14 'systemctl status apache2'")
+
+        if stat == 0:
+            await message.channel.send("Apache2 is running")
+        
+        else:
+            await message.channel.send("Apache2 is stopped")
+    
+    elif message.content.startswith('status_mariadb'):
+        stat = os.system("ssh 192.168.123.13 'systemctl status mariadb'")
+
+        if stat == 0:
+            await message.channel.send("MariaDB is running")
+        
+        else:
+            await message.channel.send("MariaDB is stopped")
+
+
+
+
 
 
 client.run(token)
