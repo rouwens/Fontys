@@ -602,6 +602,178 @@ async def on_message(message):
         else:
             await message.channel.send("MariaDB is stopped")
 
+    elif message.content.startswith('status_elk'):
+        stat = os.system("ssh 192.168.123.15 'systemctl status elasticsearch'")
+
+        if stat == 0:
+            await message.channel.send("Elasticsearch is running")
+        
+        else:
+            await message.channel.send("Elasticsearch is stopped")
+        
+        stat = os.system("ssh 192.168.123.15 'systemctl status kibana'")
+
+        if stat == 0:
+            await message.channel.send("Kibana is running")
+        
+        else:
+            await message.channel.send("Kibana is stopped")
+    
+    elif message.content.startswith('status_vpn'):
+        stat = os.system("ssh 192.168.123.17 'systemctl status openvpn'")
+
+        if stat == 0:
+            await message.channel.send("OpenVPN is running")
+        
+        else:
+            await message.channel.send("OpenVPN is stopped")
+    
+    elif message.content.startswith('status_dns'):
+        stat = os.system("ssh 192.168.123.11 'systemctl status dnsmasq'")
+
+        if stat == 0:
+            await message.channel.send("DNSMASQ is running")
+        
+        else:
+            await message.channel.send("DNSMASQ is stopped")
+    
+    elif message.content.startswith('status_ids'):
+        stat = os.system("ssh 192.168.123.16 'systemctl status suricata'")
+
+        if stat == 0:
+            await message.channel.send("Suricata is running")
+        
+        else:
+            await message.channel.send("Suricata is stopped")
+
+    elif message.content.startswith('status_mail'):
+        stat = os.system("ssh 192.168.123.19 'systemctl status dovecot'")
+
+        if stat == 0:
+            await message.channel.send("Dovecot is running")
+        
+        else:
+            await message.channel.send("Docecot is stopped")
+       
+        stat = os.system("ssh 192.168.123.19 'systemctl status mariadb'")
+
+        if stat == 0:
+            await message.channel.send("Database is running")
+        
+        else:
+            await message.channel.send("Database is stopped")
+        
+        stat = os.system("ssh 192.168.123.19 'systemctl status nginx'")
+
+        if stat == 0:
+            await message.channel.send("Webservice is running")
+        
+        else:
+            await message.channel.send("Webservice is stopped")
+    
+    elif message.content.startswith('status_jenkins'):
+        stat = os.system("ssh 192.168.123.20 'systemctl status jenkins'")
+
+        if stat == 0:
+            await message.channel.send("Jenkins is running")
+        
+        else:
+            await message.channel.send("Jenkins is stopped")
+    
+    elif message.content.startswith('status_all'):
+        apache2 = os.system("ssh 192.168.123.14 'systemctl status apache2'")   
+        mariadb = os.system("ssh 192.168.123.13 'systemctl status mariadb'")
+        elasticsearch = os.system("ssh 192.168.123.15 'systemctl status elasticsearch'")
+        kibana = os.system("ssh 192.168.123.15 'systemctl status kibana'")
+        openvpn = os.system("ssh 192.168.123.17 'systemctl status openvpn'")
+        dnsmasq = os.system("ssh 192.168.123.11 'systemctl status dnsmasq'")    
+        suricata = os.system("ssh 192.168.123.16 'systemctl status suricata'")
+        dovecot = os.system("ssh 192.168.123.19 'systemctl status dovecot'")
+        mail_database = os.system("ssh 192.168.123.19 'systemctl status mariadb'")
+        nginx = os.system("ssh 192.168.123.19 'systemctl status nginx'")
+        jenkins = os.system("ssh 192.168.123.20 'systemctl status jenkins'")
+
+        if jenkins == 0:
+            await message.channel.send("Jenkins is running")
+            await message.channel.send("-------------------------------")
+        
+        else:
+            await message.channel.send("Jenkins is stopped")
+            await message.channel.send("-------------------------------")
+        
+        if nginx == 0:
+            await message.channel.send("Webservice is running")
+        
+        else:
+            await message.channel.send("Webservice is stopped")
+        
+        if mail_database == 0:
+            await message.channel.send("Database is running")
+        
+        else:
+            await message.channel.send("Database is stopped")
+        
+        if dovecot == 0:
+            await message.channel.send("Dovecot is running")
+            await message.channel.send("-------------------------------")
+        
+        else:
+            await message.channel.send("Docecot is stopped")
+            await message.channel.send("-------------------------------")
+        
+        if suricata == 0:
+            await message.channel.send("Suricata is running")
+            await message.channel.send("-------------------------------")
+        
+        else:
+            await message.channel.send("Suricata is stopped")
+            await message.channel.send("-------------------------------")
+        
+        if dnsmasq == 0:
+            await message.channel.send("DNSMASQ is running")
+            await message.channel.send("-------------------------------")
+        
+        else:
+            await message.channel.send("DNSMASQ is stopped")
+            await message.channel.send("-------------------------------")
+        
+        if openvpn == 0:
+            await message.channel.send("OpenVPN is running")
+            await message.channel.send("-------------------------------")
+        
+        else:
+            await message.channel.send("OpenVPN is stopped")
+            await message.channel.send("-------------------------------")
+        
+        if kibana == 0:
+            await message.channel.send("Kibana is running")
+        
+        else:
+            await message.channel.send("Kibana is stopped")
+        
+        if elasticsearch == 0:
+            await message.channel.send("Elasticsearch is running")
+            await message.channel.send("-------------------------------")
+        
+        else:
+            await message.channel.send("Elasticsearch is stopped")
+            await message.channel.send("-------------------------------")
+        
+        if mariadb == 0:
+            await message.channel.send("MariaDB is running")
+            await message.channel.send("-------------------------------")
+        
+        else:
+            await message.channel.send("MariaDB is stopped")
+            await message.channel.send("-------------------------------")
+        
+        if apache2 == 0:
+            await message.channel.send("Apache2 is running")
+        
+        else:
+            await message.channel.send("Apache2 is stopped")
+
+
 
 
 
