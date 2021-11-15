@@ -1,5 +1,6 @@
 import psutil
 import os
+import mysql.connector as mysql
 
 start = 1
 

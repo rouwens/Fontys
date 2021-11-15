@@ -19,17 +19,23 @@ while start == 1:
     os.system("touch cpu_docker.txt & wget 192.168.123.30:8080 -O cpu_docker.txt >/dev/null 2>&1")
     
     # Bestand openen
-    cpu_info_docker_bestand = open("cpu_docker.txt", "r+")
-    cpu_info_docker_lezen = cpu_info_docker_bestand.read()
+    cpu_info_web_bestand = open("cpu_docker.txt", "r+")
+    cpu_info_web_lezen = cpu_info_web_bestand.read()
     # Bestand sluiten
-    cpu_info_docker_bestand.close()
+    cpu_info_web_bestand.close()
 
     #Output omzetten naar een string
-    cpu_info_docker = str (cpu_info_docker_lezen)
+    cpu_info_web = str (cpu_info_web_lezen)
     #print (cpu_info_docker)
 
     os.system("rm cpu_docker.txt")
 
-    if cpu_info_docker > percentage_voor_actie:
+    if cpu_info_web > percentage_voor_actie:
         print ("Hoog CPU gebruik")
         time.sleep(load_time_up)
+
+        if cpu_info_web > percentage_voor_actie:
+            print ("Nog steeds hoog CPU gebruik")
+        
+        else:
+            print ("CPU gebruik is minder")
