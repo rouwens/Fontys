@@ -1,5 +1,7 @@
 import os
 import time
+import random
+import string
 
 start = 1
 
@@ -8,10 +10,17 @@ timer = 2
 percentage_voor_actie = "70.0"
 
 # Aantal seconde dat de load boven de ingestelde waarde moet zitten
-load_time_up = 10
+load_time_up = 5
 
 # Aantal seconde dat de load onder de ingestelde waarde moet zitten
 load_time_down = 20
+
+def vm_uitrollen():
+    lengte = 5
+    letters = string.ascii_lowercase
+    willekeurige_string = ''.join(random.choice(letters) for i in range(lengte))
+    vm_naam = "webserver-" + willekeurige_string
+    cmd = "xe vm-copy vm=webserver sr-uuid=3fb6bb78-b43f-6db0-5734-6f710733500f new-name-label=" + vm_naam
 
 while start == 1:
 
@@ -31,11 +40,16 @@ while start == 1:
     os.system("rm cpu_docker.txt")
 
     if cpu_info_web > percentage_voor_actie:
+        print (cpu_info_web)
         print ("Hoog CPU gebruik")
         time.sleep(load_time_up)
 
         if cpu_info_web > percentage_voor_actie:
+            print (cpu_info_web)
             print ("Nog steeds hoog CPU gebruik")
+            vm_uitrollen()
         
-        else:
-            print ("CPU gebruik is minder")
+    
+    else:
+        print ("Laag CPU gebruik")
+        time.sleep(2)
