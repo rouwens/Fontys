@@ -1,6 +1,6 @@
 import mysql.connector as mysql
 
-naam = "daan"
+
 db = mysql.connect(
     host = "rouwens.ddns.net",
     user = "fontys",
@@ -9,10 +9,19 @@ db = mysql.connect(
     )
 cursor = db.cursor()
 
-get_sql = """SELECT ID FROM `test` WHERE username =  %s;"""
+naam = "esmee"
+
+get_sql = """SELECT pop FROM `test` WHERE `username` = %s;"""
 cursor.execute(get_sql, (naam,))
 sql_hostname = cursor.fetchall()
 
 pre_hostname = str(sql_hostname)
 hostname = pre_hostname[3:-4]
 print (sql_hostname)
+print (hostname)
+
+if hostname == "yes":
+    print ("Je hebt toegang tot de genere pop")
+
+else:
+    print ("Je hebt geen toegang")

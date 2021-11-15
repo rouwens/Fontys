@@ -16,11 +16,15 @@ load_time_up = 5
 load_time_down = 20
 
 def vm_uitrollen():
+<<<<<<< Updated upstream
     lengte = 5
     letters = string.ascii_lowercase
     willekeurige_string = ''.join(random.choice(letters) for i in range(lengte))
     vm_naam = "webserver-" + willekeurige_string
     cmd = "xe vm-copy vm=webserver sr-uuid=3fb6bb78-b43f-6db0-5734-6f710733500f new-name-label=" + vm_naam
+=======
+    print ("VM uigerold")
+>>>>>>> Stashed changes
 
 while start == 1:
 
@@ -47,7 +51,11 @@ while start == 1:
         if cpu_info_web > percentage_voor_actie:
             print (cpu_info_web)
             print ("Nog steeds hoog CPU gebruik")
+<<<<<<< Updated upstream
             vm_uitrollen()
+=======
+            vm_uitrollen()            
+>>>>>>> Stashed changes
         
     
     else:
