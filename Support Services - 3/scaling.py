@@ -1,46 +1,34 @@
 import os
 import time
-import random
-import string
-from random import randrange
 
-
+# Standaard waarden van de while loops 
 start = 1
 monitor = "aan"
 vm_uitrollen = "uit"
+vm_verwijderen = "uit"
 
 counter = 0
 
 timer = 2
 # Percentage van het CPU gebruik    
-percentage_voor_actie = "70.0"
+percentage_voor_actie = 70
 
 # Aantal seconde dat de load boven de ingestelde waarde moet zitten
 load_time_up = 5
 
 # Aantal seconde dat de load onder de ingestelde waarde moet zitten
-load_time_down = 20
+load_time_down = 5
 
-# Maximum aantal VM's
+# Maximum aantal VM's dat erbij mogen komen 
 max_vm_counter = 3
 
 while start == 1:
     while monitor == "aan":
 
-        # Download cpu gebruik bestand
-        os.system("touch cpu_docker.txt & wget 192.168.123.30:8080 -O cpu_docker.txt >/dev/null 2>&1")
-        
-        # Bestand openen
-        cpu_info_web_bestand = open("cpu_docker.txt", "r+")
-        cpu_info_web_lezen = cpu_info_web_bestand.read()
-        # Bestand sluiten
-        cpu_info_web_bestand.close()
+        cmd = "ssh 192.168.123.11 'cpu_info'"
+        result = os.popen(cmd)
+        cpu_info_web = int(result.read())
 
-        #Output omzetten naar een string
-        cpu_info_web = str (cpu_info_web_lezen)
-        #print (cpu_info_docker)
-
-        os.system("rm cpu_docker.txt")
 
         if cpu_info_web > percentage_voor_actie:
             print (cpu_info_web)
@@ -60,33 +48,76 @@ while start == 1:
                 
                 else:
                     print ("Maximum VM's ingezet")
+                    monitor = "aan"
+                    time.sleep(1)
+
+
+        if cpu_info_web < percentage_voor_actie:
+            print ("Laag CPU gebruik")
+            time.sleep(load_time_down)
+
+            if cpu_info_web < percentage_voor_actie:
+                if counter != 0:
+                    print ("VM verwijderen")
+                    time.sleep (1)
+                    str_counter = str(counter)
+                    vm_naam = "scaling-webserver-" + str_counter
+                    counter -= 1
+                    monitor = "uit"
+                    vm_verwijderen = "aan"
+
+                
+                else:
+                    print ("Er zijn geen VM's om te verwijderen")
                     time.sleep(1)
             
-        else:
-            print ("Laag CPU gebruik")
-            time.sleep(2)
+            else:
+                print ("CPU gebruik is nog steeds te hoog.")
 
     while vm_uitrollen == "aan":
-        cmd1 = 'Get-VM Webserver-test| Get-HardDisk | Copy-HardDisk -DestinationPath "[Servers] ' + vm_naam + '/HDD" -DestinationStorageFormat Thin' + "\n"
+        cmd1 = 'Get-VM webserver-scaling-default| Get-HardDisk | Copy-HardDisk -DestinationPath "[Servers] ' + vm_naam + '/HDD" -DestinationStorageFormat Thin' + "\n"
         cmd2 = 'New-VM -Name ' + vm_naam + ' -Datastore Servers -NumCPU 1 -MemoryGB 2 -NetworkName "Host-only" -Floppy -CD  -GuestID debian10_64Guest -DiskPath "[Servers] ' + vm_naam + '/HDD.vmdk"' + "\n"
         cmd3 = 'Start-VM -VM "'+ vm_naam + '"' + "\n"
 
-        a_file = open("vm_kopieren.ps1", "r")
+        a_file = open("vm_uitrollen.ps1", "r")
         list_of_lines = a_file.readlines()
 
         list_of_lines[2] = cmd1
         list_of_lines[3] = cmd2
         list_of_lines[4] = cmd3
 
-        a_file = open("vm_kopieren.ps1", "w")
+        a_file = open("vm_uitrollen.ps1", "w")
         a_file.writelines(list_of_lines)
         a_file.close()
 
-        cmd = "scp vm_kopieren.ps1 daan@100.105.92.26:/home/daan"
+        cmd = "scp vm_uitrollen.ps1 daan@100.105.92.26:/home/daan"
         os.system (cmd)
 
-        cmd = "ssh daan@100.105.92.26 'pwsh /home/daan/vm_kopieren.ps1'"
+        cmd = "ssh daan@100.105.92.26 'pwsh /home/daan/vm_uitrollen.ps1'"
         os.system (cmd)
 
         monitor = "aan"
         vm_uitrollen = "uit"
+
+    while vm_verwijderen == "aan":
+        cmd1 = "Stop-VM -VM " + vm_naam + " -Confirm:$false" + "\n"
+        cmd2 = "Remove-VM -VM " + vm_naam + " -Confirm:$false" + "\n"
+        
+        a_file = open("vm_verwijderen.ps1", "r")
+        list_of_lines = a_file.readlines()
+
+        list_of_lines[2] = cmd1
+        list_of_lines[3] = cmd2
+
+        a_file = open("vm_verwijderen.ps1", "w")
+        a_file.writelines(list_of_lines)
+        a_file.close()
+
+        cmd = "scp vm_verwijderen.ps1 daan@100.105.92.26:/home/daan"
+        os.system (cmd)
+
+        cmd = "ssh daan@100.105.92.26 'pwsh /home/daan/vm_verwijderen.ps1'"
+        os.system (cmd)
+
+        monitor = "aan"
+        vm_verwijderen = "uit"
