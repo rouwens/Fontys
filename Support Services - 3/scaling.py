@@ -7,10 +7,8 @@ from random import randrange
 
 start = 1
 monitor = "aan"
-naam_genereren = "uit"
 vm_uitrollen = "uit"
 
-arry = ["leeg", "leeg", "leeg"]
 counter = 0
 
 timer = 2
@@ -23,6 +21,8 @@ load_time_up = 5
 # Aantal seconde dat de load onder de ingestelde waarde moet zitten
 load_time_down = 20
 
+# Maximum aantal VM's
+max_vm_counter = 3
 
 while start == 1:
     while monitor == "aan":
@@ -52,7 +52,7 @@ while start == 1:
                 print ("Nog steeds hoog CPU gebruik. VM word nu uitgerold")
                 monitor = "uit"
 
-                if counter != 3:
+                if counter != max_vm_counter:
                     counter += 1
                     str_counter = str(counter)
                     vm_naam = "scaling-webserver-" + str_counter
