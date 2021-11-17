@@ -20,7 +20,7 @@ s.close()
 ip = re.sub(r'[^\w\s]', '', ip_heel)
 
 # De gewenste hostname ophalen en doorvoeren
-get_sql = """SELECT hostname FROM `test` WHERE `ip` = %s ;"""
+get_sql = """SELECT hostname FROM `scaling` WHERE `ip` = %s ;"""
 cursor.execute(get_sql, (ip,))
 sql_hostname = cursor.fetchall()
 
