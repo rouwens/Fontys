@@ -35,6 +35,10 @@ while start == 1:
             print ("Hoog CPU gebruik")
             time.sleep(load_time_up)
 
+            cmd = "ssh 192.168.123.11 'cpu_info'"
+            result = os.popen(cmd)
+            cpu_info_web = int(result.read())
+
             if cpu_info_web > percentage_voor_actie:
                 print (cpu_info_web)
                 print ("Nog steeds hoog CPU gebruik. VM word nu uitgerold")
@@ -55,6 +59,10 @@ while start == 1:
         if cpu_info_web < percentage_voor_actie:
             print ("Laag CPU gebruik")
             time.sleep(load_time_down)
+
+            cmd = "ssh 192.168.123.11 'cpu_info'"
+            result = os.popen(cmd)
+            cpu_info_web = int(result.read())
 
             if cpu_info_web < percentage_voor_actie:
                 if counter != 0:
