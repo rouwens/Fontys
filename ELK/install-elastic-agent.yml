@@ -1,0 +1,12 @@
+
+- name: Install Elastic agent
+  hosts: redhat
+  tasks:
+  - name: Install Elastic agent
+    ansible.builtin.shell: sudo yum -y install elastic-agent
+
+  - name: Connect to fleet server
+    ansible.builtin.shell: sudo elastic-agent install --url=http://192.168.123.14:8220 --enrollment-token=RW00TDMzNEJrbXYyRHB4S05GbVE6Z3dVSGxKaWRUZVNxczRPTzV1MUhXUQ==
+
+  - name: Start agent
+    ansible.builtin.shell: sudo systemctl enable --now elastic-agent
