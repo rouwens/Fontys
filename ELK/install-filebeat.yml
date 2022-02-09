@@ -1,0 +1,15 @@
+
+- name: Install Metricbeat
+  hosts: redhat
+  tasks:
+  - name: Install Elastic repo GPG key
+    ansible.builtin.shell: sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+  
+  - name: Download Elastic repo
+    ansible.builtin.shell: sudo curl https://raw.githubusercontent.com/rouwens/Fontys/S4/ELK/elastic.repo -o /etc/yum.repos.d/elastic.repo
+    
+  - name: Install filebeat
+    ansible.builtin.shell: sudo yum  -y install filebeat
+
+  - name: Install config
+    ansible.builtin.shell: sudo curl 
