@@ -1,5 +1,5 @@
 
-- name: Install Metricbeat
+- name: Install Filebeat
   hosts: redhat
   tasks:
   - name: Install Elastic repo GPG key
@@ -12,4 +12,10 @@
     ansible.builtin.shell: sudo yum  -y install filebeat
 
   - name: Install config
-    ansible.builtin.shell: sudo curl 
+    ansible.builtin.shell: sudo curl https://raw.githubusercontent.com/rouwens/Fontys/S4/ELK/filebeat.yml -o /etc/filebeat/filebeat.yml
+
+  - name: Enable modules
+    ansible.builtin.shell: sudo filebeat modules enable system auditd
+
+  - name: Start Filebeat
+    ansible.builtin.shell: sudo systemctl enable --now filebeat
