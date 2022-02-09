@@ -1,9 +1,0 @@
-- name: Install Discord script
-  hosts: all
-  tasks:
-
-  - name: Download script
-    ansible.builtin.shell: curl https://raw.githubusercontent.com/rouwens/Fontys/S3/MON-1/sysinfo.bash > /home/localadmin/discord_script.bash
-
-  - name: Make script executable
-    ansible.builtin.shell: chmod +x /home/localadmin/discord_script.bash

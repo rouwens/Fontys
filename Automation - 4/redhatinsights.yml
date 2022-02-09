@@ -1,7 +1,0 @@
-- name:  Sync with Red Hat insights
-  hosts: redhat
-  remote_user: localadmin
-
-  tasks:
-    - name: Sync with Red Hat insights
-      ansible.builtin.shell: echo daan0409 | sudo -S insights-client

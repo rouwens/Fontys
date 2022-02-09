@@ -1,2 +1,0 @@
-IP adres verkrijgen - https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib
-Random string - https://pynative.com/python-generate-random-string/

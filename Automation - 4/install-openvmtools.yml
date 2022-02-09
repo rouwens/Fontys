@@ -1,9 +1,0 @@
-- name: Install Open VM tools
-  hosts: redhat
-  remote_user: root
-
-  tasks:
-  - name: Install Open VM tools
-    yum:
-      name: open-vm-tools
-      state: latest
