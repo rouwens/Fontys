@@ -1,0 +1,12 @@
+- name: Install Lynis
+  hosts: redhat
+  tasks:
+  - name: Updating packages
+    ansible.builtin.shell: sudo yum update -y ca-certificates curl nss openssl
+
+  - name: Install Lynis repo
+    ansible.builtin.shell: sudo curl -o /etc/yum.repos.d/lynis.repo
+
+  - name: Install Lynis
+    ansible.builtin.shell: sudo yum install -y lynis
+    
