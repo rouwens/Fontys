@@ -1,0 +1,5 @@
+- name: SSH harding
+  hosts: redhat
+  tasks:
+  - name: Install config file
+    ansible.builtin.shell: sudo curl 
