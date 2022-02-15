@@ -2,4 +2,7 @@
   hosts: redhat
   tasks:
   - name: Install config file
-    ansible.builtin.shell: sudo curl 
+    ansible.builtin.shell: curl https://raw.githubusercontent.com/rouwens/Fontys/S4/Ansible/ssh.conf -o /etc/ssh/sshd_config
+
+  - name: Restart service
+    ansible.builtin.shell: systemctl restart sshd
