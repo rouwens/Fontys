@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?><nmaprun start="1644743214" profile_name="Intense scan, all TCP ports" xmloutputversion="1.04" scanner="nmap" version="7.80" startstr="Sun Feb 13 10:06:54 2022" args="nmap -p 1-65535 -T4 -A -v 192.168.1.1-20"><scaninfo services="1-65535" protocol="tcp" numservices="65535" type="syn"></scaninfo><verbose level="1"></verbose><debugging level="0"></debugging><output type="interactive">Starting Nmap 7.80 ( https://nmap.org ) at 2022-02-13 10:06 CET
+NSE: Loaded 151 scripts for scanning.
+NSE: Script Pre-scanning.
+Initiating NSE at 10:06
+Completed NSE at 10:06, 0.00s elapsed
+Initiating NSE at 10:06
+Completed NSE at 10:06, 0.00s elapsed
+Initiating NSE at 10:06
+Completed NSE at 10:06, 0.00s elapsed
+Initiating Ping Scan at 10:06
+Scanning 20 hosts [4 ports/host]
+Completed Ping Scan at 10:06, 1.66s elapsed (20 total hosts)
+Initiating Parallel DNS resolution of 20 hosts. at 10:06
+Completed Parallel DNS resolution of 20 hosts. at 10:06, 0.03s elapsed
+Nmap scan report for 192.168.1.2 [host down]
+Nmap scan report for 192.168.1.3 [host down]
+Nmap scan report for 192.168.1.4 [host down]
+Nmap scan report for 192.168.1.5 [host down]
+Nmap scan report for 192.168.1.6 [host down]
+Nmap scan report for 192.168.1.7 [host down]
+Nmap scan report for 192.168.1.8 [host down]
+Nmap scan report for 192.168.1.9 [host down]
+Nmap scan report for 192.168.1.15 [host down]
+Nmap scan report for 192.168.1.16 [host down]
+Nmap scan report for 192.168.1.17 [host down]
+Nmap scan report for 192.168.1.18 [host down]
+Nmap scan report for 192.168.1.19 [host down]
+Nmap scan report for 192.168.1.20 [host down]
+Initiating SYN Stealth Scan at 10:06
+Scanning 6 hosts [65535 ports/host]
+Discovered open port 443/tcp on 192.168.1.1
+Discovered open port 443/tcp on 192.168.1.10
+Discovered open port 443/tcp on 192.168.1.11
+Discovered open port 22/tcp on 192.168.1.10
+Discovered open port 22/tcp on 192.168.1.13
+Discovered open port 22/tcp on 192.168.1.12
+Discovered open port 22/tcp on 192.168.1.11
+Discovered open port 22/tcp on 192.168.1.14
+Discovered open port 80/tcp on 192.168.1.12
+Discovered open port 80/tcp on 192.168.1.11
+Discovered open port 80/tcp on 192.168.1.14
+Discovered open port 53/tcp on 192.168.1.1
+Discovered open port 80/tcp on 192.168.1.1
+Discovered open port 914/tcp on 192.168.1.10
+SYN Stealth Scan Timing: About 47.09% done; ETC: 10:08 (0:00:35 remaining)
+Discovered open port 915/tcp on 192.168.1.10
+Discovered open port 943/tcp on 192.168.1.10
+Discovered open port 81/tcp on 192.168.1.11
+Completed SYN Stealth Scan against 192.168.1.11 in 62.84s (5 hosts left)
+Completed SYN Stealth Scan against 192.168.1.10 in 62.99s (4 hosts left)
+Completed SYN Stealth Scan against 192.168.1.13 in 63.28s (3 hosts left)
+Completed SYN Stealth Scan against 192.168.1.12 in 63.38s (2 hosts left)
+Completed SYN Stealth Scan against 192.168.1.14 in 63.38s (1 host left)
+Completed SYN Stealth Scan at 10:08, 109.88s elapsed (393210 total ports)
+Initiating Service scan at 10:08
+Scanning 17 services on 6 hosts
+Completed Service scan at 10:09, 22.48s elapsed (17 services on 6 hosts)
+Initiating OS detection (try #1) against 6 hosts
+Retrying OS detection (try #2) against 6 hosts
+Retrying OS detection (try #3) against 5 hosts
+Retrying OS detection (try #4) against 5 hosts
+Retrying OS detection (try #5) against 5 hosts
+NSE: Script scanning 6 hosts.
+Initiating NSE at 10:09
+Completed NSE at 10:09, 26.88s elapsed
+Initiating NSE at 10:09
+Completed NSE at 10:09, 0.45s elapsed
+Initiating NSE at 10:09
+Completed NSE at 10:09, 0.01s elapsed
+Nmap scan report for 192.168.1.1
+Host is up (0.018s latency).
+Not shown: 65532 filtered ports
+PORT    STATE SERVICE  VERSION
+53/tcp  open  domain   (generic dns response: NOTIMP)
+| fingerprint-strings: 
+|   DNSVersionBindReqTCP: 
+|     version
+|_    bind
+80/tcp  open  http     nginx
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-title: Did not follow redirect to https://192.168.1.1/
+|_https-redirect: ERROR: Script execution failed (use -d to debug)
+443/tcp open  ssl/http nginx
+|_http-favicon: Unknown favicon MD5: 5567E9CE23E5549E0FCD7195F3882816
+| http-methods: 
+|_  Supported Methods: GET HEAD POST
+|_http-title: pfSense - Login
+| ssl-cert: Subject: commonName=pfSense-62025be6cbcee/organizationName=pfSense webConfigurator Self-Signed Certificate
+| Subject Alternative Name: DNS:pfSense-62025be6cbcee
+| Issuer: commonName=pfSense-62025be6cbcee/organizationName=pfSense webConfigurator Self-Signed Certificate
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2022-02-08T12:02:46
+| Not valid after:  2023-03-13T12:02:46
+| MD5:   c6bb 80f1 8a2a e9d0 da03 40a6 b628 6413
+|_SHA-1: 6024 4686 19fc 2da3 7562 5258 84e7 f49d 2760 826b
+|_ssl-date: TLS randomness does not represent time
+| tls-alpn: 
+|   h2
+|_  http/1.1
+| tls-nextprotoneg: 
+|   h2
+|_  http/1.1
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port53-TCP:V=7.80%I=7%D=2/13%Time=6208CAA9%P=x86_64-pc-linux-gnu%r(DNSV
+SF:ersionBindReqTCP,20,"\0\x1e\0\x06\x81\x85\0\x01\0\0\0\0\0\0\x07version\
+SF:x04bind\0\0\x10\0\x03")%r(DNSStatusRequestTCP,E,"\0\x0c\0\0\x90\x04\0\0
+SF:\0\0\0\0\0\0");
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+OS fingerprint not ideal because: Missing a closed TCP port so results incomplete
+No OS matches for host
+Uptime guess: 0.000 days (since Sun Feb 13 10:09:06 2022)
+TCP Sequence Prediction: Difficulty=261 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE
+HOP RTT      ADDRESS
+1   18.47 ms 192.168.1.1
+
+Nmap scan report for 192.168.1.10
+Host is up (0.020s latency).
+Not shown: 65530 closed ports
+PORT    STATE SERVICE  VERSION
+22/tcp  open  ssh      OpenSSH 8.0 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 4a:7f:2f:ae:af:54:17:f8:70:81:b4:f4:46:18:30:38 (RSA)
+|   256 ed:d1:ff:06:dd:12:48:9f:83:55:96:8c:76:77:93:98 (ECDSA)
+|_  256 18:d9:b0:98:d3:1a:7f:8e:3f:0d:84:ad:5b:a5:1e:34 (ED25519)
+443/tcp open  ssl/http TwistedWeb httpd 20.3.0dev0
+|_http-favicon: Unknown favicon MD5: 32A8C07C149098F52CDA6C0D6B19FDCE
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: TwistedWeb/20.3.0dev0
+| http-title: Forbidden
+|_Requested resource was https://192.168.1.10/__session_start__
+| ssl-cert: Subject: commonName=rouwensit.ddns.net
+| Subject Alternative Name: DNS:rouwensit.ddns.net
+| Issuer: commonName=OpenVPN Web CA 2022.02.08 10:14:13 CET VPN
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2022-02-07T11:34:31
+| Not valid after:  2023-02-08T11:34:31
+| MD5:   4af5 6a3f 8dd0 8ce0 2e95 fc41 aa33 b763
+|_SHA-1: 3af6 3183 161f 100b 3eaf 1918 61a9 8a98 eb32 29b8
+|_ssl-date: TLS randomness does not represent time
+| tls-alpn: 
+|_  http/1.1
+914/tcp open  ssl/http TwistedWeb httpd 20.3.0dev0
+|_http-favicon: Unknown favicon MD5: 32A8C07C149098F52CDA6C0D6B19FDCE
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: TwistedWeb/20.3.0dev0
+| http-title: Forbidden
+|_Requested resource was https://192.168.1.10:914/__session_start__
+| ssl-cert: Subject: commonName=rouwensit.ddns.net
+| Subject Alternative Name: DNS:rouwensit.ddns.net
+| Issuer: commonName=OpenVPN Web CA 2022.02.08 10:14:13 CET VPN
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2022-02-07T11:34:31
+| Not valid after:  2023-02-08T11:34:31
+| MD5:   4af5 6a3f 8dd0 8ce0 2e95 fc41 aa33 b763
+|_SHA-1: 3af6 3183 161f 100b 3eaf 1918 61a9 8a98 eb32 29b8
+|_ssl-date: TLS randomness does not represent time
+| tls-alpn: 
+|_  http/1.1
+915/tcp open  ssl/http TwistedWeb httpd 20.3.0dev0
+|_http-favicon: Unknown favicon MD5: 32A8C07C149098F52CDA6C0D6B19FDCE
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: TwistedWeb/20.3.0dev0
+| http-title: Forbidden
+|_Requested resource was https://192.168.1.10:915/__session_start__
+| ssl-cert: Subject: commonName=rouwensit.ddns.net
+| Subject Alternative Name: DNS:rouwensit.ddns.net
+| Issuer: commonName=OpenVPN Web CA 2022.02.08 10:14:13 CET VPN
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2022-02-07T11:34:31
+| Not valid after:  2023-02-08T11:34:31
+| MD5:   4af5 6a3f 8dd0 8ce0 2e95 fc41 aa33 b763
+|_SHA-1: 3af6 3183 161f 100b 3eaf 1918 61a9 8a98 eb32 29b8
+|_ssl-date: TLS randomness does not represent time
+| tls-alpn: 
+|_  http/1.1
+943/tcp open  ssl/http TwistedWeb httpd 20.3.0dev0
+|_http-favicon: Unknown favicon MD5: 32A8C07C149098F52CDA6C0D6B19FDCE
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: TwistedWeb/20.3.0dev0
+| http-title: Forbidden
+|_Requested resource was https://192.168.1.10:943/__session_start__
+| ssl-cert: Subject: commonName=rouwensit.ddns.net
+| Subject Alternative Name: DNS:rouwensit.ddns.net
+| Issuer: commonName=OpenVPN Web CA 2022.02.08 10:14:13 CET VPN
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2022-02-07T11:34:31
+| Not valid after:  2023-02-08T11:34:31
+| MD5:   4af5 6a3f 8dd0 8ce0 2e95 fc41 aa33 b763
+|_SHA-1: 3af6 3183 161f 100b 3eaf 1918 61a9 8a98 eb32 29b8
+|_ssl-date: TLS randomness does not represent time
+| tls-alpn: 
+|_  http/1.1
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.80%E=4%D=2/13%OT=22%CT=1%CU=38690%PV=Y%DS=2%DC=I%G=Y%TM=6208CAD
+OS:D%P=x86_64-pc-linux-gnu)SEQ(SP=103%GCD=1%ISR=10C%TI=Z%CI=Z%II=I%TS=A)SEQ
+OS:(SP=103%GCD=1%ISR=10C%TI=Z%CI=Z%TS=A)OPS(O1=M5B4ST11NW7%O2=M5B4ST11NW7%O
+OS:3=M5B4NNT11NW7%O4=M5B4ST11NW7%O5=M5B4ST11NW7%O6=M5B4ST11)WIN(W1=7120%W2=
+OS:7120%W3=7120%W4=7120%W5=7120%W6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M5B4NNSN
+OS:W7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%D
+OS:F=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O
+OS:=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N
+OS:%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%C
+OS:D=S)
+
+Uptime guess: 7.749 days (since Sat Feb  5 16:11:08 2022)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=259 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE
+HOP RTT      ADDRESS
+1   19.65 ms 192.168.1.10
+
+Nmap scan report for vaultwarden.lan (192.168.1.11)
+Host is up (0.020s latency).
+Not shown: 65531 closed ports
+PORT    STATE SERVICE  VERSION
+22/tcp  open  ssh      OpenSSH 8.0 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 11:8a:07:9a:83:21:13:a5:ab:41:1f:ba:95:aa:39:56 (RSA)
+|   256 5e:66:18:68:5f:e1:c4:e0:a5:95:39:0d:2c:3e:36:2f (ECDSA)
+|_  256 40:d1:17:07:c9:45:e8:de:cf:a4:d4:65:13:41:43:26 (ED25519)
+80/tcp  open  http     OpenResty web app server
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: openresty
+|_http-title: Did not follow redirect to https://vaultwarden.lan/
+81/tcp  open  http     OpenResty web app server
+|_http-favicon: Unknown favicon MD5: 54BB3A8AB0708D17763875B9AE49BCA2
+| http-methods: 
+|_  Supported Methods: GET HEAD
+|_http-server-header: openresty
+|_http-title: Nginx Proxy Manager
+443/tcp open  ssl/http OpenResty web app server
+|_http-favicon: Unknown favicon MD5: 2F0DF01346ACE9AFB440288FEEB5D974
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: openresty
+|_http-title: Bitwarden Web Vault
+| ssl-cert: Subject: commonName=localhost/organizationName=localhost
+| Issuer: commonName=localhost/organizationName=localhost
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2022-02-08T16:08:45
+| Not valid after:  2032-02-06T16:08:45
+| MD5:   5973 5607 8eee f985 bafb cf28 70ce 86fe
+|_SHA-1: 373d b82e d8a4 f502 42aa edf9 0fec 5654 ec73 ad09
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.80%E=4%D=2/13%OT=22%CT=1%CU=41114%PV=Y%DS=2%DC=I%G=Y%TM=6208CAD
+OS:D%P=x86_64-pc-linux-gnu)SEQ(SP=FB%GCD=1%ISR=10A%TI=Z%CI=Z%TS=A)SEQ(SP=FB
+OS:%GCD=1%ISR=10A%TI=Z%CI=Z%II=I%TS=A)OPS(O1=M5B4ST11NW7%O2=M5B4ST11NW7%O3=
+OS:M5B4NNT11NW7%O4=M5B4ST11NW7%O5=M5B4ST11NW7%O6=M5B4ST11)WIN(W1=7120%W2=71
+OS:20%W3=7120%W4=7120%W5=7120%W6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M5B4NNSNW7
+OS:%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=
+OS:Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%
+OS:RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N%T
+OS:=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=
+OS:S)
+
+Uptime guess: 7.184 days (since Sun Feb  6 05:45:04 2022)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=251 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE
+HOP RTT      ADDRESS
+1   19.80 ms vaultwarden.lan (192.168.1.11)
+
+Nmap scan report for 192.168.1.12
+Host is up (0.020s latency).
+Not shown: 65533 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.0 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 df:4c:49:3a:3e:66:2c:e3:cb:d3:18:9a:c2:01:0a:f4 (RSA)
+|   256 73:9d:76:97:48:ef:94:25:4b:59:90:5b:ac:f1:a0:24 (ECDSA)
+|_  256 e4:90:87:8a:fe:e8:6c:05:0c:6a:c9:be:0d:e3:76:06 (ED25519)
+80/tcp open  http    Rocket
+| fingerprint-strings: 
+|   GetRequest: 
+|     HTTP/1.0 200 OK
+|     Connection: close
+|     Content-Type: text/html; charset=utf-8
+|     Cache-Control: public, max-age=600
+|     Expires: Sun, 13 Feb 2022 09:18:48 GMT
+|     Server: Rocket
+|     Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), sync-xhr=(self "https://haveibeenpwned.com" "https://2fa.directory"), usb=(), vr=()
+|     Referrer-Policy: same-origin
+|     X-Frame-Options: SAMEORIGIN
+|     X-Content-Type-Options: nosniff
+|     X-XSS-Protection: 1; mode=block
+|     Content-Security-Policy: frame-ancestors 'self' chrome-extension://nngceckbapebfimnlniiiahkandclblb chrome-extension://jbkfoedolllekgbhcbcoahefnbanhhlh moz-extension://* ;
+|     Content-Length: 1181
+|     Date: Sun, 13 Feb 2022 09:08:48 GMT
+|     &lt;!doctype html&gt;&lt;html class="theme_light"&gt;&lt;head&gt;&lt;meta charset
+|   HTTPOptions: 
+|     HTTP/1.0 200 OK
+|     Connection: close
+|     Content-Type: text/plain; charset=utf-8
+|     Server: Rocket
+|     Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), sync-xhr=(self "https://haveibeenpwned.com" "https://2fa.directory"), usb=(), vr=()
+|     Referrer-Policy: same-origin
+|     X-Frame-Options: SAMEORIGIN
+|     X-Content-Type-Options: nosniff
+|     X-XSS-Protection: 1; mode=block
+|     Content-Security-Policy: frame-ancestors 'self' chrome-extension://nngceckbapebfimnlniiiahkandclblb chrome-extension://jbkfoedolllekgbhcbcoahefnbanhhlh moz-extension://* ;
+|     Cache-Control: no-cache, no-store, max-age=0
+|     Access-Control-Allow-Methods: 
+|     Access-Control-Allow-Headers: 
+|     Access-Control-Allow-Credentials: true
+|     Content-Length: 0
+|_    Date: Sun, 13 Feb 2022 09:0
+|_http-favicon: Unknown favicon MD5: CD0CCDF4AB7CA8FEA85165108EF83E56
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Rocket
+|_http-title: Bitwarden Web Vault
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port80-TCP:V=7.80%I=7%D=2/13%Time=6208CAA4%P=x86_64-pc-linux-gnu%r(GetR
+SF:equest,7E5,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nContent-T
+SF:ype:\x20text/html;\x20charset=utf-8\r\nCache-Control:\x20public,\x20max
+SF:-age=600\r\nExpires:\x20Sun,\x2013\x20Feb\x202022\x2009:18:48\x20GMT\r\
+SF:nServer:\x20Rocket\r\nPermissions-Policy:\x20accelerometer=\(\),\x20amb
+SF:ient-light-sensor=\(\),\x20autoplay=\(\),\x20camera=\(\),\x20encrypted-
+SF:media=\(\),\x20fullscreen=\(\),\x20geolocation=\(\),\x20gyroscope=\(\),
+SF:\x20magnetometer=\(\),\x20microphone=\(\),\x20midi=\(\),\x20payment=\(\
+SF:),\x20picture-in-picture=\(\),\x20sync-xhr=\(self\x20\"https://haveibee
+SF:npwned\.com\"\x20\"https://2fa\.directory\"\),\x20usb=\(\),\x20vr=\(\)\
+SF:r\nReferrer-Policy:\x20same-origin\r\nX-Frame-Options:\x20SAMEORIGIN\r\
+SF:nX-Content-Type-Options:\x20nosniff\r\nX-XSS-Protection:\x201;\x20mode=
+SF:block\r\nContent-Security-Policy:\x20frame-ancestors\x20'self'\x20chrom
+SF:e-extension://nngceckbapebfimnlniiiahkandclblb\x20chrome-extension://jb
+SF:kfoedolllekgbhcbcoahefnbanhhlh\x20moz-extension://\*\x20;\r\nContent-Le
+SF:ngth:\x201181\r\nDate:\x20Sun,\x2013\x20Feb\x202022\x2009:08:48\x20GMT\
+SF:r\n\r\n&lt;!doctype\x20html&gt;&lt;html\x20class=\"theme_light\"&gt;&lt;head&gt;&lt;meta\x20
+SF:charset")%r(HTTPOptions,390,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20c
+SF:lose\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nServer:\x20Roc
+SF:ket\r\nPermissions-Policy:\x20accelerometer=\(\),\x20ambient-light-sens
+SF:or=\(\),\x20autoplay=\(\),\x20camera=\(\),\x20encrypted-media=\(\),\x20
+SF:fullscreen=\(\),\x20geolocation=\(\),\x20gyroscope=\(\),\x20magnetomete
+SF:r=\(\),\x20microphone=\(\),\x20midi=\(\),\x20payment=\(\),\x20picture-i
+SF:n-picture=\(\),\x20sync-xhr=\(self\x20\"https://haveibeenpwned\.com\"\x
+SF:20\"https://2fa\.directory\"\),\x20usb=\(\),\x20vr=\(\)\r\nReferrer-Pol
+SF:icy:\x20same-origin\r\nX-Frame-Options:\x20SAMEORIGIN\r\nX-Content-Type
+SF:-Options:\x20nosniff\r\nX-XSS-Protection:\x201;\x20mode=block\r\nConten
+SF:t-Security-Policy:\x20frame-ancestors\x20'self'\x20chrome-extension://n
+SF:ngceckbapebfimnlniiiahkandclblb\x20chrome-extension://jbkfoedolllekgbhc
+SF:bcoahefnbanhhlh\x20moz-extension://\*\x20;\r\nCache-Control:\x20no-cach
+SF:e,\x20no-store,\x20max-age=0\r\nAccess-Control-Allow-Methods:\x20\r\nAc
+SF:cess-Control-Allow-Headers:\x20\r\nAccess-Control-Allow-Credentials:\x2
+SF:0true\r\nContent-Length:\x200\r\nDate:\x20Sun,\x2013\x20Feb\x202022\x20
+SF:09:0");
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.80%E=4%D=2/13%OT=22%CT=1%CU=42430%PV=Y%DS=2%DC=I%G=Y%TM=6208CAD
+OS:D%P=x86_64-pc-linux-gnu)SEQ(SP=104%GCD=1%ISR=10B%TI=Z%CI=Z%II=I%TS=A)SEQ
+OS:(SP=104%GCD=1%ISR=10C%TI=Z%CI=Z%TS=A)OPS(O1=M5B4ST11NW7%O2=M5B4ST11NW7%O
+OS:3=M5B4NNT11NW7%O4=M5B4ST11NW7%O5=M5B4ST11NW7%O6=M5B4ST11)WIN(W1=7120%W2=
+OS:7120%W3=7120%W4=7120%W5=7120%W6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M5B4NNSN
+OS:W7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%D
+OS:F=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O
+OS:=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N
+OS:%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%C
+OS:D=S)
+
+Uptime guess: 17.729 days (since Wed Jan 26 16:39:22 2022)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=260 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE
+HOP RTT      ADDRESS
+1   19.92 ms 192.168.1.12
+
+Nmap scan report for 192.168.1.13
+Host is up (0.020s latency).
+Not shown: 65534 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.0 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 01:14:7f:1e:48:9d:b5:7a:bc:c4:f0:8f:65:0a:32:da (RSA)
+|   256 4e:f8:47:64:57:5b:1a:00:59:7a:de:61:4c:52:a5:e3 (ECDSA)
+|_  256 bf:d1:fd:09:2f:48:36:6f:af:b1:3b:4c:a9:95:80:48 (ED25519)
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.80%E=4%D=2/13%OT=22%CT=1%CU=36599%PV=Y%DS=2%DC=I%G=Y%TM=6208CAD
+OS:D%P=x86_64-pc-linux-gnu)SEQ(SP=109%GCD=1%ISR=10B%TI=Z%CI=Z%TS=A)SEQ(SP=1
+OS:09%GCD=1%ISR=10B%TI=Z%CI=Z%II=I%TS=A)OPS(O1=M5B4ST11NW7%O2=M5B4ST11NW7%O
+OS:3=M5B4NNT11NW7%O4=M5B4ST11NW7%O5=M5B4ST11NW7%O6=M5B4ST11)WIN(W1=7120%W2=
+OS:7120%W3=7120%W4=7120%W5=7120%W6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M5B4NNSN
+OS:W7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%D
+OS:F=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O
+OS:=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N
+OS:%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%C
+OS:D=S)
+
+Uptime guess: 29.591 days (since Fri Jan 14 19:58:07 2022)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=265 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE
+HOP RTT      ADDRESS
+1   19.90 ms 192.168.1.13
+
+Nmap scan report for 192.168.1.14
+Host is up (0.019s latency).
+Not shown: 65533 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.0 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 e9:de:24:46:5b:86:65:47:ac:ad:fe:af:e7:3b:6d:6d (RSA)
+|   256 2f:29:5e:6b:88:8a:cf:dd:07:fa:ac:a1:1b:22:70:59 (ECDSA)
+|_  256 3e:c2:71:44:65:0d:33:25:76:e0:45:7c:23:83:96:20 (ED25519)
+80/tcp open  http    Apache httpd 2.4.37 ((Red Hat Enterprise Linux))
+|_http-favicon: Unknown favicon MD5: 531B63A51234BB06C9D77F219EB25553
+| http-robots.txt: 1 disallowed entry 
+|_/
+|_http-server-header: Apache/2.4.37 (Red Hat Enterprise Linux)
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.80%E=4%D=2/13%OT=22%CT=1%CU=32451%PV=Y%DS=2%DC=I%G=Y%TM=6208CAD
+OS:D%P=x86_64-pc-linux-gnu)SEQ(SP=104%GCD=1%ISR=10A%TI=Z%CI=Z%TS=A)SEQ(SP=1
+OS:04%GCD=1%ISR=10A%TI=Z%CI=Z%II=I%TS=A)OPS(O1=M5B4ST11NW7%O2=M5B4ST11NW7%O
+OS:3=M5B4NNT11NW7%O4=M5B4ST11NW7%O5=M5B4ST11NW7%O6=M5B4ST11)WIN(W1=7120%W2=
+OS:7120%W3=7120%W4=7120%W5=7120%W6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M5B4NNSN
+OS:W7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%D
+OS:F=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O
+OS:=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N
+OS:%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%C
+OS:D=S)
+
+Uptime guess: 39.970 days (since Tue Jan  4 10:53:08 2022)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=260 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE
+HOP RTT      ADDRESS
+1   19.46 ms 192.168.1.14
+
+NSE: Script Post-scanning.
+Initiating NSE at 10:09
+Completed NSE at 10:09, 0.00s elapsed
+Initiating NSE at 10:09
+Completed NSE at 10:09, 0.00s elapsed
+Initiating NSE at 10:09
+Completed NSE at 10:09, 0.00s elapsed
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 20 IP addresses (6 hosts up) scanned in 175.20 seconds
+           Raw packets sent: 460322 (20.279MB) | Rcvd: 328861 (13.175MB)
+</output><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.2"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.3"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.4"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.5"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.6"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.7"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.8"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.9"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.15"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.16"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.17"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.18"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.19"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="down"></status><address addrtype="ipv4" vendor="" addr="192.168.1.20"></address><hostnames></hostnames><ports></ports><os></os><uptime lastboot="" seconds=""></uptime><tcpsequence index="" values="" difficulty=""></tcpsequence><ipidsequence values="" class=""></ipidsequence><tcptssequence values="" class=""></tcptssequence></host><host comment=""><status state="up"></status><address addrtype="ipv4" vendor="" addr="192.168.1.1"></address><hostnames></hostnames><ports><extraports count="65532" state="filtered"></extraports><port protocol="tcp" portid="53"><state reason="syn-ack" state="open" reason_ttl="63"></state><service extrainfo="generic dns response: NOTIMP" method="probed" conf="10" name="domain"></service></port><port protocol="tcp" portid="80"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="nginx" method="probed" conf="10" name="http"></service></port><port protocol="tcp" portid="443"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="nginx" method="probed" conf="10" name="http"></service></port></ports><os><portused state="open" portid="53" proto="tcp"></portused></os><uptime lastboot="Sun Feb 13 10:09:06 2022" seconds="43"></uptime><tcpsequence index="261" values="E235341C,9DBF811B,37933307,31A36F2F,CE8028F0,1189C413" difficulty="Good luck!"></tcpsequence><ipidsequence values="0,0,0,0,0,0" class="All zeros"></ipidsequence><tcptssequence values="ED58AE19,4F682DC5,B2186176,AFEE3A83,228C5057,808AA156" class="other"></tcptssequence><trace port="" proto=""><hop rtt="18.47" host="" ipaddr="192.168.1.1" ttl="1"></hop></trace></host><host comment=""><status state="up"></status><address addrtype="ipv4" vendor="" addr="192.168.1.10"></address><hostnames></hostnames><ports><extraports count="65530" state="closed"></extraports><port protocol="tcp" portid="22"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="OpenSSH" name="ssh" extrainfo="protocol 2.0" version="8.0" conf="10" method="probed"></service></port><port protocol="tcp" portid="443"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="TwistedWeb httpd" version="20.3.0dev0" method="probed" conf="10" name="http"></service></port><port protocol="tcp" portid="914"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="TwistedWeb httpd" version="20.3.0dev0" method="probed" conf="10" name="http"></service></port><port protocol="tcp" portid="915"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="TwistedWeb httpd" version="20.3.0dev0" method="probed" conf="10" name="http"></service></port><port protocol="tcp" portid="943"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="TwistedWeb httpd" version="20.3.0dev0" method="probed" conf="10" name="http"></service></port></ports><os><portused state="open" portid="22" proto="tcp"></portused><portused state="closed" portid="1" proto="tcp"></portused><portused state="closed" portid="38690" proto="udp"></portused><osmatch line="63230" name="Linux 3.10 - 4.11" accuracy="98"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="98"></osclass></osmatch><osmatch line="65105" name="Linux 3.2 - 4.9" accuracy="97"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="97"></osclass></osmatch><osmatch line="64164" name="Linux 3.16 - 4.6" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="96"></osclass></osmatch><osmatch line="56411" name="Linux 2.6.32 - 3.13" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="96"></osclass></osmatch><osmatch line="66984" name="Linux 4.10" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="95"></osclass></osmatch><osmatch line="51668" name="Linux 2.6.22 - 2.6.36" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="95"></osclass></osmatch><osmatch line="62820" name="Linux 3.10" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="94"></osclass></osmatch><osmatch line="67221" name="Linux 4.4" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="94"></osclass></osmatch><osmatch line="55173" name="Linux 2.6.32" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="94"></osclass></osmatch><osmatch line="56381" name="Linux 2.6.32 - 3.10" accuracy="93"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="93"></osclass></osmatch></os><uptime lastboot="Sat Feb  5 16:11:08 2022" seconds="669521"></uptime><tcpsequence index="259" values="36A59BFD,6BE0F31F,256CC5E,59DB2B90,A93DF292,BEFA95E9" difficulty="Good luck!"></tcpsequence><ipidsequence values="0,0,0,0,0,0" class="All zeros"></ipidsequence><tcptssequence values="27E7A704,27E7A766,27E7A7CA,27E7A833,27E7A896,27E7A8F8" class="1000HZ"></tcptssequence><trace port="" proto=""><hop rtt="19.65" host="" ipaddr="192.168.1.10" ttl="1"></hop></trace></host><host comment=""><status state="up"></status><address addrtype="ipv4" vendor="" addr="192.168.1.11"></address><hostnames><hostname type="PTR" name="vaultwarden.lan"></hostname></hostnames><ports><extraports count="65531" state="closed"></extraports><port protocol="tcp" portid="22"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="OpenSSH" name="ssh" extrainfo="protocol 2.0" version="8.0" conf="10" method="probed"></service></port><port protocol="tcp" portid="80"><state reason="syn-ack" state="open" reason_ttl="62"></state><service product="OpenResty web app server" method="probed" conf="10" name="http"></service></port><port protocol="tcp" portid="81"><state reason="syn-ack" state="open" reason_ttl="62"></state><service product="OpenResty web app server" method="probed" conf="10" name="http"></service></port><port protocol="tcp" portid="443"><state reason="syn-ack" state="open" reason_ttl="62"></state><service product="OpenResty web app server" method="probed" conf="10" name="http"></service></port></ports><os><portused state="open" portid="22" proto="tcp"></portused><portused state="closed" portid="1" proto="tcp"></portused><portused state="closed" portid="41114" proto="udp"></portused><osmatch line="63230" name="Linux 3.10 - 4.11" accuracy="98"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="98"></osclass></osmatch><osmatch line="65105" name="Linux 3.2 - 4.9" accuracy="97"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="97"></osclass></osmatch><osmatch line="64164" name="Linux 3.16 - 4.6" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="96"></osclass></osmatch><osmatch line="56411" name="Linux 2.6.32 - 3.13" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="96"></osclass></osmatch><osmatch line="67221" name="Linux 4.4" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="95"></osclass></osmatch><osmatch line="51668" name="Linux 2.6.22 - 2.6.36" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="95"></osclass></osmatch><osmatch line="66984" name="Linux 4.10" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="94"></osclass></osmatch><osmatch line="62820" name="Linux 3.10" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="94"></osclass></osmatch><osmatch line="56381" name="Linux 2.6.32 - 3.10" accuracy="93"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="93"></osclass></osmatch><osmatch line="34647" name="HP P2000 G3 NAS device" accuracy="93"><osclass type="storage-misc" osfamily="embedded" vendor="HP" osgen="" accuracy="93"></osclass></osmatch></os><uptime lastboot="Sun Feb  6 05:45:04 2022" seconds="620685"></uptime><tcpsequence index="251" values="E9D1B6A0,A160316C,7B0BCEFD,CB1E0F86,4E6A595,D4BE4FB2" difficulty="Good luck!"></tcpsequence><ipidsequence values="0,0,0,0,0,0" class="All zeros"></ipidsequence><tcptssequence values="24FE7718,24FE7779,24FE77DD,24FE7846,24FE78A9,24FE790B" class="1000HZ"></tcptssequence><trace port="" proto=""><hop rtt="19.80" host="vaultwarden.lan" ipaddr="192.168.1.11" ttl="1"></hop></trace></host><host comment=""><status state="up"></status><address addrtype="ipv4" vendor="" addr="192.168.1.12"></address><hostnames></hostnames><ports><extraports count="65533" state="closed"></extraports><port protocol="tcp" portid="22"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="OpenSSH" name="ssh" extrainfo="protocol 2.0" version="8.0" conf="10" method="probed"></service></port><port protocol="tcp" portid="80"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="Rocket" method="probed" conf="10" name="http"></service></port></ports><os><portused state="open" portid="22" proto="tcp"></portused><portused state="closed" portid="1" proto="tcp"></portused><portused state="closed" portid="42430" proto="udp"></portused><osmatch line="63230" name="Linux 3.10 - 4.11" accuracy="98"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="98"></osclass></osmatch><osmatch line="65105" name="Linux 3.2 - 4.9" accuracy="97"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="97"></osclass></osmatch><osmatch line="64164" name="Linux 3.16 - 4.6" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="96"></osclass></osmatch><osmatch line="56411" name="Linux 2.6.32 - 3.13" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="96"></osclass></osmatch><osmatch line="66984" name="Linux 4.10" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="95"></osclass></osmatch><osmatch line="51668" name="Linux 2.6.22 - 2.6.36" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="95"></osclass></osmatch><osmatch line="62820" name="Linux 3.10" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="94"></osclass></osmatch><osmatch line="67221" name="Linux 4.4" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="94"></osclass></osmatch><osmatch line="55173" name="Linux 2.6.32" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="94"></osclass></osmatch><osmatch line="56381" name="Linux 2.6.32 - 3.10" accuracy="93"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="93"></osclass></osmatch></os><uptime lastboot="Wed Jan 26 16:39:22 2022" seconds="1531827"></uptime><tcpsequence index="260" values="12C90DEC,C2A38E48,9A17B67C,375E0B8,A1D7E02E,8A618D60" difficulty="Good luck!"></tcpsequence><ipidsequence values="0,0,0,0,0,0" class="All zeros"></ipidsequence><tcptssequence values="5B4D6535,5B4D6597,5B4D65FB,5B4D6664,5B4D66C7,5B4D6729" class="1000HZ"></tcptssequence><trace port="" proto=""><hop rtt="19.92" host="" ipaddr="192.168.1.12" ttl="1"></hop></trace></host><host comment=""><status state="up"></status><address addrtype="ipv4" vendor="" addr="192.168.1.13"></address><hostnames></hostnames><ports><extraports count="65534" state="closed"></extraports><port protocol="tcp" portid="22"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="OpenSSH" name="ssh" extrainfo="protocol 2.0" version="8.0" conf="10" method="probed"></service></port></ports><os><portused state="open" portid="22" proto="tcp"></portused><portused state="closed" portid="1" proto="tcp"></portused><portused state="closed" portid="36599" proto="udp"></portused><osmatch line="63230" name="Linux 3.10 - 4.11" accuracy="98"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="98"></osclass></osmatch><osmatch line="65105" name="Linux 3.2 - 4.9" accuracy="97"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="97"></osclass></osmatch><osmatch line="64164" name="Linux 3.16 - 4.6" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="96"></osclass></osmatch><osmatch line="56411" name="Linux 2.6.32 - 3.13" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="96"></osclass></osmatch><osmatch line="66984" name="Linux 4.10" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="95"></osclass></osmatch><osmatch line="51668" name="Linux 2.6.22 - 2.6.36" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="95"></osclass></osmatch><osmatch line="62820" name="Linux 3.10" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="94"></osclass></osmatch><osmatch line="67221" name="Linux 4.4" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="94"></osclass></osmatch><osmatch line="55173" name="Linux 2.6.32" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="94"></osclass></osmatch><osmatch line="56381" name="Linux 2.6.32 - 3.10" accuracy="93"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="93"></osclass></osmatch></os><uptime lastboot="Fri Jan 14 19:58:07 2022" seconds="2556702"></uptime><tcpsequence index="265" values="460C417D,F0AA2621,DDA2EF6B,620B79D1,653935F2,D31A52EC" difficulty="Good luck!"></tcpsequence><ipidsequence values="0,0,0,0,0,0" class="All zeros"></ipidsequence><tcptssequence values="9863BCC0,9863BD22,9863BD86,9863BDEF,9863BE52,9863BEB4" class="1000HZ"></tcptssequence><trace port="" proto=""><hop rtt="19.90" host="" ipaddr="192.168.1.13" ttl="1"></hop></trace></host><host comment=""><status state="up"></status><address addrtype="ipv4" vendor="" addr="192.168.1.14"></address><hostnames></hostnames><ports><extraports count="65533" state="closed"></extraports><port protocol="tcp" portid="22"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="OpenSSH" name="ssh" extrainfo="protocol 2.0" version="8.0" conf="10" method="probed"></service></port><port protocol="tcp" portid="80"><state reason="syn-ack" state="open" reason_ttl="63"></state><service product="Apache httpd" name="http" extrainfo="(Red Hat Enterprise Linux)" version="2.4.37" conf="10" method="probed"></service></port></ports><os><portused state="open" portid="22" proto="tcp"></portused><portused state="closed" portid="1" proto="tcp"></portused><portused state="closed" portid="32451" proto="udp"></portused><osmatch line="63230" name="Linux 3.10 - 4.11" accuracy="98"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="98"></osclass></osmatch><osmatch line="65105" name="Linux 3.2 - 4.9" accuracy="97"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="97"></osclass></osmatch><osmatch line="64164" name="Linux 3.16 - 4.6" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="96"></osclass></osmatch><osmatch line="56411" name="Linux 2.6.32 - 3.13" accuracy="96"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="96"></osclass></osmatch><osmatch line="66984" name="Linux 4.10" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="95"></osclass></osmatch><osmatch line="51668" name="Linux 2.6.22 - 2.6.36" accuracy="95"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="95"></osclass></osmatch><osmatch line="62820" name="Linux 3.10" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="94"></osclass></osmatch><osmatch line="67221" name="Linux 4.4" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="4.X" accuracy="94"></osclass></osmatch><osmatch line="55173" name="Linux 2.6.32" accuracy="94"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="2.6.X" accuracy="94"></osclass></osmatch><osmatch line="56381" name="Linux 2.6.32 - 3.10" accuracy="93"><osclass type="general purpose" osfamily="Linux" vendor="Linux" osgen="3.X" accuracy="93"></osclass></osmatch></os><uptime lastboot="Tue Jan  4 10:53:08 2022" seconds="3453401"></uptime><tcpsequence index="260" values="65D2480C,262219BF,8FABAD84,8D7D3534,4500EBC7,7AD9279F" difficulty="Good luck!"></tcpsequence><ipidsequence values="0,0,0,0,0,0" class="All zeros"></ipidsequence><tcptssequence values="CDD647BC,CDD6481D,CDD64881,CDD648EA,CDD6494D,CDD649AF" class="1000HZ"></tcptssequence><trace port="" proto=""><hop rtt="19.46" host="" ipaddr="192.168.1.14" ttl="1"></hop></trace></host><runstats><finished timestr="Sun Feb 13 10:09:49 2022" time="1644743389"></finished><hosts down="14" total="20" up="6"></hosts></runstats></nmaprun>
