@@ -1,0 +1,22 @@
+OM CURL TE KUNNEN GEBRUIKEN OP WINDOWS MOET INTERNET EXPLORER EEN KEER ZIJN OPGESTART :|
+
+Checken of bestand bestaat https://stackoverflow.com/questions/82831/how-do-i-check-whether-a-file-exists-without-exceptions
+GuestOS ID's - https://docs.vmware.com/en/VMware-HCX/4.2/hcx-user-guide/GUID-D4FFCBD6-9FEC-44E5-9E26-1BD0A2A81389.html
+PowerCLI vm maken - https://developer.vmware.com/docs/powercli/latest/vmware.vimautomation.core/commands/new-vm/#DefaultParameterSet
+Nested CPU VM aanzetten - https://communities.vmware.com/t5/VMware-PowerCLI-Discussions/How-to-set-Hardware-virtualization-gt-expose/td-p/1758017
+MAAS Python API - https://maas.github.io/python-libmaas/client/index.html
+string naar boolean en andere types - https://www.delftstack.com/howto/python/string-to-boolean-python/
+Dictionaries maken - https://www.w3schools.com/python/python_dictionaries.asp
+POST request python3 1 - https://www.nylas.com/blog/use-python-requests-module-rest-apis/
+POST request python3 2 - https://stackoverflow.com/questions/45350227/request-body-has-invalid-json-format-python
+Waardes van variabel onder elkaar uitlezen - https://stackoverflow.com/questions/19941141/printing-each-item-of-a-variable-on-a-separate-line-in-python
+SSH client python 1 - https://stackoverflow.com/questions/3586106/perform-commands-over-ssh-with-python
+SSH client python 2 - https://www.linode.com/docs/guides/use-paramiko-python-to-ssh-into-a-server/
+Mooie JSON formaat - https://www.delftstack.com/howto/python/python-pretty-print-dictionary/
+Active gebruikersnaam verkrijgen Windows - https://stackoverflow.com/questions/13654122/how-to-make-python-get-the-username-in-windows-and-then-implement-it-in-a-script
+\\ gebruiken - https://stackoverflow.com/questions/6971300/unterminated-string-literal-in-the-variable
+SSH Python Linux - https://techoverflow.net/2022/01/23/paramiko-ssh-client-how-to-connect-using-public-key-authentication/
+Optionele cli parameters - https://stackoverflow.com/questions/40710719/optional-command-line-arguments
+Create QT application python - https://www.pythonguis.com/tutorials/first-steps-qt-creator/ 
+
+SQL verbinding verbreken - https://stackoverflow.com/questions/5504340/python-mysqldb-connection-close-vs-cursor-close
