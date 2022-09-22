@@ -1,12 +1,12 @@
 import configparser
-import requests
-import mysql.connector as mysql
-import sys
 import argparse
+import mysql.connector as mysql
+import re
+import requests
+import os
 
 parser = argparse.ArgumentParser(description = "GNS3 Project Tool")
 parser.add_argument("-p", "--projectnaam", help = "Naam van het project", required = False, default = "")
-parser.add_argument("-b", "--bevesteging", help = "Bevestiging", required = False, default = "")
 
 argument = parser.parse_args()
 status = False
@@ -14,10 +14,6 @@ status = False
 if argument.projectnaam:
     status = True
     project_name = argument.projectnaam
-
-if argument.bevesteging:
-    status = True
-    conformation = argument.bevesteging
 
 #config bestand inladen en algemene variabelen toewijzen
 config = configparser.ConfigParser()
@@ -33,38 +29,38 @@ db = mysql.connect(
     )
 cursor = db.cursor()
 
-system = sys.platform
 if argument.projectnaam == "":
-    print ("Wat is de naam van het project dat je wilt verwijderen?")
+    print ("Wat is de naam van het project dat je wilt exporteren?")
     project_name = input()
 
-print()
-if argument.bevesteging == "":
-    print ("Weet je het zeker? (y/n)")
-    conformation = input()
+getprojectname = """SELECT name FROM `projects` WHERE `name` = %s"""
+cursor.execute(getprojectname, (project_name, ))
+fetch = cursor.fetchall()
+clean = str(fetch)
+sql_projectname = re.sub(r'[^\w\s]', '', clean)
 
-if conformation == "y":
-
+#Als de projectnaam bestaat word het script afgebroken
+if project_name == sql_projectname:
     getprojectid = """SELECT project_id FROM `projects` WHERE `name` = %s"""
     cursor.execute(getprojectid, (project_name, ))
     fetch = cursor.fetchall()
     clean = str(fetch)
     project_id = clean[3:-4]
 
-    headers = {'content-type': 'application/json'}
-    url = "http://" + gns3_server + ":3080/v2/projects/" + project_id
-    r = requests.delete(url)
-    print (r.text)
-    
-    cursor.execute("DELETE FROM projects WHERE project_id = %s ;", (project_id,))
-    db.commit()
-    print ("Project is verwijderd...")
+    project_name_file = project_name + ".gns3project"
+    url = "http://" + gns3_server + ":3080/v2/projects/" + project_id + "/export"
+    response = requests.get(url, allow_redirects=True)
+    open(project_name_file, 'wb').write(response.content)
 
-elif conformation == "n":
-    print ("Taak is afgebroken door de gebruiker")
+    if response.status_code != 200:
+        print ("Het exporteren is mislukt.")
+        cmd = "rm " + project_name_file
+        os.system (cmd)
+    else:
+        print ("Het exporteren van het project is gelukt")
 
 else:
-    print ("Input niet herkend er zijn geen wijzigingen toegepast")
+    print ("Het project bestaat niet of is niet via deze tool aangemaakt")
 
 #DB verbinding verbreken
 cursor.close()

@@ -59,7 +59,7 @@ if argument.bevesteging == "":
 if conformation == "y":
 
     #Het eerste gedeelte van het project ID genereren
-    id_first_part = str (random.randint(00000000, 99999999))
+    id_first_part = str (random.randint(10000000, 99999999))
     id = (id_first_part + "-0405-0607-0809-0a0b0c0d0e0f")
 
     payload = {
@@ -77,12 +77,13 @@ if conformation == "y":
     cursor.execute("INSERT INTO `projects` VALUES (NULL, %s, %s)", (project_name, id))
     db.commit()
 
-    #DB verbinding verbreken
-    cursor.close()
-    db.close()
 
 elif conformation == "n":
     print ("Taak is afgebroken door de gebruiker")
 
 else:
     print("Input niet herkend. Er zijn geen wijzigingen uitgevoerd")
+
+#DB verbinding verbreken
+cursor.close()
+db.close()

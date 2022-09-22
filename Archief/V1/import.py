@@ -2,11 +2,9 @@ import configparser
 import argparse
 import mysql.connector as mysql
 import random
+import re
+import requests
 import os
-import os.path
-import paramiko
-
-ssh = paramiko.SSHClient()
 
 parser = argparse.ArgumentParser(description = "GNS3 Project Tool")
 parser.add_argument("-p", "--projectnaam", help = "Naam van het project", required = False, default = "")
@@ -32,7 +30,6 @@ if argument.bevesteging:
 config = configparser.ConfigParser()
 config.read('config.ini')
 gns3_server = config['default']['gns3_server']
-ssh_username = config['default']['ssh_username']
 
 #DB config inladen
 db = mysql.connect(
@@ -51,39 +48,36 @@ if argument.projectimport == "":
     print ("Wat is de naam van het project dat je wilt importeren?")
     project_import = input()
 
-if argument.bevesteging == "":
-    print ("Weet je het zeker dat je het project wilt importeren met de volgende gegevens? (y/n")
-    print ("")
-    print ("Nieuwe projectnaam: " + project_name)
-    print ("Template: " + [project_import])
-    conformation = input ()
+id_first_part = str (random.randint(10000000, 99999999))
+project_id = (id_first_part + "-0405-0607-0809-0a0b0c0d0e0f")
 
-if conformation == "y":
-    
-    #Project importen in GNS3
+payload = {
+    "name": project_name,
+    "project_id": project_id
+}
 
-    id_first_part = str (random.randint(10000000, 99999999))
-    project_id = (id_first_part + "-0405-0607-0809-0a0b0c0d0e0f")
+#Project aanmaken in GNS3
+#headers = {'content-type': 'application/json'}
+#url = "http://" + gns3_server + ":3080/v2/projects"
+#r = requests.post(url, json=payload, headers=headers)
+#print (r.text)
 
-    cmd = "cd /mnt && curl -X POST -H 'Content-type: application/octet-stream' --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name
+#Project importen in GNS3
 
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(gns3_server, username=ssh_username,
-                key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
-    #print(ssh_stdout.read().decode())
+cmd = "curl -X POST -H 'Content-type: application/octet-stream' --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name
+os.system = (cmd)
+print (cmd)
 
-    #Project naam en ID wegschrijven naar de database
-    cursor.execute("INSERT INTO `projects` VALUES (NULL, %s, %s)", (project_name, project_id))
-    db.commit()
+#project_file = project_import + ".gns3project"
+#upload_file = {'upload_file': open(project_file,'rb')}
+#url = "http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import"
+#r = requests.post(url, files=upload_file,)
 
-    print ("Het project is geimporteerd")
 
-if conformation == "n":
-    print ("Er zijn geen wijzigingen aangebracht")
+#Project naam en ID wegschrijven naar de database
+cursor.execute("INSERT INTO `projects` VALUES (NULL, %s, %s)", (project_name, project_id))
+db.commit()
 
-else:
-    print ("input niet herkend. Probeer het opnieuw")
 
 #DB verbinding verbreken
 cursor.close()
