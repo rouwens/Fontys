@@ -1,0 +1,12 @@
+V0.0.1 - Maas
+    - Test scripts voor gebruik met MAAS. Uiteindelijk gaan die niet verder ontwikkeld worden door verandering van de koers in het project.
+
+V0.0.1
+    - Importeer en exporteer scripts waarbij gebruik gemaakt word van de huidige map op de lokale machine.
+
+V0.1
+    - Basis scripts voor het maken, verwijderen, exporteren en importeren in GNS3.
+    - Parameters werken per script, ze zijn optioneel.
+
+V0.2
+    - Alle losse scripts samengevoegd tot één geheel. De basis werkt, parameters werken niet. 

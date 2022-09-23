@@ -5,9 +5,9 @@ import mysql.connector as mysql
 import re
 import argparse
 
-parser = argparse.ArgumentParser(description = "GNS3 Project Tool")
-parser.add_argument("-p", "--projectnaam", help = "Naam van het project", required = False, default = "")
-parser.add_argument("-b", "--bevesteging", help = "Bevestiging", required = False, default = "")
+parser = argparse.ArgumentParser(description = "GNS3 Management Tool")
+parser.add_argument("-p", "--projectnaam", help = "Naam van het (nieuwe) project", required = False, default = "")
+parser.add_argument("-b", "--bevesteging", help = "Vul de y van ja om de alles te accepteren ", required = False, default = "")
 
 argument = parser.parse_args()
 status = False
