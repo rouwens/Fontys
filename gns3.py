@@ -41,11 +41,11 @@ db = mysql.connect(
     )
 cursor = db.cursor()
 
-ssh = paramiko.SSHClient()
-ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(gns3_server, username=ssh_username,
-key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
-
+def ssh_init():
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(gns3_server, username=ssh_username,
+    key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
 
 def message (message_input):
     os.system(clear)
@@ -525,6 +525,7 @@ def manage_projects():
             conformation = input()
 
             if conformation == "y":
+                ssh_init()
                 cmd = "rm /mnt/" + answer + ".gns3project"
                 ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
                 message ("Opdracht is uitgevoerd, check de lijst met projecten om te zien of het project nog bestaat")
