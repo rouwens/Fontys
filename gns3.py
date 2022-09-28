@@ -12,20 +12,6 @@ import time
 import paramiko
 import json
 
-sleepcounter = 2
-option = ""
-start = "on"
-title = "GNS3 Management Tool"
-
-# Bepalen van schoonmaak commando op basis van OS
-sys = platform.system()
-
-if sys == "Windows":
-    clear = "cls"
-
-elif sys == "Linux" or "Darwin":
-    clear = "clear"
-
 # Config inlezen
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -41,11 +27,37 @@ db = mysql.connect(
     )
 cursor = db.cursor()
 
-def ssh_init():
+sleepcounter = 2
+option = ""
+start = "on"
+title = "GNS3 Management Tool"
+
+# Bepalen van schoonmaak commando op basis van OS
+sys = platform.system()
+
+if sys == "Windows":
+    clear = "cls"
+
+elif sys == "Linux":
+    clear = "clear"
+    ssh_private_key = os.path.isfile("~/.ssh/id_rsa")
+
+elif sys == "Darwin":
+    clear = "clear"
+    username = os.getlogin()
+    ssh_private_key = os.path.isfile("/Users/" + username + "/.ssh/id_rsa")
+
+if ssh_private_key == False:
+    os.system(clear)
+    print ("Er is geen SSH privé sleutel gevonden. Hierdoor zullen sommige functies niet werken.")
+    time.sleep(sleepcounter)
+
+else:
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(gns3_server, username=ssh_username,
     key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
+
 
 def message (message_input):
     os.system(clear)
@@ -525,7 +537,6 @@ def manage_projects():
             conformation = input()
 
             if conformation == "y":
-                ssh_init()
                 cmd = "rm /mnt/" + answer + ".gns3project"
                 ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
                 message ("Opdracht is uitgevoerd, check de lijst met projecten om te zien of het project nog bestaat")
