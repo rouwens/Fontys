@@ -535,7 +535,7 @@ def manage_projects():
                 message(message_input="Input niet herkend probeer het opnieuw")
 
         elif answer == "3":
-                return ()
+            return ()
             
         elif answer == "4":
             afsluiten()
@@ -552,9 +552,23 @@ def manage_ssh():
             username = os.getlogin()
             ssh_private_key = os.path.isfile("/Users/" + username + "/.ssh/id_rsa")
 
-        if ssh_private_key == "True":
-            print ("SSH key bestaat")
+    if ssh_private_key == True:
+        os.system(clear)
+    
+    if ssh_private_key == False:
+        messagequestion ("Er zijn geen SSH sleutels gevonden. Wil je die nu maken? (y/n)")
+        answer= input()
+
+        if answer == "y": 
+            os.system("ssh-keygen")
         
+        elif answer == "n":
+            message (message_input="Taak is afgebroken door de gebruiker. Er zijn geen wijzigingen doorgevoerd")
+        
+        else:
+            message ("Input niet herkend. Probeer het opniew")
+    
+    os.system ("ssh-copy-id " + ssh_username + "@" + gns3_server)
 
 def manage_menu ():
     while start == "on":
@@ -575,7 +589,7 @@ def manage_menu ():
             manage_projects()
         
         elif answer == "3":
-            print ()
+            manage_ssh()
 
         elif answer == "4":
             return()
