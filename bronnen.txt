@@ -21,3 +21,11 @@ Create QT application python - https://www.pythonguis.com/tutorials/first-steps-
 
 SQL verbinding verbreken - https://stackoverflow.com/questions/5504340/python-mysqldb-connection-close-vs-cursor-close
 OS type bepalen - https://stackoverflow.com/questions/1854/how-to-identify-on-which-os-python-is-running-on
+JSON waarde uitlezen - https://bobbyhadz.com/blog/python-response-object-is-not-subscriptable
+
+
+
+
+
+Python modules
+pip3 install paramiko requests mysql.connector
