@@ -11,6 +11,7 @@ import os.path
 import time
 import paramiko
 import json
+from pathlib import Path
 
 # Config inlezen
 config = configparser.ConfigParser()
@@ -37,6 +38,8 @@ sys = platform.system()
 
 if sys == "Windows":
     clear = "cls"
+    path = str(Path.home())
+    ssh_private_key = os.path.isfile(path + "/.ssh/id_rsa")
 
 elif sys == "Linux":
     clear = "clear"
@@ -581,7 +584,7 @@ def manage_ssh():
         elif answer == "n":
             message (message_input="Taak is afgebroken door de gebruiker. Er zijn geen wijzigingen doorgevoerd")
             return()
-            
+
         else:
             message ("Input niet herkend. Probeer het opniew")
             return()
