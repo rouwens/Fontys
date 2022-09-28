@@ -40,7 +40,9 @@ if sys == "Windows":
 
 elif sys == "Linux":
     clear = "clear"
-    ssh_private_key = os.path.isfile("~/.ssh/id_rsa")
+    username = os.getlogin()
+    ssh_private_key = os.path.isfile("/home/" + username + "/.ssh/id_rsa")
+
 
 elif sys == "Darwin":
     clear = "clear"
@@ -50,7 +52,7 @@ elif sys == "Darwin":
 if ssh_private_key == False:
     os.system(clear)
     print ("Er is geen SSH privé sleutel gevonden. Hierdoor zullen sommige functies niet werken.")
-    time.sleep(sleepcounter)
+    time.sleep(5)
 
 else:
     ssh = paramiko.SSHClient()
@@ -558,7 +560,8 @@ def manage_ssh():
     
     elif sys == "Linux" or "Darwin":
         if sys == "Linux":
-            ssh_private_key = os.path.isfile("~/.ssh/id_rsa")
+            username = os.getlogin()
+            ssh_private_key = os.path.isfile("/home/" + username + "/.ssh/id_rsa")
         
         elif sys == "Darwin":
             username = os.getlogin()
@@ -571,16 +574,22 @@ def manage_ssh():
         messagequestion ("Er zijn geen SSH sleutels gevonden. Wil je die nu maken? (y/n)")
         answer= input()
 
-        if answer == "y": 
+        if answer == "y":
+            os.sytem(clear) 
             os.system("ssh-keygen")
         
         elif answer == "n":
             message (message_input="Taak is afgebroken door de gebruiker. Er zijn geen wijzigingen doorgevoerd")
-        
+            return()
+            
         else:
             message ("Input niet herkend. Probeer het opniew")
+            return()
     
+    os.system(clear)
     os.system ("ssh-copy-id " + ssh_username + "@" + gns3_server)
+
+    message(message_input="De SSH sleutel is geimporteerd")
 
 def manage_menu ():
     while start == "on":
