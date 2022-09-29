@@ -295,7 +295,7 @@ def imports ():
                 id_first_part = str (random.randint(10000000, 99999999))
                 project_id = (id_first_part + "-0405-0607-0809-0a0b0c0d0e0f")
 
-                cmd = " 'cd /mnt && curl -X POST -H 'Content-type: application/octet-stream' --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name + "'"
+                cmd = " 'cd /mnt && curl -X POST -H Content-type: application/octet-stream --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name + "'"
                 
                 test = os.system (ssh + cmd)
                 print (test)
