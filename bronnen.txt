@@ -18,6 +18,9 @@ Active gebruikersnaam verkrijgen Windows - https://stackoverflow.com/questions/1
 SSH Python Linux - https://techoverflow.net/2022/01/23/paramiko-ssh-client-how-to-connect-using-public-key-authentication/
 Optionele cli parameters - https://stackoverflow.com/questions/40710719/optional-command-line-arguments
 Create QT application python - https://www.pythonguis.com/tutorials/first-steps-qt-creator/ 
+Optionele modules laden - https://stackoverflow.com/questions/69775650/how-to-only-import-module-if-necessary-and-only-once
+Home dir ophalen Windows - https://stackoverflow.com/questions/2668909/how-to-find-the-real-user-home-directory-using-python
+
 
 SQL verbinding verbreken - https://stackoverflow.com/questions/5504340/python-mysqldb-connection-close-vs-cursor-close
 OS type bepalen - https://stackoverflow.com/questions/1854/how-to-identify-on-which-os-python-is-running-on
@@ -28,4 +31,4 @@ JSON waarde uitlezen - https://bobbyhadz.com/blog/python-response-object-is-not-
 
 
 Python modules
-pip3 install paramiko requests mysql.connector
+pip3 install paramiko requests mysql.connector pypiwin32

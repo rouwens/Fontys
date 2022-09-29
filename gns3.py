@@ -12,6 +12,8 @@ import time
 import paramiko
 import json
 from pathlib import Path
+from typing import TYPE_CHECKING
+
 
 # Config inlezen
 config = configparser.ConfigParser()
@@ -38,19 +40,23 @@ sys = platform.system()
 
 if sys == "Windows":
     clear = "cls"
-    path = str(Path.home())
-    ssh_private_key = os.path.isfile(path + "/.ssh/id_rsa")
+    if TYPE_CHECKING:
+        from win32com.shell import shell,shellcon
+    home = shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
+    ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
 
 elif sys == "Linux":
     clear = "clear"
     username = os.getlogin()
     ssh_private_key = os.path.isfile("/home/" + username + "/.ssh/id_rsa")
+    home = "~"
 
 
 elif sys == "Darwin":
     clear = "clear"
     username = os.getlogin()
     ssh_private_key = os.path.isfile("/Users/" + username + "/.ssh/id_rsa")
+    home = "~"
 
 if ssh_private_key == False:
     os.system(clear)
@@ -61,7 +67,7 @@ else:
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(gns3_server, username=ssh_username,
-    key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
+    key_filename=os.path.join(os.path.expanduser(home), ".ssh", "id_rsa"))
 
 
 def message (message_input):
@@ -559,8 +565,10 @@ def manage_projects():
 
 def manage_ssh():
     if sys == "Windows":
-        print ()
-    
+        import_module("win32com.shell")
+        home = shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
+
+
     elif sys == "Linux" or "Darwin":
         if sys == "Linux":
             username = os.getlogin()
