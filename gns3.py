@@ -38,9 +38,11 @@ ssh = ("ssh " + ssh_username + "@" + gns3_server + " ")
 sys = platform.system()
 
 if sys == "Windows":
-    from win32com.shell import shell,shellcon
+    #from win32com.shell import shell,shellcon
     clear = "cls"
-    home = shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
+    #home = shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
+    #ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
+    home = str(Path.home())
     ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
 
 elif sys == "Linux":
@@ -539,9 +541,10 @@ def manage_projects():
 
         if answer == "1":
             os.system(clear)
-            cmd = ssh + "'ls /mnt'"
+            cmd = ssh + "' ls /mnt'"
             command = os.system(cmd)
             print (command)
+            print (cmd)
             #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls /mnt")
             #print(ssh_stdout.read().decode())
             input("Druk op enter om door te gaan...")
@@ -572,8 +575,6 @@ def manage_projects():
 def manage_ssh():
     if sys == "Windows":
         home = str(Path.home())
-
-        cmd = "type " + home + "\.ssh\id_rsa.pub | ssh " + ssh_username + "@" + gns3_server + " 'cat >> .ssh/authorized_keys'"
         ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
 
     elif sys == "Linux" or "Darwin":
