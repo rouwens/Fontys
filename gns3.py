@@ -12,8 +12,6 @@ import time
 import paramiko
 import json
 from pathlib import Path
-from typing import TYPE_CHECKING
-
 
 # Config inlezen
 config = configparser.ConfigParser()
@@ -34,6 +32,7 @@ sleepcounter = 2
 option = ""
 start = "on"
 title = "GNS3 Management Tool"
+ssh = ("ssh " + ssh_username + "@" + gns3_server + " ")
 
 # Bepalen van schoonmaak commando op basis van OS
 sys = platform.system()
@@ -63,10 +62,12 @@ if ssh_private_key == False:
     time.sleep(5)
 
 else:
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(gns3_server, username=ssh_username,
-    key_filename=os.path.join(os.path.expanduser(home), ".ssh", "id_rsa"))
+    print ()
+    #ssh = paramiko.SSHClient()
+    #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    #ssh.connect(gns3_server, username=ssh_username,
+    #key_filename=os.path.join(os.path.expanduser(ssh_private_key)))
+    #key_filename=os.path.join(os.path.expanduser("%HOMEPATH%"), ".ssh", "id_rsa"))
 
 
 def message (message_input):
@@ -237,12 +238,13 @@ def export ():
 
             cmd = "curl http://" + gns3_server + ":3080/v2/projects/" + project_id + "/export -o /mnt/" + exportproject_name + ".gns3project" 
 
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(gns3_server, username=ssh_username,
-                        key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
-            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
-            print(ssh_stdout.read().decode())
+            #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            #ssh.connect(gns3_server, username=ssh_username,
+            #            key_filename=os.path.join(os.path.expanduser(ssh_private_key)))
+            #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
+            #print(ssh_stdout.read().decode())
             
+
             message (message_input="Het project is gexporteerd")
 
         else:
@@ -299,11 +301,13 @@ def imports ():
 
                 cmd = "cd /mnt && curl -X POST -H 'Content-type: application/octet-stream' --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name
 
-                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                ssh.connect(gns3_server, username=ssh_username,
-                            key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
-                ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
+                #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                #ssh.connect(gns3_server, username=ssh_username,
+                #            key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
+                #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
                 #print(ssh_stdout.read().decode())
+                
+                os.system (ssh + cmd)
 
                 #Project naam en ID wegschrijven naar de database
                 cursor.execute("INSERT INTO `projects` VALUES (NULL, %s, %s)", (project_name, project_id))
@@ -535,8 +539,11 @@ def manage_projects():
 
         if answer == "1":
             os.system(clear)
-            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls /mnt")
-            print(ssh_stdout.read().decode())
+            cmd = ssh + "'ls /mnt'"
+            command = os.system(cmd)
+            print (command)
+            #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls /mnt")
+            #print(ssh_stdout.read().decode())
             input("Druk op enter om door te gaan...")
 
         elif answer == "2":
@@ -564,11 +571,14 @@ def manage_projects():
 
 def manage_ssh():
     if sys == "Windows":
-        import_module("win32com.shell")
-        home = shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
+        home = str(Path.home())
 
+        cmd = "type $env:USERPROFILE\.ssh\id_rsa.pub | ssh " + ssh_username + "@" + gns3_server + "'cat >> .ssh/authorized_keys'"
+        ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
 
     elif sys == "Linux" or "Darwin":
+        cmd = "ssh-copy-id " + ssh_username + "@" + gns3_server
+
         if sys == "Linux":
             username = os.getlogin()
             ssh_private_key = os.path.isfile("/home/" + username + "/.ssh/id_rsa")
@@ -595,10 +605,9 @@ def manage_ssh():
         else:
             message ("Input niet herkend. Probeer het opniew")
             return()
-    
-    os.system(clear)
-    os.system ("ssh-copy-id " + ssh_username + "@" + gns3_server)
 
+    os.system (cmd)
+ 
     message(message_input="De SSH sleutel is geimporteerd")
 
 def manage_menu ():
