@@ -541,7 +541,7 @@ def manage_projects():
 
         if answer == "1":
             os.system(clear)
-            cmd = ssh + "' ls /mnt'"
+            cmd = ssh + "ls /mnt"
             command = os.system("powershell " + cmd)
             print (command)
             print (cmd)
@@ -558,7 +558,7 @@ def manage_projects():
 
             if conformation == "y":
                 cmd = "rm /mnt/" + answer + ".gns3project"
-                ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
+                os.system(cmd)
                 message ("Opdracht is uitgevoerd, check de lijst met projecten om te zien of het project nog bestaat")
                     
             elif conformation == "n":
@@ -595,7 +595,7 @@ def manage_ssh():
         answer= input()
 
         if answer == "y":
-            os.sytem(clear) 
+            os.system(clear) 
             os.system("ssh-keygen")
         
         elif answer == "n":
