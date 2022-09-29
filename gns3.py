@@ -577,8 +577,7 @@ def manage_ssh():
         ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
 
     elif sys == "Linux" or "Darwin":
-        cmd = "ssh-copy-id " + ssh_username + "@" + gns3_server
-
+        
         if sys == "Linux":
             username = os.getlogin()
             ssh_private_key = os.path.isfile("/home/" + username + "/.ssh/id_rsa")
@@ -606,10 +605,8 @@ def manage_ssh():
             message ("Input niet herkend. Probeer het opniew")
             return()
 
-    test = os.system (cmd)
-    print (test)
-    print (cmd)
-    time.sleep(10)
+    cmd = "ssh-copy-id " + ssh_username + "@" + gns3_server
+    os.system(cmd)
  
     message(message_input="De SSH sleutel is geimporteerd")
 
