@@ -542,7 +542,7 @@ def manage_projects():
         if answer == "1":
             os.system(clear)
             cmd = ssh + "' ls /mnt'"
-            command = os.system(cmd)
+            command = os.system("powershell " + cmd)
             print (command)
             print (cmd)
             #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls /mnt")
