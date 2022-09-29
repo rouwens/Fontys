@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 
 
-cmd = "C:\Windows\System32\OpenSSH\ssh.exe ub_localadmin@192.168.253.2  'ls /mnt'"
+cmd = "C:\Windows\System32\OpenSSH\ssh.exe ub_localadmin@192.168.253.2  ls /mnt"
 command = os.system(cmd)
 print (command)
 print (cmd)
