@@ -573,7 +573,7 @@ def manage_ssh():
     if sys == "Windows":
         home = str(Path.home())
 
-        cmd = "type $env:USERPROFILE\.ssh\id_rsa.pub | ssh " + ssh_username + "@" + gns3_server + "'cat >> .ssh/authorized_keys'"
+        cmd = "type " + home + "\.ssh\id_rsa.pub | ssh " + ssh_username + "@" + gns3_server + " 'cat >> .ssh/authorized_keys'"
         ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
 
     elif sys == "Linux" or "Darwin":
