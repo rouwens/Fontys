@@ -39,9 +39,8 @@ title = "GNS3 Management Tool"
 sys = platform.system()
 
 if sys == "Windows":
+    from win32com.shell import shell,shellcon
     clear = "cls"
-    if TYPE_CHECKING:
-        from win32com.shell import shell,shellcon
     home = shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
     ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
 
