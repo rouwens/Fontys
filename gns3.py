@@ -238,14 +238,8 @@ def export ():
             clean = str(fetch)
             project_id = clean[3:-4]
 
-            cmd = "curl http://" + gns3_server + ":3080/v2/projects/" + project_id + "/export -o /mnt/" + exportproject_name + ".gns3project" 
-
-            #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            #ssh.connect(gns3_server, username=ssh_username,
-            #            key_filename=os.path.join(os.path.expanduser(ssh_private_key)))
-            #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
-            #print(ssh_stdout.read().decode())
-            
+            cmd = ssh + " curl http://" + gns3_server + ":3080/v2/projects/" + project_id + "/export -o /mnt/" + exportproject_name + ".gns3project" 
+            os.system (cmd)
 
             message (message_input="Het project is gexporteerd")
 
@@ -302,12 +296,6 @@ def imports ():
                 project_id = (id_first_part + "-0405-0607-0809-0a0b0c0d0e0f")
 
                 cmd = "cd /mnt && curl -X POST -H 'Content-type: application/octet-stream' --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name
-
-                #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                #ssh.connect(gns3_server, username=ssh_username,
-                #            key_filename=os.path.join(os.path.expanduser('~'), ".ssh", "id_rsa"))
-                #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
-                #print(ssh_stdout.read().decode())
                 
                 os.system (ssh + cmd)
 
@@ -542,11 +530,8 @@ def manage_projects():
         if answer == "1":
             os.system(clear)
             cmd = ssh + "ls /mnt"
-            command = os.system("powershell " + cmd)
+            command = os.system(cmd)
             print (command)
-            print (cmd)
-            #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("ls /mnt")
-            #print(ssh_stdout.read().decode())
             input("Druk op enter om door te gaan...")
 
         elif answer == "2":
