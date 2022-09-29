@@ -608,6 +608,7 @@ def manage_ssh():
 
     test = os.system (cmd)
     print (test)
+    print (ssh_private_key)
     time.sleep(10)
  
     message(message_input="De SSH sleutel is geimporteerd")
