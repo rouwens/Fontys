@@ -38,10 +38,7 @@ ssh = ("ssh " + ssh_username + "@" + gns3_server + " ")
 sys = platform.system()
 
 if sys == "Windows":
-    #from win32com.shell import shell,shellcon
     clear = "cls"
-    #home = shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
-    #ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
     home = str(Path.home())
     ssh_private_key = os.path.isfile(home + "\.ssh\id_rsa")
 
@@ -62,15 +59,6 @@ if ssh_private_key == False:
     os.system(clear)
     print ("Er is geen SSH privé sleutel gevonden. Hierdoor zullen sommige functies niet werken.")
     time.sleep(5)
-
-else:
-    print ()
-    #ssh = paramiko.SSHClient()
-    #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    #ssh.connect(gns3_server, username=ssh_username,
-    #key_filename=os.path.join(os.path.expanduser(ssh_private_key)))
-    #key_filename=os.path.join(os.path.expanduser("%HOMEPATH%"), ".ssh", "id_rsa"))
-
 
 def message (message_input):
     os.system(clear)
@@ -231,6 +219,24 @@ def export ():
 
         #Als de projectnaam bestaat word het het exporteren uitgevoerd
         if project_name == sql_projectname:
+
+            cmd = ssh + " cat /mnt/" + exportproject_name + ".gns3project"
+            file_check = os.system(cmd)
+
+            if file_check != "0":
+                messagequestion(message_input="Het bestand bestaat al wil je het bestand overschrijven?")
+                conformation = input()
+
+                if conformation == "y":
+                    print ()
+                
+                elif conformation == "n":
+                    message("Taak is afgebroken door de gebruiker. Er zijn geen wijzigen doorgevoerd")
+                    return()
+                
+                else:
+                    message("Input niet herkend. Probeer het opnieuw")
+
             os.system(clear)
             getprojectid = """SELECT project_id FROM `projects` WHERE `name` = %s"""
             cursor.execute(getprojectid, (project_name, ))
@@ -242,19 +248,21 @@ def export ():
             os.system (cmd)
 
             message (message_input="Het project is gexporteerd")
+            
 
         else:
             message (message_input="Het project bestaat niet of is niet via deze tool aangemaakt")
         
         messagequestion (message_input="Wil je nog een project exporteren? (y/n)")
-        answer = input()
+        conformation = input()
         
-        if answer == "y":
+        if conformation == "y":
             print ()
         
-        elif answer == "n":
+        elif conformation == "n":
             print ()
             export = "off"
+
         else:
             message (message_input="Input niet herkend, je word doorgewezen naar het hoofdmenu")
             export = "off"
@@ -296,11 +304,7 @@ def imports ():
                 project_id = (id_first_part + "-0405-0607-0809-0a0b0c0d0e0f")
 
                 cmd = " 'cd /mnt && curl -X POST -H Content-type: application/octet-stream --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name + "'"
-                
-                test = os.system (ssh + cmd)
-                print (test)
-                print (ssh + cmd)
-                time.sleep(20)
+                os.system (ssh + cmd)
 
                 #Project naam en ID wegschrijven naar de database
                 cursor.execute("INSERT INTO `projects` VALUES (NULL, %s, %s)", (project_name, project_id))
@@ -317,12 +321,12 @@ def imports ():
                 message (message_input="input niet herkend. Probeer het opnieuw")
             
             messagequestion (message_input= "Wil je nog een project importeren? (y/n)")
-            answer = input()
+            conformation = input()
             
-            if answer == "y":
+            if conformation == "y":
                 print ()
             
-            elif answer == "n":
+            elif conformation == "n":
                 print ()
                 imports = "off"
             else:
@@ -629,7 +633,6 @@ def manage_menu ():
         elif answer != "1" or "2" or "3" or "4" or "5":
             message (message_input="Input niet herkend probeer het opnieuw")
     
-
 def afsluiten():
         #DB connectie verbreken
         cursor.close()
