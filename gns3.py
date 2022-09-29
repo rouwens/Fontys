@@ -295,9 +295,12 @@ def imports ():
                 id_first_part = str (random.randint(10000000, 99999999))
                 project_id = (id_first_part + "-0405-0607-0809-0a0b0c0d0e0f")
 
-                cmd = "cd /mnt && curl -X POST -H 'Content-type: application/octet-stream' --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name
+                cmd = " 'cd /mnt && curl -X POST -H 'Content-type: application/octet-stream' --data-binary @" + project_import + ".gns3project http://" + gns3_server + ":3080/v2/projects/" + project_id + "/import?name=" + project_name + "'"
                 
-                os.system (ssh + cmd)
+                test = os.system (ssh + cmd)
+                print (test)
+                print (ssh + cmd)
+                time.sleep(20)
 
                 #Project naam en ID wegschrijven naar de database
                 cursor.execute("INSERT INTO `projects` VALUES (NULL, %s, %s)", (project_name, project_id))
@@ -313,7 +316,7 @@ def imports ():
             else:
                 message (message_input="input niet herkend. Probeer het opnieuw")
             
-            messagequestion (message_input= "Wil je nog een project exporteren? (y/n)")
+            messagequestion (message_input= "Wil je nog een project importeren? (y/n)")
             answer = input()
             
             if answer == "y":
@@ -644,8 +647,8 @@ while start == "on":
     print ("1 - Lijst met projecten weergeven")
     print ("2 - Project aanmaken")
     print ("3 - Project verwijderen")
-    print ("4 - Project exportern")
-    print ("5 - Project importern")
+    print ("4 - Project exporteren")
+    print ("5 - Project importeren")
     print ("6 - Snapshot")
     print ("7 - Beheer")
     print ()
