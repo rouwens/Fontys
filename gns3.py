@@ -606,7 +606,9 @@ def manage_ssh():
             message ("Input niet herkend. Probeer het opniew")
             return()
 
-    os.system (cmd)
+    test = os.system (cmd)
+    print (test)
+    time.sleep(10)
  
     message(message_input="De SSH sleutel is geimporteerd")
 
