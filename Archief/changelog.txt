@@ -10,3 +10,12 @@ V0.1
 
 V0.2
     - Alle losse scripts samengevoegd tot één geheel. De basis werkt, parameters werken niet.
+
+V0.3 
+    - Beheer functies toegevoegd
+    - Windows & Mac OS functies eruit gehaald (i.v.m. de koers van het project)
+    - Toegevoegd: Snapshots maken en terugzetten (beta)
+    - Toegevoegd: versienummer aanvragen
+
+V0.4
+    - SQL vervangen door JSON data

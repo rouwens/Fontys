@@ -240,7 +240,9 @@ def export ():
             clean = str(fetch)
             project_id = clean[3:-4]
 
-            cmd = "curl http://" + gns3_server + ":3080/v2/projects/" + project_id + "/export -o /mnt/" + exportproject_name + ".gns3project" 
+            #cmd = "curl http://" + gns3_server + ":3080/v2/projects/" + project_id + "/export -o /mnt/" + exportproject_name + ".gns3project" 
+            #f-string:
+            cmd = f"curl http://{gns3_server}:3080/v2/projects/{project_id}/export -o /mnt/{exportproject_name}.gns3project" 
 
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(gns3_server, username=ssh_username,

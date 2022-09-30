@@ -11,7 +11,6 @@ import os.path
 import time
 import paramiko
 import json
-import pandas as pd
 
 # Config inlezen
 config = configparser.ConfigParser()
@@ -45,33 +44,30 @@ def messagequestion (message_input):
     print (message_input)
 
 def view ():
-    os.system(clear)
-    headers = {'content-type': 'application/json'}
-    url = f"http://{gns3_server}:3080/v2/projects"
-    r = requests.get(url, headers=headers)
-    data = r.json()
+    os.system(clear)    
+    getprojects = """SELECT name, project_id FROM `projects`"""
+    cursor.execute(getprojects)
+    fetch = cursor.fetchall()
+    messagequestion (message_input="Projectnaam     Project ID")
+    print ()
+    for row in fetch:
+        print(row, '\n')
 
-    df = pd.DataFrame.from_dict(data)
-    print(df[['name', 'project_id']])
-    
+    input("Druk op enter om door te gaan...")
 
 def create ():
     go = "on"
     messagequestion (message_input="Wat is de naam van het nieuwe project?")
     project_name = input()
 
-    os.system("clear")
-    headers = {'content-type': 'application/json'}
-    url = "http://" + gns3_server + ":3080/v2/projects"
-    r = requests.get(url, headers=headers)
-    data = r.json()
-
-    items = []
-    for item in data:
-        items.append(item['name'])
+    getprojectname = """SELECT name FROM `projects` WHERE `name` = %s"""
+    cursor.execute(getprojectname, (project_name, ))
+    fetch = cursor.fetchall()
+    clean = str(fetch)
+    sql_projectname = re.sub(r'[^\w\s]', '', clean)
 
     #Als de projectnaam bestaat word het script afgebroken
-    if project_name in items:
+    if project_name == sql_projectname:
         message (message_input="Project bestaat al. Probeer het opnieuw")
         time.sleep (sleepcounter)
         go = "off"
@@ -96,6 +92,10 @@ def create ():
             headers = {'content-type': 'application/json'}
             url = "http://" + gns3_server + ":3080/v2/projects"
             r = requests.post(url, json=payload, headers=headers)
+            
+            #Project naam en ID wegschrijven naar de database
+            cursor.execute("INSERT INTO `projects` VALUES (NULL, %s, %s)", (project_name, id))
+            db.commit()
             
             message (message_input="Het project is aangemaakt")
 
@@ -122,45 +122,35 @@ def create ():
 def remove ():
     remove = "on"
     while remove == "on": 
-        os.system(clear)
-        view ()
-        print ()
-        print ("Wat is de naam van het project dat je wilt verwijderen?")
+        messagequestion (message_input="Wat is de naam van het project dat je wilt verwijderen?")
         project_name = input()
-        
-        print ()
-        print ("Wat is het project ID?")
-        project_id = input()
 
-        os.system("clear")
-        headers = {'content-type': 'application/json'}
-        url = "http://" + gns3_server + ":3080/v2/projects"
-        r = requests.get(url, headers=headers)
-        data = r.json()
+        getprojectname = """SELECT name FROM `projects` WHERE `name` = %s"""
+        cursor.execute(getprojectname, (project_name, ))
+        fetch = cursor.fetchall()
+        clean = str(fetch)
+        project_name_sql = clean[3:-4]
 
-        items = []
-        for item in data:
-            items.append(item['name'])
-
-        if project_name in items:
+        if project_name == project_name_sql:
 
             messagequestion(message_input= f"Weet je het zeker dat je het project {project_name} wilt verwijderen? (y/n)")
             conformation = input()
 
             if conformation == "y":
 
-                items = []
-                for item in data:
-                    items.append(item['project_id'])
+                getprojectid = """SELECT project_id FROM `projects` WHERE `name` = %s"""
+                cursor.execute(getprojectid, (project_name, ))
+                fetch = cursor.fetchall()
+                clean = str(fetch)
+                project_id = clean[3:-4]
 
-                if project_id in items:
+                url = f"http://{gns3_server}:3080/v2/projects/{project_id}"
+                requests.delete(url)
 
-                    url = f"http://{gns3_server}:3080/v2/projects/{project_id}"
-                    requests.delete(url)
-                    message (message_input="Het project is verwijderd")
                 
-                elif project_id not in items:
-                    message(message_input="Project ID bestaat niet. Probeer het opnieuw")
+                cursor.execute("DELETE FROM projects WHERE project_id = %s ;", (project_id,))
+                db.commit()
+                message (message_input="Project is verwijderd")
 
             elif conformation == "n":
                 message (message_input="Taak is afgebroken door de gebruiker")
@@ -188,56 +178,45 @@ def remove ():
 def export ():
     export = "on"
     while export == "on":
-        os.system (clear)
-        view()
-        print ()
-        print ("Wat is de naam van het project dat je wilt exporteren?")
+
+        messagequestion (message_input="Wat is de naam van het project dat je wilt exporteren?")
         project_name = input()
-        print ()
-        print ("Wat is het project ID?")
-        project_id = input()
-        print ()
-        print ("Wat is de naam van het export bestand?")
+            
+        messagequestion (message_input="Wat is de naam van het export bestand?")
         exportproject_name = input()
 
-        os.system("clear")
-        headers = {'content-type': 'application/json'}
-        url = "http://" + gns3_server + ":3080/v2/projects"
-        r = requests.get(url, headers=headers)
-        data = r.json()
+        getprojectname = """SELECT name FROM `projects` WHERE `name` = %s"""
+        cursor.execute(getprojectname, (project_name, ))
+        fetch = cursor.fetchall()
+        clean = str(fetch)
+        sql_projectname = re.sub(r'[^\w\s]', '', clean)
 
-        items = []
-        for item in data:
-            items.append(item['name'])
+        #Als de projectnaam bestaat word het het exporteren uitgevoerd
+        if project_name == sql_projectname:
 
-        if project_name in items:
-            items = []
-            for item in data:
-                items.append(item['project_id'])
+            cmd =f"{ssh} cat /mnt/{exportproject_name}.gns3project"
+            file_check = os.system(cmd)
 
-            if project_id in items:
+            if file_check != "0":
+                messagequestion(message_input="Het bestand bestaat al wil je het bestand overschrijven?")
+                conformation = input()
 
-                cmd =f"{ssh} cat /mnt/{exportproject_name}.gns3project"
-                file_check = os.system(cmd)
+                if conformation == "y":
+                    print ()
+                
+                elif conformation == "n":
+                    message("Taak is afgebroken door de gebruiker. Er zijn geen wijzigen doorgevoerd")
+                    return()
+                
+                else:
+                    message("Input niet herkend. Probeer het opnieuw")
 
-                if file_check != "0":
-                    messagequestion(message_input="Het bestand bestaat al wil je het bestand overschrijven? (y/n)")
-                    conformation = input()
-
-                    if conformation == "y":
-                        print ()
-                    
-                    elif conformation == "n":
-                        message("Taak is afgebroken door de gebruiker. Er zijn geen wijzigen doorgevoerd")
-                        return()
-                    
-                    else:
-                        message("Input niet herkend. Probeer het opnieuw")
-            
-            elif project_id not in item:
-                message(message_input="Project ID bestaat niet. Probeer het opnieuw ")
-                return()
-
+            os.system(clear)
+            getprojectid = """SELECT project_id FROM `projects` WHERE `name` = %s"""
+            cursor.execute(getprojectid, (project_name, ))
+            fetch = cursor.fetchall()
+            clean = str(fetch)
+            project_id = clean[3:-4]
 
             cmd = f"{ssh} curl http://{gns3_server}:3080/v2/projects/{project_id}/export -o /mnt/{exportproject_name}.gns3project" 
             os.system (cmd)
@@ -246,7 +225,7 @@ def export ():
             
 
         else:
-            message (message_input="Het project bestaat niet. Probeer het opnieuw")
+            message (message_input="Het project bestaat niet of is niet via deze tool aangemaakt")
         
         messagequestion (message_input="Wil je nog een project exporteren? (y/n)")
         conformation = input()
@@ -266,31 +245,24 @@ def imports ():
     imports = "on"
     while imports == "on":
         go = "on"
-        os.system(clear)
-        print()
-        print("Wat is de naam van het nieuwe project?")
+        messagequestion (message_input="Wat is de naam van het nieuwe project?")
         project_name = input()
+    
+        getprojectname = """SELECT name FROM `projects` WHERE `name` = %s"""
+        cursor.execute(getprojectname, (project_name, ))
+        fetch = cursor.fetchall()
+        clean = str(fetch)
+        sql_projectname = re.sub(r'[^\w\s]', '', clean)
 
-        os.system("clear")
-        headers = {'content-type': 'application/json'}
-        url = "http://" + gns3_server + ":3080/v2/projects"
-        r = requests.get(url, headers=headers)
-        data = r.json()
-
-        items = []
-        for item in data:
-            items.append(item['name'])
-
-        if project_name in items:
+        #Als de projectnaam bestaat word het script afgebroken
+        if project_name == sql_projectname:
             message (message_input="Project bestaat al. Probeer het opnieuw")
             go = "off"
         
         if go == "on":
-            cmd = ssh + "ls /mnt"
-            command = os.system(cmd)
-            print (command)
-            print ()
-            print ("Wat is de naam van de template dat je wilt importeren?")
+
+
+            messagequestion (message_input="Wat is de naam van het project dat je wilt importeren?")
             project_import = input()
 
             os.system(clear)
@@ -306,12 +278,16 @@ def imports ():
                 project_id = f"{id_first_part}-0405-0607-0809-0a0b0c0d0e0f"
 
                 cmd = f" 'cd /mnt && curl -X POST -H Content-type: application/octet-stream --data-binary @{project_import}.gns3project http://{gns3_server}:3080/v2/projects/{project_id}/import?name={project_name}'"
-                command = os.system (ssh + cmd)
+                os.system (ssh + cmd)
+
+                #Project naam en ID wegschrijven naar de database
+                cursor.execute("INSERT INTO `projects` VALUES (NULL, %s, %s)", (project_name, project_id))
+                db.commit()
                 
                 message (message_input="Het project is geimporteerd")
                 imports = "off"
 
-            elif conformation == "n":
+            if conformation == "n":
                 message (message_input="Er zijn geen wijzigingen aangebracht")
                 imports = "off"
 
@@ -337,20 +313,15 @@ def snapshot_view(project_id):
     headers = {'content-type': 'application/json'}
     url = f"http://{gns3_server}:3080/v2/projects/{project_id}/snapshots"
     r = requests.get(url, headers=headers)
-    data = r.json()
-
-
     
     if r.text == "[]":
         message (message_input="Er is zijn snapshots gemaakt voor dit project")
-        return()
     
     else:
-        df = pd.DataFrame.from_dict(data)
-        print(df[['name', 'snapshot_id', 'created_at']])
+        print (r.text)
         input("Druk op enter om door te gaan...")
 
-def snapshot_create(project_id):
+def snapshot_create(project_id, project_name):
     message (message_input= "Wat is de naam van de snapshot?")
     answer = input()
     
@@ -362,6 +333,13 @@ def snapshot_create(project_id):
     headers = {'content-type': 'application/json'}
     url = f"http://{gns3_server}:3080/v2/projects/{project_id}/snapshots"
     r = requests.post(url, json=payload, headers=headers)
+    data = r.json()
+    snapshot_id = data["snapshot_id"]
+
+    #Project naam en ID wegschrijven naar de database
+    cursor.execute("INSERT INTO `snapshots` VALUES (NULL, %s, %s, %s)", (project_name, answer, snapshot_id))
+    db.commit()
+
     message (message_input = "De snapshot is gemaakt")
 
 def snapshot_remove(project_id, project_name):
@@ -432,97 +410,85 @@ def snapshot_restore(project_id, project_name):
     else:
         message (message_input="Input niet herkend. Er zijn geen wijzigingen uitgevoerd")
 
-def snapshot_menu_check():
-        go = "on"
-        os.system(clear)
-        view()
-        print ()
-        print ("Wat is de naam van het project?")
-        project_name = input()
-
-        print ()
-        print ("Wat is het Project ID?")
-        project_id = input()
-
-        headers = {'content-type': 'application/json'}
-        url = "http://" + gns3_server + ":3080/v2/projects"
-        r = requests.get(url, headers=headers)
-        data = r.json()
-
-        items = []
-        for item in data:
-            items.append(item['name'])
-
-        if project_name in items:
-
-            items = []
-            for item in data:
-                items.append(item['project_id'])
-            
-            if project_id in items:
-
-                #API request om het project te openen 
-                headers = {'content-type': 'application/json'}
-                url = "http://" + gns3_server + ":3080/v2/projects/" + project_id +"/open"
-                r = requests.post(url, headers=headers)
-                snapshot_menu(project_name, project_id)
-            
-            elif project_name not in items:
-                os.system(clear)
-                print ("Project bestaat niet. Probeer het opnieuw")
-                time.sleep(sleepcounter)
-                return()
-            
-        elif project_name not in items:
-            os.system(clear)
-            print ("Project bestaat niet. Probeer het opnieuw")
-            time.sleep(sleepcounter)
-            return()
-
-def snapshot_menu (project_name, project_id):
+def snapshot_menu ():
+    project_name = ""
     while start == "on":
-        os.system(clear)
-        print (title)
-        print ()
-        print_menu = f"Snapshots beheren van project {project_name} met project ID {project_id}"
-        print (print_menu)
-        print ()
-        print ("1 - Snapshots weergeven")
-        print ("2 - Snapshot maken")
-        print ("3 - Snapshot verwijderen")
-        print ("4 - Snapshot terug zetten")
-        print ("5 - Ander project beheren")
-        print ("6 - Terug gaan naar het vorige menu")
-        print ("7 - Afsluiten")
-        print ()
-        print ("Vul het nummer van de optie die je wilt gebruiken.")
-        answer = input ()
+        go = "on"
 
-        if answer == "1":
-            snapshot_view(project_id)
+        if project_name == "":
+            os.system(clear)
+            print ("Wat is de naam van het project?")
+            project_name = input()
 
-        elif answer == "2":
-            snapshot_create(project_id)
-        
-        elif answer == "3":
-            snapshot_remove(project_id, project_name)                
+            getprojectname = """SELECT name FROM `projects` WHERE `name` = %s"""
+            cursor.execute(getprojectname, (project_name, ))
+            fetch = cursor.fetchall()
+            clean = str(fetch)
+            sql_projectname = re.sub(r'[^\w\s]', '', clean)
 
-        elif answer == "4":
-            snapshot_restore(project_id, project_name)
+            getprojectid = """SELECT project_id FROM `projects` WHERE `name` = %s"""
+            cursor.execute(getprojectid, (project_name, ))
+            fetch = cursor.fetchall()
+            clean = str(fetch)
+            project_id = clean[3:-4]
+
+            #API request om het project te openen 
+            headers = {'content-type': 'application/json'}
+            url = "http://" + gns3_server + ":3080/v2/projects/" + project_id +"/open"
+            r = requests.post(url, headers=headers)
+
+            if project_name != sql_projectname:
+                os.system(clear)
+                print ("Project bestaat niet. Kies een andere naam")
+                time.sleep(sleepcounter)
+                go = "off"
+            
+            else:
+                go = "on"
         
-        elif answer == "5":
-            project_name = ""
-        
-        elif answer == "6":
-            return ()
-        
-        elif answer == "7":
-            afsluiten()
-        
-        elif answer != "1" or "2" or "3" or "4" or "5" or "6" or "7":
-            os.system (clear)
-            print ("Input niet herkend probeer het opnieuw")
-            time.sleep (sleepcounter)
+        if go == "on":
+            os.system(clear)
+            print_menu = f"Snapshots beheren van project {project_name}"
+            print (print_menu)
+            print ("Snapshots")
+            print ()
+            print ("1 - Snapshots weergeven")
+            print ("2 - Snapshot maken")
+            print ("3 - Snapshot verwijderen")
+            print ("4 - Snapshot terug zetten")
+            print ("5 - Ander project beheren")
+            print ("6 - Terug gaan naar het vorige menu")
+            print ("7 - Afsluiten")
+            print ()
+            print ("Vul het nummer van de optie die je wilt gebruiken.")
+            answer = input ()
+
+            if answer == "1":
+                snapshot_view(project_id)
+
+            
+            elif answer == "2":
+                snapshot_create(project_id, project_name)
+            
+            elif answer == "3":
+                snapshot_remove(project_id, project_name)                
+
+            elif answer == "4":
+                snapshot_restore(project_id, project_name)
+            
+            elif answer == "5":
+                project_name = ""
+            
+            elif answer == "6":
+                return ()
+            
+            elif answer == "7":
+                afsluiten()
+            
+            elif answer != "1" or "2" or "3" or "4" or "5" or "6" or "7":
+                os.system (clear)
+                print ("Input niet herkend probeer het opnieuw")
+                time.sleep (sleepcounter)
 
 def manage_checkversion():
     os.system(clear)
@@ -601,7 +567,7 @@ def manage_menu ():
         
         elif answer != "1" or "2" or "3" or "4":
             message (message_input="Input niet herkend probeer het opnieuw")
-
+    
 def afsluiten():
         #DB connectie verbreken
         cursor.close()
@@ -631,8 +597,6 @@ while start == "on":
 
     if answer == "1":
         view ()
-        print ()
-        input("Druk op enter om door te gaan...")
 
     elif answer == "2":
         create () 
@@ -647,7 +611,7 @@ while start == "on":
         imports ()
     
     elif answer == "6":
-        snapshot_menu_check ()
+        snapshot_menu ()
     
     elif answer == "7":
         manage_menu ()
