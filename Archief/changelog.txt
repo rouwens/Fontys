@@ -15,7 +15,11 @@ V0.3
     - Beheer functies toegevoegd
     - Windows & Mac OS functies eruit gehaald (i.v.m. de koers van het project)
     - Toegevoegd: Snapshots maken en terugzetten (beta)
-    - Toegevoegd: versienummer aanvragen
+    - Toegevoegd: Versienummer aanvragen
+    - Toegevoegd: Alle nodes weergeven
 
 V0.4
     - SQL vervangen door JSON data
+    - Mappen structuur aangepast op de server
+    - Toegevoegd: Apparaten selecteren en toevoegen aan een nieuw of bestaand project.
+    - Snapshots verbeterd, alle functies werken naar behoren.

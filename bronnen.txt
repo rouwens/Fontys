@@ -20,6 +20,8 @@ Optionele cli parameters - https://stackoverflow.com/questions/40710719/optional
 Create QT application python - https://www.pythonguis.com/tutorials/first-steps-qt-creator/ 
 Optionele modules laden - https://stackoverflow.com/questions/69775650/how-to-only-import-module-if-necessary-and-only-once
 Home dir ophalen Windows - https://stackoverflow.com/questions/2668909/how-to-find-the-real-user-home-directory-using-python
+Python for loop - https://www.w3schools.com/python/python_for_loops.asp
+Python count - https://bobbyhadz.com/blog/python-count-in-for-loop#:~:text=Initialize%20a%20count%20variable%20and,its%20current%20value%20plus%20N.
 
 
 SQL verbinding verbreken - https://stackoverflow.com/questions/5504340/python-mysqldb-connection-close-vs-cursor-close

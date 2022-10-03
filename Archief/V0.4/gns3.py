@@ -1,5 +1,4 @@
 import configparser
-from inspect import Parameter
 import random
 from tracemalloc import Snapshot
 import requests
@@ -12,22 +11,6 @@ import time
 import paramiko
 import json
 import pandas as pd
-
-parser = argparse.ArgumentParser(description = "GNS3 Management Tool")
-parser.add_argument("-o", "--optie", help = "Optie", required = False, default = "")
-parser.add_argument("-b", "--bevesteging", help = "Bevestegeging", required = False, default = "")
-
-argument = parser.parse_args()
-status = False
-
-if argument.optie:
-    status = True
-    option = argument.optie
-
-if argument.bevesteging:
-    status = True
-    comfromation = argument.bevesteging
-
 
 # Config inlezen
 config = configparser.ConfigParser()
@@ -46,7 +29,6 @@ start = "on"
 title = "GNS3 Management Tool"
 ssh = ("ssh " + ssh_username + "@" + gns3_server + " ")
 clear = ("clear")
-print (option)
 
 def message (message_input):
     os.system(clear)
@@ -393,7 +375,7 @@ def snapshot_remove(project_id, project_name):
     url = f"http://{gns3_server}:3080/v2/projects/{project_id}/snapshots"
     r = requests.get(url, headers=headers)
     data = r.json()
-
+ 
     snapshot_view(project_id)
     print()
     print("Wat is de naam van de snapshot dat je wilt verwijderen?")
@@ -735,12 +717,7 @@ def afsluiten():
         os.system("rm ~/.session")
         exit()
 
-while start == "on":
-
-    if option == "view":
-        view()
-        exit()
-
+while start == "on":       
     os.system (clear)
     print ("GNS3 Management Tool")
     print ()
@@ -754,6 +731,7 @@ while start == "on":
     print ("8 - Beheer")
     print ()
     print ("9 - Afsluiten")
+    print ("10 - Naar shell gaan")
     print ()
     print ("Vul het nummer van de optie die je wilt gebruiken.")
     answer = input ()
