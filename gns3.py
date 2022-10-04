@@ -12,9 +12,19 @@ import time
 import paramiko
 import json
 import pandas as pd
+from pathlib import Path
+
 
 parser = argparse.ArgumentParser(description = "GNS3 Management Tool")
 parser.add_argument("-o", "--optie", help = "Optie", required = False, default = "")
+parser.add_argument("-pn", "--projectnaam", help = "Project aam", required = False, default = "")
+parser.add_argument("-pid", "--projectid", help = "Project ID", required = False, default = "")
+parser.add_argument("-exn", "--exportnaam", help = "Export naam", required = False, default = "")
+parser.add_argument("-imn", "--importnaam", help = "Import naam", required = False, default = "")
+parser.add_argument("-sn", "--snapshotnaam", help = "Snapshot naam", required = False, default = "")
+parser.add_argument("-sid", "--snapshotid", help = "Snapshot ID", required = False, default = "")
+parser.add_argument("-tn", "--templatenaam", help = "Template naam", required = False, default = "")
+parser.add_argument("-s", "--show", help = "Laat dingen zien", required = False, default = "")
 parser.add_argument("-b", "--bevesteging", help = "Bevestegeging", required = False, default = "")
 
 argument = parser.parse_args()
@@ -22,12 +32,6 @@ status = False
 
 if argument.optie:
     status = True
-    option = argument.optie
-
-if argument.bevesteging:
-    status = True
-    comfromation = argument.bevesteging
-
 
 # Config inlezen
 config = configparser.ConfigParser()
@@ -46,7 +50,7 @@ start = "on"
 title = "GNS3 Management Tool"
 ssh = ("ssh " + ssh_username + "@" + gns3_server + " ")
 clear = ("clear")
-print (option)
+
 
 def message (message_input):
     os.system(clear)
@@ -57,20 +61,38 @@ def messagequestion (message_input):
     os.system(clear)
     print (message_input)
 
-def view ():
-    os.system(clear)
-    headers = {'content-type': 'application/json'}
-    url = f"http://{gns3_server}:3080/v2/projects"
-    r = requests.get(url, headers=headers)
-    data = r.json()
+def view (option):
+    if option == "projects":
+        os.system(clear)
+        headers = {'content-type': 'application/json'}
+        url = f"http://{gns3_server}:3080/v2/projects"
+        r = requests.get(url, headers=headers)
+        data = r.json()
 
-    df = pd.DataFrame.from_dict(data)
-    print(df[['name', 'project_id']])   
+        df = pd.DataFrame.from_dict(data)
+        print(df[['name', 'project_id']])
+    
+    if option == "templates":
+        os.system(clear)
+        cmd = ssh + "ls /mnt/project_templates/"
+        command = os.system(cmd)
+        print (command)
 
-def create ():
+    if option == "nodes":
+        os.system (clear)              
+        headers = {'content-type': 'application/json'}
+        url = f"http://{gns3_server}:3080/v2/templates"
+        r = requests.get(url, headers=headers)
+        data = r.json()
+        df = pd.DataFrame.from_dict(data)
+        print(df[['name', 'template_id', 'template_type', 'category' ]])
+        print ()   
+
+def create (project_name, conformation, exit_after_finish):
     go = "on"
-    messagequestion (message_input="Wat is de naam van het nieuwe project?")
-    project_name = input()
+    if project_name == "":
+        messagequestion (message_input="Wat is de naam van het nieuwe project?")
+        project_name = input()
 
     os.system("clear")
     headers = {'content-type': 'application/json'}
@@ -90,8 +112,9 @@ def create ():
 
     if go == "on":
 
-        messagequestion (message_input="Weet je het zeker dat je een nieuw project wilt starten met de naam " + project_name + " ? (y/n)")
-        conformation = input()
+        if conformation == "":
+            messagequestion (message_input="Weet je het zeker dat je een nieuw project wilt starten met de naam " + project_name + "? (y/n)")
+            conformation = input()
 
         if conformation == "y":
 
@@ -110,6 +133,9 @@ def create ():
             r = requests.post(url, json=payload, headers=headers)
             
             message (message_input="Het project is aangemaakt")
+
+            if exit_after_finish == True:
+                exit()
 
             messagequestion (message_input="Wil je apparaten toevoegen aan je nieuwe project? (y/n)")
             answer_add_devices = input()
@@ -145,18 +171,19 @@ def create ():
         else:
             message (message_input="Input niet herkend, je word doorgewezen naar het hoofdmenu")
 
-def remove ():
+def remove (project_name, project_id, conformation, exit_after_finish):
     remove = "on"
     while remove == "on": 
         os.system(clear)
-        view ()
-        print ()
-        print ("Wat is de naam van het project dat je wilt verwijderen?")
-        project_name = input()
-        
-        print ()
-        print ("Wat is het project ID?")
-        project_id = input()
+        if project_name == "" or project_id== "":
+            view (option="projects")
+            print ()
+            print ("Wat is de naam van het project dat je wilt verwijderen?")
+            project_name = input()
+            
+            print ()
+            print ("Wat is het project ID?")
+            project_id = input()
 
         os.system("clear")
         headers = {'content-type': 'application/json'}
@@ -169,9 +196,9 @@ def remove ():
             items.append(item['name'])
 
         if project_name in items:
-
-            messagequestion(message_input= f"Weet je het zeker dat je het project {project_name} wilt verwijderen? (y/n)")
-            conformation = input()
+            if conformation == "":
+                messagequestion(message_input= f"Weet je het zeker dat je het project {project_name} wilt verwijderen? (y/n)")
+                conformation = input()
 
             if conformation == "y":
 
@@ -194,8 +221,8 @@ def remove ():
             else:
                 message (message_input="Input niet herkend er zijn geen wijzigingen toegepast")
             
-            if option != "":
-                exit ()
+            if exit_after_finish == True:
+                exit()
 
             messagequestion (message_input="Wil je nog een project verwijderen? (y/n)")
             answer = input()
@@ -211,20 +238,25 @@ def remove ():
         else:
             message (message_input="Het project bestaat niet of is niet via deze tool gemaakt. Probeer het opnieuw")
     
-def export ():
+def export (project_name, project_id, export_name, exit_after_finish):
     export = "on"
     while export == "on":
         os.system (clear)
-        view()
-        print ()
-        print ("Wat is de naam van het project dat je wilt exporteren?")
-        project_name = input()
-        print ()
-        print ("Wat is het project ID?")
-        project_id = input()
-        print ()
-        print ("Wat is de naam van het export bestand?")
-        exportproject_name = input()
+        if project_name == "":
+            view(option="projects")
+            print ()
+            print ("Wat is de naam van het project dat je wilt exporteren?")
+            project_name = input()
+        
+        if project_id == "":
+            print ()
+            print ("Wat is het project ID?")
+            project_id = input()
+        
+        if export_name == "":
+            print ()
+            print ("Wat is de naam van het export bestand?")
+            export_name = input()
 
         os.system("clear")
         headers = {'content-type': 'application/json'}
@@ -243,10 +275,10 @@ def export ():
 
             if project_id in items:
 
-                cmd =f"{ssh} cat /mnt/project_templates/{exportproject_name}.gns3project"
-                file_check = os.system(cmd)
+                check_export = os.path.isfile(f"/mnt/project_templates/{export_name}.gns3project")
 
-                if file_check != "0":
+                if check_export == False:
+                    print (check_export)
                     messagequestion(message_input="Het bestand bestaat al wil je het bestand overschrijven? (y/n)")
                     conformation = input()
 
@@ -265,7 +297,7 @@ def export ():
                 return()
 
 
-            cmd = f"{ssh} curl http://{gns3_server}:3080/v2/projects/{project_id}/export -o /mnt/project_templates/{exportproject_name}.gns3project" 
+            cmd = f"{ssh} curl http://{gns3_server}:3080/v2/projects/{project_id}/export -o /mnt/project_templates/{export_name}.gns3project" 
             os.system (cmd)
 
             message (message_input="Het project is gexporteerd")
@@ -274,6 +306,9 @@ def export ():
         else:
             message (message_input="Het project bestaat niet. Probeer het opnieuw")
         
+        if exit_after_finish == True:
+            exit()
+
         messagequestion (message_input="Wil je nog een project exporteren? (y/n)")
         conformation = input()
         
@@ -288,14 +323,16 @@ def export ():
             message (message_input="Input niet herkend, je word doorgewezen naar het hoofdmenu")
             export = "off"
     
-def imports ():
+def imports (project_name, import_name, conformation, exit_after_finish):
     imports = "on"
     while imports == "on":
-        go = "on"
-        os.system(clear)
-        print()
-        print("Wat is de naam van het nieuwe project?")
-        project_name = input()
+        go = True
+
+        if project_name == "":
+            os.system(clear)
+            print()
+            print("Wat is de naam van het nieuwe project?")
+            project_name = input()
 
         os.system("clear")
         headers = {'content-type': 'application/json'}
@@ -309,29 +346,31 @@ def imports ():
 
         if project_name in items:
             message (message_input="Project bestaat al. Probeer het opnieuw")
-            go = "off"
+            go = False
         
-        if go == "on":
-            cmd = ssh + "ls /mnt/project_templates/"
-            command = os.system(cmd)
-            print (command)
-            print ()
-            print ("Wat is de naam van de template dat je wilt importeren?")
-            project_import = input()
-
-            os.system(clear)
-            print ("Nieuwe projectnaam: " + project_name)
-            print ("Template: " + project_import)
-            print ("")
-            print ("Weet je het zeker dat je het project wilt importeren met de volgende gegevens? (y/n)")
-            conformation = input ()
+        if go == True:
+            if import_name == "":
+                cmd = ssh + "ls /mnt/project_templates/"
+                command = os.system(cmd)
+                print (command)
+                print ()
+                print ("Wat is de naam van de template dat je wilt importeren?")
+                import_name = input()
+            
+            if conformation == "":
+                os.system(clear)
+                print ("Nieuwe projectnaam: " + project_name)
+                print ("Template: " + import_name)
+                print ("")
+                print ("Weet je het zeker dat je het project wilt importeren met de volgende gegevens? (y/n)")
+                conformation = input ()
 
             if conformation == "y":
                 
                 id_first_part = str (random.randint(10000000, 99999999))
                 project_id = f"{id_first_part}-0405-0607-0809-0a0b0c0d0e0f"
 
-                cmd = f" 'cd /mnt/project_templates/ && curl -X POST -H Content-type: application/octet-stream --data-binary @{project_import}.gns3project http://{gns3_server}:3080/v2/projects/{project_id}/import?name={project_name}'"
+                cmd = f" 'cd /mnt/project_templates/ && curl -X POST -H Content-type: application/octet-stream --data-binary @{import_name}.gns3project http://{gns3_server}:3080/v2/projects/{project_id}/import?name={project_name}'"
                 command = os.system (ssh + cmd)
                 
                 message (message_input="Het project is geimporteerd")
@@ -343,6 +382,9 @@ def imports ():
 
             else:
                 message (message_input="input niet herkend. Probeer het opnieuw")
+
+            if exit_after_finish == True:
+                exit()
             
             messagequestion (message_input= "Wil je nog een project importeren? (y/n)")
             conformation = input()
@@ -373,12 +415,13 @@ def snapshot_view(project_id):
         df = pd.DataFrame.from_dict(data)
         print(df[['name', 'snapshot_id', 'created_at']])
 
-def snapshot_create(project_id):
-    message (message_input= "Wat is de naam van de snapshot?")
-    answer = input()
+def snapshot_create(project_id, snap_name):
+    if snap_name == "":
+        message (message_input= "Wat is de naam van de snapshot?")
+        snap_name = input()
     
     payload = {
-        "name": answer,
+        "name": snap_name,
     }
 
     #API request om de snapshot te maken 
@@ -387,44 +430,48 @@ def snapshot_create(project_id):
     r = requests.post(url, json=payload, headers=headers)
     message (message_input = "De snapshot is gemaakt")
 
-def snapshot_remove(project_id, project_name):
+def snapshot_remove(project_id, snap_name, snap_id, conformation):
     os.system(clear)
     headers = {'content-type': 'application/json'}
     url = f"http://{gns3_server}:3080/v2/projects/{project_id}/snapshots"
     r = requests.get(url, headers=headers)
     data = r.json()
 
-    snapshot_view(project_id)
-    print()
-    print("Wat is de naam van de snapshot dat je wilt verwijderen?")
-    snapshot_name = input()
+    if snap_name == "":
+        snapshot_view(project_id)
+        print()
+        print("Wat is de naam van de snapshot dat je wilt verwijderen?")
+        snap_name = input()
 
     items = []
     for item in data:
         items.append(item['name'])
 
-    if snapshot_name not in items:
+    if snap_name not in items:
         message (message_input="Snapshot naam bestaat niet. Probeer het opnieuw")
         return()
 
-    print ()
-    print ("Wat is het ID van de snapshot?")
-    snapshot_id = input()
+    if snap_id == "":
+        print ()
+        print ("Wat is het ID van de snapshot?")
+        snap_id = input()
+
     items = []
     for item in data:
         items.append(item['snapshot_id'])
     
-    if snapshot_id not in items:
+    if snap_id not in items:
         message(message_input="Snapshot ID bestaat niet. Probeer het opniew")
         return()
 
-    print ()
-    messagequestion(message_input=f"Weet je het zeker dat je de snapshot {snapshot_name} met het ID {snapshot_id} wilt verwijderen (y/n)")
-    conformation = input()
+    if conformation == "":
+        print ()
+        messagequestion(message_input=f"Weet je het zeker dat je de snapshot {snap_name} met het ID {snap_id} wilt verwijderen (y/n)")
+        conformation = input()
 
     if conformation == "y":
             headers = {'content-type': 'application/json'}
-            url = f"http://{gns3_server}:3080/v2/projects/{project_id}/snapshots/{snapshot_id}"
+            url = f"http://{gns3_server}:3080/v2/projects/{project_id}/snapshots/{snap_id}"
             r = requests.delete(url, headers=headers)
             message (message_input="Snapshot is verwijderd")            
         
@@ -433,21 +480,21 @@ def snapshot_remove(project_id, project_name):
     else:
         message(message_input="Input niet herkend probeer het opnieuw")
 
-def snapshot_restore(project_id, project_name):
-    snapshot_view(project_id)
-    print ()
-    print("Wat is het ID van de snapshot dat je wilt herstellen?")
-    snapshot_id = input()
+def snapshot_restore(project_id, snap_id, conformation):
+    if snap_id == "":
+        snapshot_view(project_id)
+        print ()
+        print("Wat is het ID van de snapshot dat je wilt herstellen?")
+        snap_id = input()
 
-    messagequestion(f"Weet je het zeker dat je snapshot ID {snapshot_id} wilt herstellen? (y/n)")
-    conformation = input ()
+    if conformation == "":
+        messagequestion(f"Weet je het zeker dat je snapshot ID {snap_id} wilt herstellen? (y/n)")
+        conformation = input ()
 
     if conformation == "y":
         headers = {'content-type': 'application/json'}
-        url = f"http://{gns3_server}:3080/v2/projects/{project_id}/snapshots/{snapshot_id}/restore"
-        r = requests.post(url, headers=headers)
-        print (r.text)
-        #time.sleep(10)
+        url = f"http://{gns3_server}:3080/v2/projects/{project_id}/snapshots/{snap_id}/restore"
+        requests.post(url, headers=headers)
         message (message_input="Snapshot is hersteld")
         
     elif conformation == "n":
@@ -459,7 +506,7 @@ def snapshot_restore(project_id, project_name):
 def snapshot_menu_check():
         go = "on"
         os.system(clear)
-        view()
+        view(option="projects")
         print ()
         print ("Wat is de naam van het project?")
         project_name = input()
@@ -505,6 +552,7 @@ def snapshot_menu_check():
 
 def snapshot_menu (project_name, project_id):
     while start == "on":
+        snap_name = ""
         os.system(clear)
         print (title)
         print ()
@@ -528,16 +576,16 @@ def snapshot_menu (project_name, project_id):
 
 
         elif answer == "2":
-            snapshot_create(project_id)
+            snapshot_create(project_id, snap_name)
         
         elif answer == "3":
-            snapshot_remove(project_id, project_name)                
+            snapshot_remove(project_id, snap_name, snap_id, conformation)                
 
         elif answer == "4":
-            snapshot_restore(project_id, project_name)
+            snapshot_restore(project_id, snap_id, conformation)
         
         elif answer == "5":
-            project_name = ""
+            snapshot_menu_check()
         
         elif answer == "6":
             return ()
@@ -557,7 +605,7 @@ def manage_checkversion():
     r = requests.get(url, headers=headers)
     data = r.json()
     version_number = data['version']
-    message(message_input= f"GNS3 versie: {version_number}")
+    print (f"GNS3 versie: {version_number}")
 
 def manage_projects():
     while start == "on":
@@ -572,10 +620,7 @@ def manage_projects():
         answer = input()
 
         if answer == "1":
-            os.system(clear)
-            cmd = ssh + "ls /mnt/project_templates/"
-            command = os.system(cmd)
-            print (command)
+            view(option="templates")
             input("Druk op enter om door te gaan...")
 
         elif answer == "2":
@@ -601,18 +646,6 @@ def manage_projects():
         elif answer == "4":
             afsluiten()
 
-def manage_nodes():
-    os.system (clear)              
-    #API request om snapshots te zien
-    headers = {'content-type': 'application/json'}
-    url = f"http://{gns3_server}:3080/v2/templates"
-    r = requests.get(url, headers=headers)
-    data = r.json()
-    df = pd.DataFrame.from_dict(data)
-    print(df[['name', 'template_id', 'template_type', 'category' ]])
-    print ()
-    input("Druk op enter om door te gaan...")
-
 def manage_menu ():
     while start == "on":
         os.system(clear)
@@ -628,12 +661,14 @@ def manage_menu ():
 
         if answer == "1":
             manage_checkversion()
+            time.sleep(2)
         
         elif answer == "2":
             manage_projects()
         
         elif answer == "3":
-            manage_nodes()
+            view(option="nodes")
+            input("Druk op enter om door te gaan...")
 
         elif answer == "4":
             return()
@@ -732,14 +767,72 @@ def afsluiten():
         os.system (clear)
         print ("Bye, Bye")
         time.sleep (sleepcounter)
-        os.system("rm ~/.session")
         exit()
 
-while start == "on":
+def arguments(option, project_name, project_id, export_name, import_name, snap_name, snap_id, show, template_name, comfromation):
+    exit_after_finish = True
 
     if option == "view":
-        view()
-        exit()
+        view(option="projects")
+    
+    elif option == "project_create":
+        create (project_name,comfromation, exit_after_finish)
+    
+    elif option == "remove_project":
+        remove (project_name, project_id, comfromation, exit_after_finish)
+    
+    elif option == "export":
+        export(project_name, project_id, export_name, exit_after_finish)
+    
+    elif option == "import":
+        imports(project_name, import_name, comfromation, exit_after_finish)
+    
+    elif option == "snap_view":
+        snapshot_view(project_id)
+    
+    elif option == "snap_create":
+        snapshot_create(project_id, snap_name)
+    
+    elif option == "snap_remove":
+        snapshot_remove(project_id, snap_name, snap_id, comfromation)
+    
+    elif option == "snap_restore":
+        snapshot_restore(project_id, snap_id, comfromation)
+
+    elif option == "show":
+        view (show)
+    
+    elif option == "remove_template":
+        print()
+
+    else:
+        message(message_input="Optie bestaat niet. Probeer het opnieuw")
+    
+    exit()
+
+while start == "on":
+    if status == True:
+        option = argument.optie
+        comfromation = argument.bevesteging
+        project_name = argument.projectnaam
+        project_id = argument.projectid
+        export_name = argument.exportnaam
+        import_name = argument.importnaam
+        snap_name = argument.snapshotnaam
+        snap_id = argument.snapshotid
+        show = argument.show
+        template_name = argument.templatenaam
+        arguments(option, project_name, project_id, export_name, import_name, snap_name, snap_id, show, template_name, comfromation)
+    
+    project_name = ""
+    project_id = ""
+    conformation = ""
+    export_name = ""
+    import_name = ""
+    snap_name = ""
+    snap_id = ""
+    template_name = ""
+    exit_after_finish = False
 
     os.system (clear)
     print ("GNS3 Management Tool")
@@ -759,12 +852,12 @@ while start == "on":
     answer = input ()
 
     if answer == "1":
-        view ()
+        view (option="projects")
         print ()
         input("Druk op enter om door te gaan...")
 
     elif answer == "2":
-        create () 
+        create (project_name, conformation, exit_after_finish) 
 
     elif answer == "3":
         os.system(clear)
@@ -775,13 +868,13 @@ while start == "on":
         add_devices(project_id)
 
     elif answer == "4":
-        remove ()
+        remove (project_name, project_id, conformation, exit_after_finish)
 
     elif answer == "5":
-        export ()
+        export (project_name, project_id, export_name, exit_after_finish)
 
     elif answer == "6":
-        imports ()
+        imports (project_name, import_name, conformation, exit_after_finish)
     
     elif answer == "7":
         snapshot_menu_check ()
