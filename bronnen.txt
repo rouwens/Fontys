@@ -22,6 +22,7 @@ Optionele modules laden - https://stackoverflow.com/questions/69775650/how-to-on
 Home dir ophalen Windows - https://stackoverflow.com/questions/2668909/how-to-find-the-real-user-home-directory-using-python
 Python for loop - https://www.w3schools.com/python/python_for_loops.asp
 Python count - https://bobbyhadz.com/blog/python-count-in-for-loop#:~:text=Initialize%20a%20count%20variable%20and,its%20current%20value%20plus%20N.
+Powercli vmware cpu cores toevoegen - https://vmguru.com/2015/12/powershell-friday-adding-cpus-powercli/
 
 
 SQL verbinding verbreken - https://stackoverflow.com/questions/5504340/python-mysqldb-connection-close-vs-cursor-close

@@ -17,6 +17,7 @@ from pathlib import Path
 
 parser = argparse.ArgumentParser(description = "GNS3 Management Tool")
 parser.add_argument("-o", "--optie", help = "Optie", required = False, default = "")
+parser.add_argument("-s", "--show", help = "Laat dingen zien", required = False, default = "")
 parser.add_argument("-pn", "--projectnaam", help = "Project aam", required = False, default = "")
 parser.add_argument("-pid", "--projectid", help = "Project ID", required = False, default = "")
 parser.add_argument("-exn", "--exportnaam", help = "Export naam", required = False, default = "")
@@ -24,7 +25,9 @@ parser.add_argument("-imn", "--importnaam", help = "Import naam", required = Fal
 parser.add_argument("-sn", "--snapshotnaam", help = "Snapshot naam", required = False, default = "")
 parser.add_argument("-sid", "--snapshotid", help = "Snapshot ID", required = False, default = "")
 parser.add_argument("-tn", "--templatenaam", help = "Template naam", required = False, default = "")
-parser.add_argument("-s", "--show", help = "Laat dingen zien", required = False, default = "")
+parser.add_argument("-ram", "--ram", help = "GNS3 RAM", required = False, default = "")
+parser.add_argument("-cpu", "--cpu", help = "GNS3 CPU's", required = False, default = "")
+parser.add_argument("-core", "--core", help = "GNS3 Core's", required = False, default = "")
 parser.add_argument("-b", "--bevesteging", help = "Bevestegeging", required = False, default = "")
 
 argument = parser.parse_args()
@@ -43,6 +46,11 @@ template_cloud = config['templates']['cloud']
 template_fortigate = config['templates']['fortigate']
 template_switch = config['templates']['switch']
 template_pc = config['templates']['pc']
+
+vmware_host = config['vmware']['host']
+vmware_username = config['vmware']['username']
+vmware_password = config['vmware']['password']
+vmware_vm_name = config['vmware']['vm_name']
 
 sleepcounter = 2
 option = ""
@@ -607,6 +615,25 @@ def manage_checkversion():
     version_number = data['version']
     print (f"GNS3 versie: {version_number}")
 
+def manage_projects_remove(template_name, conformation):
+    if template_name == "":
+        messagequestion (message_input="Wat is de naam van de template die je wilt verwijderen?")
+        template_name = input()
+
+    if conformation == "":
+        messagequestion (message_input=f"Weet je het zeker dat je {template_name} wilt verwijderen? (y/n)")
+        conformation = input()
+
+    if conformation == "y":
+        cmd = f"rm /mnt/project_templates/{template_name}.gns3project"
+        os.system(cmd)
+        message ("Opdracht is uitgevoerd, check de lijst met projecten om te zien of het project nog bestaat")
+            
+    elif conformation == "n":
+        message(message_input="Taak afgebroken door de gebruiker. Er zijn geen wijzigingen doorgevoerd.")
+    else:
+        message(message_input="Input niet herkend probeer het opnieuw")
+
 def manage_projects():
     while start == "on":
         os.system(clear)
@@ -624,27 +651,67 @@ def manage_projects():
             input("Druk op enter om door te gaan...")
 
         elif answer == "2":
-            messagequestion (message_input="Wat is de naam van de template die je wilt verwijderen?")
-            answer = input()
-
-            messagequestion (message_input=f"Weet je het zeker dat je {answer} wilt verwijderen? (y/n)")
-            conformation = input()
-
-            if conformation == "y":
-                cmd = f"rm /mnt/project_templates/{answer}.gns3project"
-                os.system(cmd)
-                message ("Opdracht is uitgevoerd, check de lijst met projecten om te zien of het project nog bestaat")
-                    
-            elif conformation == "n":
-                message(message_input="Taak afgebroken door de gebruiker. Er zijn geen wijzigingen doorgevoerd.")
-            else:
-                message(message_input="Input niet herkend probeer het opnieuw")
-
+            manage_projects_remove(template_name="", conformation="")
+            
         elif answer == "3":
             return ()
             
         elif answer == "4":
             afsluiten()
+
+def manage_server(gns3_ram ="", gns3_cpu="", gns3_cores="", conformation = ""):
+    if gns3_ram == "":
+        messagequestion(message_input="Hoeveel RAM wil je aan de GNS3 server geven?")
+        gns3_ram = input()
+
+    if gns3_cpu == "":
+        messagequestion(message_input="Hoeveel CPU's wil je aan de GNS3 server geven? ")
+        gns3_cpu = input()
+
+    if gns3_cores == "":
+        messagequestion(message_input="Hoeveel CPU cores wil je aan de GNS3 server geven?")
+        gns3_cores = input()
+
+    if conformation =="":
+        os.system(clear)
+        print ("Overzicht - GNS3 VM upgraden/downgraden")
+        print ()
+        print (f"RAM:                {gns3_ram}")
+        print (f"CPU's:              {gns3_cpu}")
+        print (f"Cores per CPU:      {gns3_cores}")
+        print ()
+        print ("Kloppen deze gegevens? (y/n)")
+        conformation = input ()
+
+    if conformation == "y":
+        cmd1 = "Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false" + "\n"
+        cmd2 = f"Connect-VIServer -Server {vmware_host} -Protocol https -User {vmware_username} -Password {vmware_password}" + "\n"
+        cmd3 = f"Stop-VM -VM {vmware_vm_name} -confirm:$false" + "\n"
+        cmd4 = f"Get-VM -Name {vmware_vm_name} | Set-VM -MemoryGB {gns3_ram} -NumCpu {gns3_cpu} -CoresPerSocket {gns3_cores} -confirm:$false" + "\n"
+        cmd5 = f"Start-VM -VM {vmware_vm_name} -confirm:$false" + "\n"
+
+        a_file = open("./vmware-gns3.ps1", "r")
+        list_of_lines = a_file.readlines()
+        
+        list_of_lines[0] = cmd1
+        list_of_lines[1] = cmd2
+        list_of_lines[2] = cmd3
+        list_of_lines[3] = cmd4
+        list_of_lines[4] = cmd5
+
+        a_file = open("./vmware-gns3.ps1", "w")
+        a_file.writelines(list_of_lines)
+        a_file.close()
+        
+        message (message_input="Het script word zo uitgevoerd.")
+        os.system("pwsh ./vmware-gns3.ps1")
+        message("De GNS3 server is geupgraded. Het kan nog een paar minuten totdat de server weer bereikbaar is.")
+    
+    elif conformation == "n":
+        message(message_input="Taak is afgebroken door de gebruiker. Er zijn geen wijzigingen doorgevoerd")
+    
+    else:
+        message(message_input="Input niet herkend. Probeer het opniew")
 
 def manage_menu ():
     while start == "on":
@@ -655,8 +722,9 @@ def manage_menu ():
         print ("1 - GNS3 versie weergeven")
         print ("2 - Templates beheren")
         print ("3 - Alle nodes bekijken")
-        print ("4 - Terug gaan")
-        print ("5 - Afsluiten")
+        print ("4 - Server hardware aanpassen")
+        print ("5 - Terug gaan")
+        print ("6 - Afsluiten")
         answer = input()
 
         if answer == "1":
@@ -669,14 +737,18 @@ def manage_menu ():
         elif answer == "3":
             view(option="nodes")
             input("Druk op enter om door te gaan...")
-
+        
         elif answer == "4":
+            manage_server(gns3_ram ="", gns3_cpu="", gns3_cores="", conformation = "")
+
+        elif answer == "5":
+            manage_server()
             return()
         
-        elif answer == "5":
+        elif answer == "6":
             afsluiten()
         
-        elif answer != "1" or "2" or "3" or "4" or "5":
+        elif answer != "1" or "2" or "3" or "4" or "5" or "6":
             message (message_input="Input niet herkend probeer het opnieuw")
 
 def add_devices(project_id):
@@ -769,23 +841,23 @@ def afsluiten():
         time.sleep (sleepcounter)
         exit()
 
-def arguments(option, project_name, project_id, export_name, import_name, snap_name, snap_id, show, template_name, comfromation):
+def arguments(option, project_name, project_id, export_name, import_name, snap_name, snap_id, show, template_name, gns3_ram, gns3_cpu, gns3_core, conformation):
     exit_after_finish = True
 
     if option == "view":
         view(option="projects")
     
     elif option == "project_create":
-        create (project_name,comfromation, exit_after_finish)
+        create (project_name,conformation, exit_after_finish)
     
-    elif option == "remove_project":
-        remove (project_name, project_id, comfromation, exit_after_finish)
+    elif option == "project_remove":
+        remove (project_name, project_id, conformation, exit_after_finish)
     
-    elif option == "export":
+    elif option == "project_export":
         export(project_name, project_id, export_name, exit_after_finish)
     
-    elif option == "import":
-        imports(project_name, import_name, comfromation, exit_after_finish)
+    elif option == "project_import":
+        imports(project_name, import_name, conformation, exit_after_finish)
     
     elif option == "snap_view":
         snapshot_view(project_id)
@@ -794,17 +866,20 @@ def arguments(option, project_name, project_id, export_name, import_name, snap_n
         snapshot_create(project_id, snap_name)
     
     elif option == "snap_remove":
-        snapshot_remove(project_id, snap_name, snap_id, comfromation)
+        snapshot_remove(project_id, snap_name, snap_id, conformation)
     
     elif option == "snap_restore":
-        snapshot_restore(project_id, snap_id, comfromation)
+        snapshot_restore(project_id, snap_id, conformation)
 
     elif option == "show":
         view (show)
     
-    elif option == "remove_template":
-        print()
-
+    elif option == "template_remove":
+        manage_projects_remove (template_name, conformation)
+    
+    elif option == "upgrade_vm":
+        manage_server (gns3_ram, gns3_cpu, gns3_core, conformation)
+        
     else:
         message(message_input="Optie bestaat niet. Probeer het opnieuw")
     
@@ -813,7 +888,7 @@ def arguments(option, project_name, project_id, export_name, import_name, snap_n
 while start == "on":
     if status == True:
         option = argument.optie
-        comfromation = argument.bevesteging
+        conformation = argument.bevesteging
         project_name = argument.projectnaam
         project_id = argument.projectid
         export_name = argument.exportnaam
@@ -822,18 +897,11 @@ while start == "on":
         snap_id = argument.snapshotid
         show = argument.show
         template_name = argument.templatenaam
-        arguments(option, project_name, project_id, export_name, import_name, snap_name, snap_id, show, template_name, comfromation)
+        gns3_ram = argument.ram
+        gns3_cpu = argument.cpu
+        gns3_core = argument.core
+        arguments(option, project_name, project_id, export_name, import_name, snap_name, snap_id, show, template_name, gns3_ram, gns3_cpu, gns3_core, conformation)
     
-    project_name = ""
-    project_id = ""
-    conformation = ""
-    export_name = ""
-    import_name = ""
-    snap_name = ""
-    snap_id = ""
-    template_name = ""
-    exit_after_finish = False
-
     os.system (clear)
     print ("GNS3 Management Tool")
     print ()
@@ -857,7 +925,7 @@ while start == "on":
         input("Druk op enter om door te gaan...")
 
     elif answer == "2":
-        create (project_name, conformation, exit_after_finish) 
+        create (project_name="", conformation="", exit_after_finish=False) 
 
     elif answer == "3":
         os.system(clear)
@@ -868,13 +936,13 @@ while start == "on":
         add_devices(project_id)
 
     elif answer == "4":
-        remove (project_name, project_id, conformation, exit_after_finish)
+        remove (project_name="", project_id="", conformation="", exit_after_finish=False)
 
     elif answer == "5":
-        export (project_name, project_id, export_name, exit_after_finish)
+        export (project_name="", project_id="", export_name="", exit_after_finish=False)
 
     elif answer == "6":
-        imports (project_name, import_name, conformation, exit_after_finish)
+        imports (project_name="", import_name="", conformation="", exit_after_finish=False)
     
     elif answer == "7":
         snapshot_menu_check ()

@@ -12,14 +12,17 @@ V0.2
     - Alle losse scripts samengevoegd tot één geheel. De basis werkt, parameters werken niet.
 
 V0.3 
-    - Beheer functies toegevoegd
-    - Windows & Mac OS functies eruit gehaald (i.v.m. de koers van het project)
     - Toegevoegd: Snapshots maken en terugzetten (beta)
     - Toegevoegd: Versienummer aanvragen
     - Toegevoegd: Alle nodes weergeven
+    - Toegevoegd: Beheer functies (templates zien/verwijderen, nodes bekijken)
+    - Verwijderd: Parameters (voor later)
+    - Verwijderd: Windows & Mac OS ondersteuning (i.v.m. de koers van het project)
 
 V0.4
     - SQL vervangen door JSON data
     - Mappen structuur aangepast op de server
     - Toegevoegd: Apparaten selecteren en toevoegen aan een nieuw of bestaand project.
-    - Snapshots verbeterd, alle functies werken naar behoren.
+    - Toegevoegd: Parameters
+    - Toegevoegd: VM upgraden 
+    - Verbeterd: Snapshots (alle functies werken naar behoren)
