@@ -14,7 +14,7 @@ import json
 import pandas as pd
 from pathlib import Path
 
-
+# Alle mogelijke parameters. De optie parameter "optie" is verplicht bij het gebruik
 parser = argparse.ArgumentParser(description = "GNS3 Management Tool")
 parser.add_argument("-o", "--optie", help = "Optie", required = False, default = "")
 parser.add_argument("-s", "--show", help = "Laat dingen zien", required = False, default = "")
@@ -52,6 +52,7 @@ vmware_username = config['vmware']['username']
 vmware_password = config['vmware']['password']
 vmware_vm_name = config['vmware']['vm_name']
 
+# Standaard variabelen die gebruikt worden 
 sleepcounter = 2
 option = ""
 start = "on"
@@ -59,17 +60,20 @@ title = "GNS3 Management Tool"
 ssh = ("ssh " + ssh_username + "@" + gns3_server + " ")
 clear = ("clear")
 
-
+# Functie voor het het uitprinten van een bericht op een nette manier
 def message (message_input):
     os.system(clear)
     print (message_input)
     time.sleep(2)
 
+# Functie voor het het uitprinten van een vraag op een nette manier
 def messagequestion (message_input):
     os.system(clear)
     print (message_input)
 
+# Functie met daarin alle mogelijkheden om data op te halen en weer te geven.
 def view (option):
+    # Laat de bestaande GNS3 zien
     if option == "projects":
         os.system(clear)
         headers = {'content-type': 'application/json'}
@@ -80,12 +84,14 @@ def view (option):
         df = pd.DataFrame.from_dict(data)
         print(df[['name', 'project_id']])
     
+    # Laat alle projecten zien die geimporteerd kunnen worden
     if option == "templates":
         os.system(clear)
         cmd = ssh + "ls /mnt/project_templates/"
         command = os.system(cmd)
         print (command)
 
+    # Laat alle applainces die op de server staan zien
     if option == "nodes":
         os.system (clear)              
         headers = {'content-type': 'application/json'}
@@ -96,6 +102,7 @@ def view (option):
         print(df[['name', 'template_id', 'template_type', 'category' ]])
         print ()   
 
+# Functie om projecten aan te maken
 def create (project_name, conformation, exit_after_finish):
     go = "on"
     if project_name == "":
@@ -112,7 +119,7 @@ def create (project_name, conformation, exit_after_finish):
     for item in data:
         items.append(item['name'])
 
-    #Als de projectnaam bestaat word het script afgebroken
+    # Als de projectnaam bestaat word het script afgebroken
     if project_name in items:
         message (message_input="Project bestaat al. Probeer het opnieuw")
         time.sleep (sleepcounter)
@@ -179,6 +186,7 @@ def create (project_name, conformation, exit_after_finish):
         else:
             message (message_input="Input niet herkend, je word doorgewezen naar het hoofdmenu")
 
+# Functie om projecten te verwijderen
 def remove (project_name, project_id, conformation, exit_after_finish):
     remove = "on"
     while remove == "on": 
@@ -193,6 +201,7 @@ def remove (project_name, project_id, conformation, exit_after_finish):
             print ("Wat is het project ID?")
             project_id = input()
 
+        # Haalt de huidige lijst met projecten op en vergelijkt dit met de input
         os.system("clear")
         headers = {'content-type': 'application/json'}
         url = "http://" + gns3_server + ":3080/v2/projects"
@@ -245,7 +254,8 @@ def remove (project_name, project_id, conformation, exit_after_finish):
                 remove == "off"
         else:
             message (message_input="Het project bestaat niet of is niet via deze tool gemaakt. Probeer het opnieuw")
-    
+
+# Functie om projecten te importeren    
 def export (project_name, project_id, export_name, exit_after_finish):
     export = "on"
     while export == "on":
@@ -266,6 +276,7 @@ def export (project_name, project_id, export_name, exit_after_finish):
             print ("Wat is de naam van het export bestand?")
             export_name = input()
 
+        # Haalt de huidige lijst met projecten op en vergelijkt het met de input
         os.system("clear")
         headers = {'content-type': 'application/json'}
         url = "http://" + gns3_server + ":3080/v2/projects"
@@ -282,7 +293,8 @@ def export (project_name, project_id, export_name, exit_after_finish):
                 items.append(item['project_id'])
 
             if project_id in items:
-
+                
+                # Chect of er al een export bestaat met de naam van de input
                 check_export = os.path.isfile(f"/mnt/project_templates/{export_name}.gns3project")
 
                 if check_export == False:
@@ -330,7 +342,8 @@ def export (project_name, project_id, export_name, exit_after_finish):
         else:
             message (message_input="Input niet herkend, je word doorgewezen naar het hoofdmenu")
             export = "off"
-    
+
+# Functie om projecten te importeren    
 def imports (project_name, import_name, conformation, exit_after_finish):
     imports = "on"
     while imports == "on":
@@ -342,6 +355,7 @@ def imports (project_name, import_name, conformation, exit_after_finish):
             print("Wat is de naam van het nieuwe project?")
             project_name = input()
 
+        # Controleert of de naam van het nieuwe project bestaat
         os.system("clear")
         headers = {'content-type': 'application/json'}
         url = "http://" + gns3_server + ":3080/v2/projects"
@@ -373,6 +387,7 @@ def imports (project_name, import_name, conformation, exit_after_finish):
                 print ("Weet je het zeker dat je het project wilt importeren met de volgende gegevens? (y/n)")
                 conformation = input ()
 
+            # Het project importeren met shell commando's
             if conformation == "y":
                 
                 id_first_part = str (random.randint(10000000, 99999999))
@@ -407,6 +422,7 @@ def imports (project_name, import_name, conformation, exit_after_finish):
                 message (message_input="Input niet herkend, je word doorgewezen naar het hoofdmenu")
                 imports = "off"
 
+# Functie dat een lijst genereerd van de beschikbare snapshots van het project
 def snapshot_view(project_id):
     os.system (clear)              
     #API request om snapshots te zien
@@ -423,6 +439,7 @@ def snapshot_view(project_id):
         df = pd.DataFrame.from_dict(data)
         print(df[['name', 'snapshot_id', 'created_at']])
 
+# Functie om een snapshot te maken
 def snapshot_create(project_id, snap_name):
     if snap_name == "":
         message (message_input= "Wat is de naam van de snapshot?")
@@ -438,6 +455,7 @@ def snapshot_create(project_id, snap_name):
     r = requests.post(url, json=payload, headers=headers)
     message (message_input = "De snapshot is gemaakt")
 
+# Functie om een snapshot te verwijderen
 def snapshot_remove(project_id, snap_name, snap_id, conformation):
     os.system(clear)
     headers = {'content-type': 'application/json'}
@@ -488,6 +506,7 @@ def snapshot_remove(project_id, snap_name, snap_id, conformation):
     else:
         message(message_input="Input niet herkend probeer het opnieuw")
 
+# Functie om snapshots te herstellen
 def snapshot_restore(project_id, snap_id, conformation):
     if snap_id == "":
         snapshot_view(project_id)
@@ -558,6 +577,7 @@ def snapshot_menu_check():
             time.sleep(sleepcounter)
             return()
 
+# Het menu dat uitgeprint word bij het beheren van snapshots
 def snapshot_menu (project_name, project_id):
     while start == "on":
         snap_name = ""
@@ -606,6 +626,7 @@ def snapshot_menu (project_name, project_id):
             print ("Input niet herkend probeer het opnieuw")
             time.sleep (sleepcounter)
 
+# Functie dat het versie nummer van GNS3 op vraagt
 def manage_checkversion():
     os.system(clear)
     headers = {'content-type': 'application/json'}
@@ -615,6 +636,7 @@ def manage_checkversion():
     version_number = data['version']
     print (f"GNS3 versie: {version_number}")
 
+# Functie om een template te verwijderen
 def manage_projects_remove(template_name, conformation):
     if template_name == "":
         messagequestion (message_input="Wat is de naam van de template die je wilt verwijderen?")
@@ -634,6 +656,7 @@ def manage_projects_remove(template_name, conformation):
     else:
         message(message_input="Input niet herkend probeer het opnieuw")
 
+# Menu dat uitgeprint word voor het beheren van de GNS3 installatie
 def manage_projects():
     while start == "on":
         os.system(clear)
@@ -659,6 +682,7 @@ def manage_projects():
         elif answer == "4":
             afsluiten()
 
+# Functie voor het aanpassen van de systeem recources van de GNS3 VM
 def manage_server(gns3_ram ="", gns3_cpu="", gns3_cores="", conformation = ""):
     if gns3_ram == "":
         messagequestion(message_input="Hoeveel RAM wil je aan de GNS3 server geven?")
@@ -672,6 +696,7 @@ def manage_server(gns3_ram ="", gns3_cpu="", gns3_cores="", conformation = ""):
         messagequestion(message_input="Hoeveel CPU cores wil je aan de GNS3 server geven?")
         gns3_cores = input()
 
+    # Print een overzicht uit met de ingevulde waardes
     if conformation =="":
         os.system(clear)
         print ("Overzicht - GNS3 VM upgraden/downgraden")
@@ -683,6 +708,7 @@ def manage_server(gns3_ram ="", gns3_cpu="", gns3_cores="", conformation = ""):
         print ("Kloppen deze gegevens? (y/n)")
         conformation = input ()
 
+    # Powershell commando's die uitgevoerd moeten worden.
     if conformation == "y":
         cmd1 = "Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false" + "\n"
         cmd2 = f"Connect-VIServer -Server {vmware_host} -Protocol https -User {vmware_username} -Password {vmware_password}" + "\n"
@@ -690,6 +716,7 @@ def manage_server(gns3_ram ="", gns3_cpu="", gns3_cores="", conformation = ""):
         cmd4 = f"Get-VM -Name {vmware_vm_name} | Set-VM -MemoryGB {gns3_ram} -NumCpu {gns3_cpu} -CoresPerSocket {gns3_cores} -confirm:$false" + "\n"
         cmd5 = f"Start-VM -VM {vmware_vm_name} -confirm:$false" + "\n"
 
+        # Bovenstaande regels weg schrijven naar een bestand
         a_file = open("./vmware-gns3.ps1", "r")
         list_of_lines = a_file.readlines()
         
@@ -703,6 +730,7 @@ def manage_server(gns3_ram ="", gns3_cpu="", gns3_cores="", conformation = ""):
         a_file.writelines(list_of_lines)
         a_file.close()
         
+        # Het Powershell script uitvoeren
         message (message_input="Het script word zo uitgevoerd.")
         os.system("pwsh ./vmware-gns3.ps1")
         message("De GNS3 server is geupgraded. Het kan nog een paar minuten totdat de server weer bereikbaar is.")
@@ -713,6 +741,7 @@ def manage_server(gns3_ram ="", gns3_cpu="", gns3_cores="", conformation = ""):
     else:
         message(message_input="Input niet herkend. Probeer het opniew")
 
+# Het menu dat utigeprint word bij de optie beheer
 def manage_menu ():
     while start == "on":
         os.system(clear)
@@ -751,7 +780,9 @@ def manage_menu ():
         elif answer != "1" or "2" or "3" or "4" or "5" or "6":
             message (message_input="Input niet herkend probeer het opnieuw")
 
+# Functie om systeem recources van de GNS3 VM aan te passen
 def add_devices(project_id):
+    # Standaard waardes
     counter_cloud = 0
     counter_fortigate = 0
     counter_switch = 0
@@ -785,6 +816,7 @@ def add_devices(project_id):
             device_name = "Virtuele PC's"
 
         elif answer == "5":
+            # Van elke optie word er een loop uitgevoerd als de waarde boven de 0 is. Verder er bij elke applaince een ander coordinaat gegenereerd anders overlappen ze elkaar in GNS3
             
             if counter_cloud != 0:
                 coordinate_x = 200
@@ -835,12 +867,15 @@ def add_devices(project_id):
         elif device_name == "Virtuele PC's":
             counter_pc = int(answer)
 
+# Functie dat gebruikt word bij het afsluiten van het script
 def afsluiten():
         os.system (clear)
         print ("Bye, Bye")
         time.sleep (sleepcounter)
         exit()
 
+# Als er argumenten zijn gegeven, dan word deze functie gebruikt om te checken welke functionaliteit er uitgevoerd moet worden. Daarbij worden ook 
+# de variabelen die nodig zijn mee gestuurd
 def arguments(option, project_name, project_id, export_name, import_name, snap_name, snap_id, show, template_name, gns3_ram, gns3_cpu, gns3_core, conformation):
     exit_after_finish = True
 
@@ -885,7 +920,9 @@ def arguments(option, project_name, project_id, export_name, import_name, snap_n
     
     exit()
 
+# Start staat altijd aan om een constante loop van het script te behouden
 while start == "on":
+    # Als er argumenten zijn gebruikt dan worden die hieronder in variableen gezet en naar de functie arguments word gestuurd 
     if status == True:
         option = argument.optie
         conformation = argument.bevesteging
@@ -902,6 +939,7 @@ while start == "on":
         gns3_core = argument.core
         arguments(option, project_name, project_id, export_name, import_name, snap_name, snap_id, show, template_name, gns3_ram, gns3_cpu, gns3_core, conformation)
     
+    # Het hoofdmenu
     os.system (clear)
     print ("GNS3 Management Tool")
     print ()
@@ -929,7 +967,7 @@ while start == "on":
 
     elif answer == "3":
         os.system(clear)
-        view ()
+        view (option="projects")
         print ()
         print ("Wat is het project ID waaraan je de apparaten wilt toevoegen?")
         project_id = input()
