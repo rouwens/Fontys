@@ -9,7 +9,6 @@ import platform
 import os
 import os.path
 import time
-import paramiko
 import json
 import pandas as pd
 from pathlib import Path
